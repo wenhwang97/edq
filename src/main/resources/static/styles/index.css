@@ -1,0 +1,480 @@
+*,body,div,p,ul,li,a,h2 {
+  padding: 0;
+  margin: 0;
+}
+body {
+  overflow-y: auto;
+}
+ul {
+  list-style: none;
+}
+/*
+a {
+  color: #fff !important;
+}
+*/
+a:hover {
+  text-decoration: none;
+}
+/* CSS Document 更多精品模板请访问：http://www.bootstrapmb.com*/
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+} /*滚动条的滑轨背景颜色*/
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(75, 75, 75, 0.58);
+} /*滑块颜色*/
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(48, 48, 48, 0.92);
+}
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+} /* 滑块整体设置*/
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 5px solid transparent;
+}
+::-webkit-scrollbar-track {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2) inset;
+}
+::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-clip: content-box;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2) inset;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+} /* 横向滚动条和纵向滚动条相交处尖角的颜色 */
+
+.header {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  background-color: #2553a0;
+}
+.header .header-left,
+.header .header-right {
+  position: absolute;
+}
+.header-right {
+  right: 0;
+}
+.header .header-nav > ul > li {
+  display: inline-block;
+  color: #fff;
+  padding: 12px 20px;
+  margin-top: 28px;
+  font-size: 1.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.header .header-nav > ul > li span {
+  float: left;
+}
+.header .header-nav > ul > li .icon {
+  margin: 3px 4px 0 0;
+}
+.header .header-nav ul li.header-active,
+.header-nav > ul > li:hover {
+  font-weight: bold;
+  border-bottom: 2px solid #eeeeee;
+}
+.search,
+.admin {
+  position: relative;
+}
+.search-list {
+  position: absolute;
+  width: 100%;
+  top: 47px;
+  left: 0;
+  background-color: #1955a3;
+  z-index: 999;
+  display: none;
+  padding-bottom: 10px;
+}
+.search-list ul li {
+  line-height: 36px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.search-list ul li a {
+  display: inline-block;
+  width: 100%;
+  padding-left: 20px;
+}
+.search-list ul li:hover {
+  background-color: #2e3569;
+}
+.logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 647px;
+  height: 98px;
+  color: #ffffff;
+  text-shadow: 3px 3px 3px #333;
+  text-align: center;
+  font-size: 40px;
+  line-height: 2.5;
+}
+.time {
+  position: absolute;
+  left: -30px;
+  bottom: 0;
+  color: #b6bbe4;
+  font-size: 10px;
+}
+.info-text {
+  position: absolute;
+  right: -74px;
+  bottom: 0;
+  color: #b6bbe4;
+  font-size: 10px;
+  background-color: #161c4c;
+  padding: 0 0 0 4px;
+}
+.info-btn {
+  cursor: pointer;
+  position: absolute;
+  right: -30px;
+  bottom: 0;
+}
+.content {
+  display: flex;
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+  width: 100%;
+}
+.content-left {
+  flex: 1;
+  position: relative;
+}
+.left-btn {
+  position: absolute;
+  right: 0;
+  top: 46%;
+  cursor: pointer;
+}
+.content-right {
+  flex: 0 0 25%;
+  background-color: #3a455b;
+  border-top: 1px #fff solid;
+  box-sizing: border-box;
+}
+.fc {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  bottom: 0;
+  background-color: #e4e8eb;
+  width: 100%;
+  z-index: 300;
+  display: none;
+}
+.static_tab {
+  padding: 5px;
+}
+.static_tab input,
+.static_tab select {
+  width: 15%;
+  height: 28px;
+  margin-right: 10px;
+  border: 1px solid #cccccc;
+}
+.static_tab span {
+  float: right;
+}
+.static_tab span a {
+  display: inline-block;
+  text-decoration: none;
+  height: 28px;
+  width: 124px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-right: 10px;
+}
+.a_pic {
+  background-image: url("../images/pic.png");
+}
+.a_table {
+  background-image: url("../images/table.png");
+}
+.static_con {
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  width: 98%;
+  margin-left: 1%;
+  background-color: #eeeeee;
+}
+.static_con_div {
+  width: 100%;
+  height: 98%;
+  display: none;
+}
+.static_tit {
+  background-color: #3d43c0;
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+  font-size: 1.25em;
+  text-indent: 10px;
+  float: left;
+  font-weight: bold;
+  width: 100%;
+}
+.static_chart {
+  width: 48.5%;
+  height: 45%;
+  background-color: #ffffff;
+  float: left;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+.static_chart p {
+  width: 750px;
+  height: 250px;
+}
+.export_a {
+  margin-left: 1%;
+  margin-top: 10px;
+}
+.static_table {
+  border: 1px solid #dddddd !important;
+}
+.static_table thead tr {
+  background-color: #3d6d83;
+  color: #ffffff;
+  height: 30px;
+}
+
+/*layer样式文件*/
+.layui-layer-rim {
+  background-color: #226aa3 !important;
+  border: none !important;
+}
+h1 {
+  color: #fff;
+  text-align: center;
+}
+.layui-layer-content {
+  overflow-y: auto;
+}
+.layui-layer-rim .layui-layer-title {
+  background-color: #164a72 !important;
+  border-bottom: 1px #292f3d solid !important;
+  color: #bac2d5 !important;
+  display: inline-block;
+  border-radius: 20px !important;
+  height: 26px !important;
+  line-height: 28px !important;
+  padding: 0 20px !important;
+  margin: 4px 0 0 4px;
+}
+.layui-layer-dialog .layui-layer-title {
+  background-color: #3c8cbc !important;
+  color: #fff !important;
+}
+
+/*index弹框样式文件*/
+.fixed-table-container thead th .th-inner,
+.fixed-table-container tbody td .th-inner {
+  padding: 5px;
+}
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+  border-bottom: 1px solid #dddddd;
+}
+.system-fc {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 300;
+  display: none;
+}
+.system {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 300;
+}
+.table > thead > tr > th {
+  background-color: #d9edf7;
+  color: #333;
+  font-weight: bold;
+}
+.pull-left {
+  display: none;
+}
+#systemTable tbody tr:nth-child(2n) {
+  background-color: #edeff3 !important;
+}
+#systemTable td {
+  border: 1px #b9bfd1 solid;
+  padding: 6px 8px !important;
+}
+.clear {
+  clear: both;
+}
+.system {
+  display: flex;
+}
+.tabs {
+  height: 40px;
+  background-color: #fff;
+  width: 100%;
+  line-height: 40px;
+}
+.system-left {
+  flex: 0 0 300px;
+  background-color: #2c4e72;
+  height: 100%;
+}
+.system-right {
+  flex: 1;
+  padding: 0 2px 10px 10px;
+  background-color: #e4e8ea;
+  height: 100%;
+  overflow-y: auto;
+}
+.system-search {
+  background-color: #386893;
+  padding-bottom: 28px;
+  margin-bottom: 10px;
+}
+.search-item {
+  float: left;
+  width: 30%;
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  margin-top: 28px;
+  padding: 0 0 0 3.3%;
+}
+.search-item label {
+  flex: 0 0 100px;
+  text-align: center;
+  background-color: #4478ae;
+  border: 1px #5886a9 solid;
+  color: #fff;
+}
+.search-item input,
+.search-item select {
+  flex: 1;
+  margin: 0 0 0 2px;
+  border: 1px #5489ef solid;
+}
+.search-item button {
+  flex: 0 0 80%;
+  height: 33px;
+  line-height: 33px;
+  background: url("../images/btn01.png") no-repeat 100% 100%;
+  border: none;
+  color: #fff;
+}
+.system-content {
+  border: 1px #d1d6da;
+  background-color: #fff;
+}
+.search-btn {
+  padding: 10px 0 6px 4px;
+}
+.search-btn button {
+  padding: 0 8px;
+  line-height: 26px;
+  color: #fff;
+  background: url("../images/del.png") no-repeat 100% 100%;
+  border: none;
+  border-radius: 4px;
+}
+.search-btn button:nth-child(2n) {
+  background: url("../images/btn02.png") no-repeat 100% 100%;
+}
+.search-btn button span {
+  display: inline-block;
+  margin-top: 4px;
+}
+.ztree li a.curSelectedNode {
+  padding-top: 0px;
+  background-color: #fff;
+  color: #8a4141 !important;
+  height: 16px;
+  /* border: 1px #FFf solid; */
+  opacity: 0.8;
+}
+.blink {
+  color: #dd4814;
+  animation: blink 1s linear infinite;
+  /* 其它浏览器兼容性前缀 */
+  -webkit-animation: blink 1s linear infinite;
+  -moz-animation: blink 1s linear infinite;
+  -ms-animation: blink 1s linear infinite;
+  -o-animation: blink 1s linear infinite;
+}
+@keyframes blink {
+  0% {
+    transform: scale(0.8, 0.8);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+
+#map{
+  height: 92%;
+  width: 100%;
+  margin-top: 0.1em;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Navbar style */
+.navbar{
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;  
+  width: 100vw;
+  background-color: #2199F2;
+}
+
+.navbar-brand{
+  padding: 10px;
+  background-color: #184490;
+  color: #FFFFFF;
+}
+
+.nav-link{
+  color: white;
+  font-size: 1.3em;
+  margin-left: 1em;
+}
+
