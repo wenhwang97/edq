@@ -16,25 +16,45 @@ public class DemoData {
         this.asianPop = asianPop;
     }
 
-    // Setter methods later implementing...
+
     public int getTotalPop() {
         return totalPop;
+    }
+
+    public void setTotalPop(int totalPop) {
+        this.totalPop = totalPop;
     }
 
     public int getWhitePop() {
         return whitePop;
     }
 
+    public void setWhitePop(int whitePop) {
+        this.whitePop = whitePop;
+    }
+
     public int getBlackPop() {
         return blackPop;
+    }
+
+    public void setBlackPop(int blackPop) {
+        this.blackPop = blackPop;
     }
 
     public int getLatinPop() {
         return latinPop;
     }
 
+    public void setLatinPop(int latinPop) {
+        this.latinPop = latinPop;
+    }
+
     public int getAsianPop() {
         return asianPop;
+    }
+
+    public void setAsianPop(int asianPop) {
+        this.asianPop = asianPop;
     }
 
     @Override
