@@ -1,16 +1,9 @@
 package com.u1s1.edq.repository;
 
-import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.State;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class StateRepository {
+public interface StateRepository extends JpaRepository<State, String> {
 
-
-    public State getState(String stateId) {
-
-
-        return new State("CA", "California", new DemoData(1000, 80, 60, 40, 20));
-    }
+    State findStateById(String stateId);
 }

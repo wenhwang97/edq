@@ -1,6 +1,12 @@
 package com.u1s1.edq.entity;
 
+import javax.persistence.*;
+
+@Table(name = "DEMO_DATA")
+@Entity
 public class DemoData {
+
+    private long id;
 
     private int totalPop;
     private int whitePop;
@@ -8,15 +14,19 @@ public class DemoData {
     private int latinPop;
     private int asianPop;
 
-    public DemoData(int totalPop, int whitePop, int blackPop, int latinPop, int asianPop) {
-        this.totalPop = totalPop;
-        this.whitePop = whitePop;
-        this.blackPop = blackPop;
-        this.latinPop = latinPop;
-        this.asianPop = asianPop;
+
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    public long getId() {
+        return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    @Column(name = "total_population")
     public int getTotalPop() {
         return totalPop;
     }
@@ -25,6 +35,7 @@ public class DemoData {
         this.totalPop = totalPop;
     }
 
+    @Column(name = "white_population")
     public int getWhitePop() {
         return whitePop;
     }
@@ -33,6 +44,7 @@ public class DemoData {
         this.whitePop = whitePop;
     }
 
+    @Column(name = "black_population")
     public int getBlackPop() {
         return blackPop;
     }
@@ -41,6 +53,7 @@ public class DemoData {
         this.blackPop = blackPop;
     }
 
+    @Column(name = "hispanic_population")
     public int getLatinPop() {
         return latinPop;
     }
@@ -49,6 +62,7 @@ public class DemoData {
         this.latinPop = latinPop;
     }
 
+    @Column(name = "asian_population")
     public int getAsianPop() {
         return asianPop;
     }

@@ -1,70 +1,34 @@
 package com.u1s1.edq.entity;
 
-import com.u1s1.edq.enums.PrecinctType;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Table(name = "PRECINCT")
+@Table(name = "COUNTY")
 @Entity
-public class Precinct implements Serializable {
+public class County implements Serializable {
 
     private String id;
 
-    private String name;
-    private String canonicalName;
-    private County county;
     private State state;
-
-    private PrecinctType type;
-
     private DemoData demoData;
 
     private List<GeoVertex> boundary;
     private List<ElectionData> presidentialElectionData;
     private List<ElectionData> congressionalElectionData;
 
-//    private Set<Precinct> neighbors;
+    private Set<Precinct> precincts;
 
 
     @Id
-    @Column(name = "precinct_id")
+    @Column(name = "county_id")
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @Column(nullable = false)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Column(nullable = false)
-    public String getCanonicalName() {
-        return canonicalName;
-    }
-
-    public void setCanonicalName(String canonicalName) {
-        this.canonicalName = canonicalName;
-    }
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    public County getCounty() {
-        return county;
-    }
-
-    public void setCounty(County county) {
-        this.county = county;
     }
 
     @ManyToOne
@@ -75,15 +39,6 @@ public class Precinct implements Serializable {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    @Column(nullable = false)
-    public PrecinctType getType() {
-        return type;
-    }
-
-    public void setType(PrecinctType type) {
-        this.type = type;
     }
 
     @OneToOne
@@ -108,11 +63,11 @@ public class Precinct implements Serializable {
 
     @OneToMany
     @JoinColumn(nullable = false)
-    public List<ElectionData> getGeneralElectionData() {
+    public List<ElectionData> getPresidentialElectionData() {
         return presidentialElectionData;
     }
 
-    public void setGeneralElectionData(List<ElectionData> presidentialElectionData) {
+    public void setPresidentialElectionData(List<ElectionData> presidentialElectionData) {
         this.presidentialElectionData = presidentialElectionData;
     }
 
@@ -126,13 +81,14 @@ public class Precinct implements Serializable {
         this.congressionalElectionData = congressionalElectionData;
     }
 
-//    @ManyToMany
-//    @JoinColumn
-//    public Set<Precinct> getNeighbors() {
-//        return neighbors;
-//    }
-//
-//    public void setNeighbors(Set<Precinct> neighbors) {
-//        this.neighbors = neighbors;
-//    }
+
+    @OneToMany
+    @JoinColumn
+    public Set<Precinct> getPrecincts() {
+        return precincts;
+    }
+
+    public void setPrecincts(Set<Precinct> precincts) {
+        this.precincts = precincts;
+    }
 }

@@ -1,7 +1,12 @@
 package com.u1s1.edq.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+@Table(name = "STATE")
+@Entity
 public class State implements Serializable {
 
     private String id;
@@ -9,13 +14,14 @@ public class State implements Serializable {
     private String name;
     private DemoData demoData;
 
-    public State(String id, String name, DemoData demoData) {
-        this.id = id;
-        this.name = name;
-        this.demoData = demoData;
-    }
+    private Set<County> counties = new HashSet<County>();
+    // later districts...
+    // later geographics...
 
 
+
+    @Id
+    @Column(name = "state_id")
     public String getId() {
         return id;
     }
@@ -24,6 +30,7 @@ public class State implements Serializable {
         this.id = id;
     }
 
+    @Column(nullable = false)
     public String getName() {
         return name;
     }
@@ -32,6 +39,8 @@ public class State implements Serializable {
         this.name = name;
     }
 
+    @OneToOne
+    @JoinColumn(nullable = false)
     public DemoData getDemoData() {
         return demoData;
     }
@@ -40,12 +49,24 @@ public class State implements Serializable {
         this.demoData = demoData;
     }
 
+    @OneToMany
+    @JoinColumn(nullable = false)
+    public Set<County> getCounties() {
+        return counties;
+    }
+
+    public void setCounties(Set<County> counties) {
+        this.counties = counties;
+    }
+
+
     @Override
     public String toString() {
-        return "StateEntity{" +
+        return "State{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", demoData=" + demoData +
+                ", counties=" + counties +
                 '}';
     }
 }

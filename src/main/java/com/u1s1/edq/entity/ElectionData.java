@@ -1,23 +1,34 @@
 package com.u1s1.edq.entity;
 
+import com.u1s1.edq.enums.ElectionType;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Table(name = "ELECTION_DATA")
+@Entity
 public class ElectionData implements Serializable {
 
+    private long id;
+
     private int year;
+    private ElectionType electionType;
     private int republicanVote;
     private int democraticVote;
     private int libertarianVote;
     private int greenVote;
 
-    public ElectionData(int year, int republicanVote, int democraticVote, int libertarianVote, int greenVote) {
-        this.year = year;
-        this.republicanVote = republicanVote;
-        this.democraticVote = democraticVote;
-        this.libertarianVote = libertarianVote;
-        this.greenVote = greenVote;
+
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    public long getId() {
+        return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public int getYear() {
         return year;
@@ -27,6 +38,16 @@ public class ElectionData implements Serializable {
         this.year = year;
     }
 
+    @Column(name = "election_type")
+    public ElectionType getElectionType() {
+        return electionType;
+    }
+
+    public void setElectionType(ElectionType electionType) {
+        this.electionType = electionType;
+    }
+
+    @Column(name = "republican_vote")
     public int getRepublicanVote() {
         return republicanVote;
     }
@@ -35,6 +56,7 @@ public class ElectionData implements Serializable {
         this.republicanVote = republicanVote;
     }
 
+    @Column(name = "democratic_vote")
     public int getDemocraticVote() {
         return democraticVote;
     }
@@ -43,6 +65,7 @@ public class ElectionData implements Serializable {
         this.democraticVote = democraticVote;
     }
 
+    @Column(name = "libertarian_vote")
     public int getLibertarianVote() {
         return libertarianVote;
     }
@@ -51,6 +74,7 @@ public class ElectionData implements Serializable {
         this.libertarianVote = libertarianVote;
     }
 
+    @Column(name = "green_vote")
     public int getGreenVote() {
         return greenVote;
     }
