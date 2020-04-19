@@ -31,7 +31,7 @@ public class StateController {
 
 
     @GetMapping(value = "/show-counties")
-    public Set<ResponseObject> showCounties(@PathVariable String stateId) {
+    public Set<ResponseObject> sendCounties(@PathVariable String stateId) {
 
         State state = stateService.getState(stateId);
         Set<ResponseObject> response = new HashSet<ResponseObject>();

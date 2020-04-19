@@ -1,8 +1,8 @@
 const THREE_STATES = ["California", "Texas", "Rhode Island"];
 var map;
 var dataLayers = {}; // all dataLayer (geojson)
-var r=document.getElementById("countyCheckBox"); 
-var PrecinctCheckBox=document.getElementById("PrecinctCheckBox"); 
+var r=document.getElementById("countyCheckBox");
+var PrecinctCheckBox=document.getElementById("PrecinctCheckBox");
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -211,8 +211,6 @@ function handleRedirect(
           console.log(event.feature.j.PREC); //get the name/number of precinct
           openNav();
         });
-      } else {
-        texasPrecinctLayer.setMap(null);
       }
   });
       // google.maps.event.addListener(

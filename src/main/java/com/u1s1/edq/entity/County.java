@@ -11,6 +11,7 @@ public class County implements Serializable {
 
     private String id;
 
+    private String name;
     private State state;
     private DemoData demoData;
 
@@ -29,6 +30,15 @@ public class County implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Column(nullable = false)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @ManyToOne

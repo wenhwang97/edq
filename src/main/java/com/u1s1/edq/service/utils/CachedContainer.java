@@ -69,4 +69,12 @@ public class CachedContainer {
         return null;
     }
 
+    public boolean hasState(String id) {
+        if (stateContainer.get(id) != null) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

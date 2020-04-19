@@ -1,6 +1,5 @@
 package com.u1s1.edq.service;
 
-
 import com.u1s1.edq.service.utils.CachedContainer;
 import com.u1s1.edq.entity.State;
 import com.u1s1.edq.repository.StateRepository;
@@ -14,7 +13,6 @@ public class StateService {
     private StateRepository stateRepo;
     private CachedContainer cachedContainer;
 
-
     @Autowired
     public StateService(StateRepository stateRepo, CachedContainer cachedContainer) {
         this.stateRepo = stateRepo;
@@ -23,6 +21,10 @@ public class StateService {
 
 
     public void fetchState(String stateId) {
+
+        if (cachedContainer.hasState(stateId)) {
+            return;
+        }
 
         State state = stateRepo.findStateById(stateId);
         if (cachedContainer.putState(state)) {

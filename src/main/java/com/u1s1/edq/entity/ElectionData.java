@@ -12,7 +12,6 @@ public class ElectionData implements Serializable {
     private long id;
 
     private int year;
-    private ElectionType electionType;
     private int republicanVote;
     private int democraticVote;
     private int libertarianVote;
@@ -36,15 +35,6 @@ public class ElectionData implements Serializable {
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    @Column(name = "election_type")
-    public ElectionType getElectionType() {
-        return electionType;
-    }
-
-    public void setElectionType(ElectionType electionType) {
-        this.electionType = electionType;
     }
 
     @Column(name = "republican_vote")
