@@ -108,11 +108,11 @@ public class Precinct implements Serializable {
 
     @OneToMany
     @JoinColumn(nullable = false)
-    public List<ElectionData> getGeneralElectionData() {
+    public List<ElectionData> getPresidentialElectionData() {
         return presidentialElectionData;
     }
 
-    public void setGeneralElectionData(List<ElectionData> presidentialElectionData) {
+    public void setPresidentialElectionData(List<ElectionData> presidentialElectionData) {
         this.presidentialElectionData = presidentialElectionData;
     }
 
