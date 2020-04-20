@@ -1,4 +1,4 @@
-package com.u1s1.edq.common;
+package com.u1s1.edq.temp;
 
 public class PropertiesTemp {
 
