@@ -4,6 +4,8 @@ import com.u1s1.edq.enums.PrecinctType;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,11 +24,11 @@ public class Precinct implements Serializable {
 
     private DemoData demoData;
 
-    private List<GeoVertex> boundary;
-    private List<ElectionData> presidentialElectionData;
-    private List<ElectionData> congressionalElectionData;
+    private List<GeoVertex> boundary = new ArrayList<GeoVertex>();
+    private List<ElectionData> presidentialElectionData = new ArrayList<ElectionData>();
+    private List<ElectionData> congressionalElectionData = new ArrayList<ElectionData>();
 
-//    private Set<Precinct> neighbors;
+    private Set<Precinct> neighbors = new HashSet<Precinct>();
 
 
     @Id
@@ -126,13 +128,13 @@ public class Precinct implements Serializable {
         this.congressionalElectionData = congressionalElectionData;
     }
 
-//    @ManyToMany
-//    @JoinColumn
-//    public Set<Precinct> getNeighbors() {
-//        return neighbors;
-//    }
-//
-//    public void setNeighbors(Set<Precinct> neighbors) {
-//        this.neighbors = neighbors;
-//    }
+    @OneToMany
+    @JoinColumn
+    public Set<Precinct> getNeighbors() {
+        return neighbors;
+    }
+
+    public void setNeighbors(Set<Precinct> neighbors) {
+        this.neighbors = neighbors;
+    }
 }

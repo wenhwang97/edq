@@ -2,6 +2,8 @@ package com.u1s1.edq.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,10 +18,10 @@ public class County implements Serializable {
     private DemoData demoData;
 
     private List<GeoVertex> boundary;
-    private List<ElectionData> presidentialElectionData;
-    private List<ElectionData> congressionalElectionData;
+    private List<ElectionData> presidentialElectionData = new ArrayList<ElectionData>();
+    private List<ElectionData> congressionalElectionData = new ArrayList<ElectionData>();
 
-    private Set<Precinct> precincts;
+    private Set<Precinct> precincts = new HashSet<Precinct>();
 
 
     @Id
