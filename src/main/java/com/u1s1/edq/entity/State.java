@@ -39,8 +39,8 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "demo_data")
     public DemoData getDemoData() {
         return demoData;
     }
@@ -49,8 +49,7 @@ public class State implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany
-    @JoinColumn(name = "state_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "state")
     public Set<County> getCounties() {
         return counties;
     }

@@ -17,9 +17,8 @@ public class County implements Serializable {
     private State state;
     private DemoData demoData;
 
-    private List<Polygon> boundary = new ArrayList<Polygon>();
-    private List<ElectionData> presidentialElectionData = new ArrayList<ElectionData>();
-    private List<ElectionData> congressionalElectionData = new ArrayList<ElectionData>();
+    private List<CountyPolygon> boundary = new ArrayList<CountyPolygon>();
+    private List<CountyElectionData> electionData = new ArrayList<CountyElectionData>();
 
     private Set<Precinct> precincts = new HashSet<Precinct>();
 
@@ -53,8 +52,8 @@ public class County implements Serializable {
         this.state = state;
     }
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "demo_data")
     public DemoData getDemoData() {
         return demoData;
     }
@@ -63,39 +62,25 @@ public class County implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany
-    @JoinColumn
-    public List<Polygon> getBoundary() {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "county")
+    public List<CountyPolygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<Polygon> boundary) {
+    public void setBoundary(List<CountyPolygon> boundary) {
         this.boundary = boundary;
     }
 
-    @OneToMany
-    @JoinColumn
-    public List<ElectionData> getPresidentialElectionData() {
-        return presidentialElectionData;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "county")
+    public List<CountyElectionData> getElectionData() {
+        return electionData;
     }
 
-    public void setPresidentialElectionData(List<ElectionData> presidentialElectionData) {
-        this.presidentialElectionData = presidentialElectionData;
+    public void setElectionData(List<CountyElectionData> electionData) {
+        this.electionData = electionData;
     }
 
-    @OneToMany
-    @JoinColumn
-    public List<ElectionData> getCongressionalElectionData() {
-        return congressionalElectionData;
-    }
-
-    public void setCongressionalElectionData(List<ElectionData> congressionalElectionData) {
-        this.congressionalElectionData = congressionalElectionData;
-    }
-
-
-    @OneToMany
-    @JoinColumn
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "county")
     public Set<Precinct> getPrecincts() {
         return precincts;
     }

@@ -18,17 +18,16 @@ public class Precinct implements Serializable {
     private String name;
     private String canonicalName;
     private County county;
-    private State state;
 
     private PrecinctType type;
 
     private DemoData demoData;
 
-    private List<Polygon> boundary = new ArrayList<Polygon>();
-    private List<ElectionData> presidentialElectionData = new ArrayList<ElectionData>();
-    private List<ElectionData> congressionalElectionData = new ArrayList<ElectionData>();
+    private List<PrecinctPolygon> boundary = new ArrayList<PrecinctPolygon>();
+    private List<PrecinctElectionData> electionData = new ArrayList<PrecinctElectionData>();
 
-    private Set<Precinct> neighbors = new HashSet<Precinct>();
+//    private Set<Precinct> neighborWith = new HashSet<Precinct>();
+//    private Set<Precinct> neighborBy = new HashSet<Precinct>();
 
 
     @Id
@@ -60,23 +59,13 @@ public class Precinct implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "county")
     public County getCounty() {
         return county;
     }
 
     public void setCounty(County county) {
         this.county = county;
-    }
-
-    @ManyToOne
-    @JoinColumn
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     @Column
@@ -88,8 +77,8 @@ public class Precinct implements Serializable {
         this.type = type;
     }
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "demo_data")
     public DemoData getDemoData() {
         return demoData;
     }
@@ -98,43 +87,45 @@ public class Precinct implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany
-    @JoinColumn
-    public List<Polygon> getBoundary() {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "precinct")
+    public List<PrecinctPolygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<Polygon> boundary) {
+    public void setBoundary(List<PrecinctPolygon> boundary) {
         this.boundary = boundary;
     }
 
-    @OneToMany
-    @JoinColumn
-    public List<ElectionData> getPresidentialElectionData() {
-        return presidentialElectionData;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "precinct")
+    public List<PrecinctElectionData> getElectionData() {
+        return electionData;
     }
 
-    public void setPresidentialElectionData(List<ElectionData> presidentialElectionData) {
-        this.presidentialElectionData = presidentialElectionData;
+    public void setElectionData(List<PrecinctElectionData> electionData) {
+        this.electionData = electionData;
     }
 
-    @OneToMany
-    @JoinColumn
-    public List<ElectionData> getCongressionalElectionData() {
-        return congressionalElectionData;
-    }
-
-    public void setCongressionalElectionData(List<ElectionData> congressionalElectionData) {
-        this.congressionalElectionData = congressionalElectionData;
-    }
-
-    @OneToMany
-    @JoinColumn
-    public Set<Precinct> getNeighbors() {
-        return neighbors;
-    }
-
-    public void setNeighbors(Set<Precinct> neighbors) {
-        this.neighbors = neighbors;
-    }
+//    @ManyToMany(mappedBy = "neighborBy", cascade = CascadeType.ALL)
+//    @JoinTable(name = "NeighborRel",
+//            joinColumns = @JoinColumn(name = "selfId"),
+//            inverseJoinColumns = @JoinColumn(name = "neighborId"))
+//    public Set<Precinct> getNeighborWith() {
+//        return neighborWith;
+//    }
+//
+//    public void setNeighborWith(Set<Precinct> neighborWith) {
+//        this.neighborWith = neighborWith;
+//    }
+//
+//    @ManyToMany(mappedBy = "neighborWith",cascade = CascadeType.ALL)
+//    @JoinTable(name = "NeighborRel",
+//            joinColumns = @JoinColumn(name = "neighborId"),
+//            inverseJoinColumns = @JoinColumn(name = "selfId"))
+//    public Set<Precinct> getNeighborBy() {
+//        return neighborBy;
+//    }
+//
+//    public void setNeighborBy(Set<Precinct> neighborBy) {
+//        this.neighborBy = neighborBy;
+//    }
 }

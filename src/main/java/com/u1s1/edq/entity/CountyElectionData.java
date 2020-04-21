@@ -5,11 +5,15 @@ import com.u1s1.edq.enums.ElectionType;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "ELECTION_DATA")
+@Table(name = "COUNTY_ELECTION")
 @Entity
-public class ElectionData implements Serializable {
+public class CountyElectionData implements Serializable {
 
     private Integer id;
+
+    private County county;
+
+    private ElectionType type;
 
     private int year;
     private int republicanVote;
@@ -27,6 +31,24 @@ public class ElectionData implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "county_id")
+    public County getCounty() {
+        return county;
+    }
+
+    public void setCounty(County county) {
+        this.county = county;
+    }
+
+    public ElectionType getType() {
+        return type;
+    }
+
+    public void setType(ElectionType type) {
+        this.type = type;
     }
 
     public int getYear() {
@@ -75,7 +97,7 @@ public class ElectionData implements Serializable {
 
     @Override
     public String toString() {
-        return "ElectionData{" +
+        return "CountyElectionData{" +
                 "year=" + year +
                 ", republicanVote=" + republicanVote +
                 ", democraticVote=" + democraticVote +

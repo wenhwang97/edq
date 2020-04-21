@@ -73,7 +73,7 @@ public class DemoData {
 
     @Override
     public String toString() {
-        return "DemoData{" +
+        return "DemoDataRepository{" +
                 "totalPop=" + totalPop +
                 ", whitePop=" + whitePop +
                 ", blackPop=" + blackPop +

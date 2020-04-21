@@ -4,15 +4,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Table(name = "GEOMETRY")
+@Table(name = "COUNTY_GEOMETRY")
 @Entity
-public class GeoVertex implements Serializable {
+public class CountyGeoVertex implements Serializable {
 
     private Integer id;
 
+    private CountyPolygon polygon;
+
     private double x_pos;
     private double y_pos;
-
 
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,16 @@ public class GeoVertex implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "polygon_id")
+    public CountyPolygon getPolygon() {
+        return polygon;
+    }
+
+    public void setPolygon(CountyPolygon polygon) {
+        this.polygon = polygon;
     }
 
     public double getX_pos() {

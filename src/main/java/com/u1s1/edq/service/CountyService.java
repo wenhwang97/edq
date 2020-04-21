@@ -2,7 +2,7 @@ package com.u1s1.edq.service;
 
 import com.u1s1.edq.entity.County;
 import com.u1s1.edq.entity.DemoData;
-import com.u1s1.edq.entity.ElectionData;
+import com.u1s1.edq.entity.CountyElectionData;
 import com.u1s1.edq.enums.ElectionType;
 import com.u1s1.edq.repository.CountyRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
@@ -35,46 +35,24 @@ public class CountyService {
     }
 
 
-    public ElectionData getElectionData(String stateId, String countyId, ElectionType type, int year) {
+    public CountyElectionData getElectionData(String stateId, String countyId, ElectionType type, int year) {
 
         County county = cachedContainer.findCounty(stateId, countyId);
 
-        if (type == ElectionType.CONGRESSIONAL) {
-            for (ElectionData electionData : county.getCongressionalElectionData()) {
-                if (year == electionData.getYear()) return electionData;
-            }
+        for (CountyElectionData electionData : county.getElectionData()) {
+            if (year == electionData.getYear() && electionData.getType() == type) return electionData;
+        }
 
-            return null;
-        }
-        else if (type == ElectionType.PRESIDENTIAL) {
-            for (ElectionData electionData : county.getPresidentialElectionData()) {
-                if (year == electionData.getYear()) return electionData;
-            }
-
-            return null;
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
     public void updateElectionData(String stateId, String countyId,
-                               ElectionType type, int year, ElectionData data) {
+                               ElectionType type, int year, CountyElectionData data) {
 
         County county = cachedContainer.findCounty(stateId, countyId);
 
-        if (type == ElectionType.CONGRESSIONAL) {
-            for (ElectionData electionData : county.getCongressionalElectionData()) {
-                if (year == electionData.getYear()) electionData = data;
-            }
-        }
-        else if (type == ElectionType.PRESIDENTIAL) {
-            for (ElectionData electionData : county.getPresidentialElectionData()) {
-                if (year == electionData.getYear()) electionData = data;
-            }
-        }
-        else {
-            return;
+        for (CountyElectionData electionData : county.getElectionData()) {
+            if (year == electionData.getYear() && electionData.getType() == type) electionData = data;
         }
 
         countyRepo.save(county);
