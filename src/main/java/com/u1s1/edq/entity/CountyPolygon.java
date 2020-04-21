@@ -17,7 +17,7 @@ public class CountyPolygon implements Serializable {
     private List<CountyGeoVertex> vertices = new ArrayList<CountyGeoVertex>();
 
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     public Integer getId() {
         return id;
@@ -37,7 +37,7 @@ public class CountyPolygon implements Serializable {
         this.county = county;
     }
 
-    @OneToMany(mappedBy = "polygon")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "polygon")
     public List<CountyGeoVertex> getVertices() {
         return vertices;
     }

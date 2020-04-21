@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.u1s1.edq.entity.*;
 import com.u1s1.edq.enums.ElectionType;
 import com.u1s1.edq.enums.PrecinctType;
+import com.u1s1.edq.repository.CountyRepository;
 import com.u1s1.edq.repository.StateRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class TempController {
     @Autowired
     StateRepository stateRepo;
 
+    @Autowired
+    CountyRepository countyRepo;
+
     int i;
 
     public TempController() {
@@ -47,7 +51,7 @@ public class TempController {
         state.setName("Rhode Island");
 
         i = 0;
-        for (int j = 0; j < conTemp.length; j++) {
+        for (int j = 0; j < conTemp.length - 1; j++) {
 
             County county = new County();
 
@@ -159,12 +163,14 @@ public class TempController {
         }
     }
 
-    @GetMapping("/test/save-state")
-    public State testingSaveState() {
-        State state = container.findState("ri");
-        stateRepo.save(state);
+    @GetMapping("/test/save-county")
+    public County testingSaveState() {
+        County county = container.findCounty("ri", "ri_kent");
+
+        countyRepo.save(county);
+
         System.out.println("Save OP done");
 
-        return state;
+        return county;
     }
 }

@@ -16,7 +16,7 @@ public class PrecinctPolygon implements Serializable {
     private List<PrecinctGeoVertex> vertices = new ArrayList<PrecinctGeoVertex>();
 
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     public Integer getId() {
         return id;
@@ -36,7 +36,7 @@ public class PrecinctPolygon implements Serializable {
         this.precinct = precinct;
     }
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "polygon")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "polygon")
     public List<PrecinctGeoVertex> getVertices() {
         return vertices;
     }

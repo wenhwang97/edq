@@ -16,7 +16,7 @@ public class DemoData {
 
 
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     public Integer getId() {
         return id;

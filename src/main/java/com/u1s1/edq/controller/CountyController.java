@@ -47,37 +47,38 @@ public class CountyController {
     }
 
     @PostMapping(value = "/data/demo")
-    public void receiveCountyDemoData(@PathVariable String stateId, @PathVariable String countyId, DemoData demoData) {
+    public void receiveCountyDemoData(@PathVariable String stateId, @PathVariable String countyId,
+                                      @RequestBody DemoData demoData) {
 
         countyService.updateCountyDemoData(stateId, countyId, demoData);
     }
 
 
     @GetMapping(value = "/data/vote/presidential/{year}")
-    public CountyElectionData sendCountyPresidentialVoteData(@PathVariable String stateId, @PathVariable String countyId,
-                                                             @PathVariable int year) {
+    public CountyElectionData sendCountyPresidentialVoteData(@PathVariable String stateId,
+                                                             @PathVariable String countyId, @PathVariable int year) {
 
         return countyService.getElectionData(stateId, countyId, ElectionType.PRESIDENTIAL, year);
     }
 
     @PostMapping(value = "/data/vote/presidential/{year}")
     public void receiveCountyPresidentialVoteData(@PathVariable String stateId, @PathVariable String countyId,
-                                                  @PathVariable int year, CountyElectionData data) {
+                                                  @PathVariable int year, @RequestBody CountyElectionData data) {
 
         countyService.updateElectionData(stateId, countyId, ElectionType.PRESIDENTIAL, year, data);
     }
 
 
     @GetMapping(value = "/data/vote/congressional/{year}")
-    public CountyElectionData sendCountyCongressionalVoteData(@PathVariable String stateId, @PathVariable String countyId,
-                                                              @PathVariable int year) {
+    public CountyElectionData sendCountyCongressionalVoteData(@PathVariable String stateId,
+                                                              @PathVariable String countyId, @PathVariable int year) {
 
         return countyService.getElectionData(stateId, countyId, ElectionType.CONGRESSIONAL, year);
     }
 
     @PostMapping(value = "/data/vote/congressional/{year}")
     public void receiveCountyCongressionalVoteData(@PathVariable String stateId, @PathVariable String countyId,
-                                                  @PathVariable int year, CountyElectionData data) {
+                                                  @PathVariable int year, @RequestBody CountyElectionData data) {
 
         countyService.updateElectionData(stateId, countyId, ElectionType.CONGRESSIONAL, year, data);
     }

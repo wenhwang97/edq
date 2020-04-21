@@ -16,7 +16,7 @@ public class CountyGeoVertex implements Serializable {
     private double y_pos;
 
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     public Integer getId() {
         return id;
@@ -26,7 +26,7 @@ public class CountyGeoVertex implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "polygon_id")
     public CountyPolygon getPolygon() {
         return polygon;
