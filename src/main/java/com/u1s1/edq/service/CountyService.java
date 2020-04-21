@@ -5,7 +5,7 @@ import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
 import com.u1s1.edq.enums.ElectionType;
 import com.u1s1.edq.repository.CountyRepository;
-import com.u1s1.edq.service.utils.CachedContainer;
+import com.u1s1.edq.service.cache.CachedContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,8 @@
 package com.u1s1.edq.temp;
 
-public class PrecinctGeoTemp {
+import java.io.Serializable;
+
+public class PrecinctGeoTemp implements Serializable {
 
     private PropertiesTemp properties;
     private GeometryTemp geometry;

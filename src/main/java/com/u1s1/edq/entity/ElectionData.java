@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 public class ElectionData implements Serializable {
 
-    private long id;
+    private Integer id;
 
     private int year;
     private int republicanVote;
@@ -19,13 +19,13 @@ public class ElectionData implements Serializable {
 
 
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

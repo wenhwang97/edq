@@ -1,15 +1,16 @@
 package com.u1s1.edq.temp;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.u1s1.edq.entity.*;
 import com.u1s1.edq.enums.PrecinctType;
-import com.u1s1.edq.service.utils.CachedContainer;
+import com.u1s1.edq.service.cache.CachedContainer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -17,68 +18,87 @@ public class TempController {
 
     @Autowired
     CachedContainer container;
-    long i;
+
+    @Autowired
+    ObjectMapper mapper;
+
+    int i;
 
     public TempController() {
     }
 
 
-    @PostMapping("/test/add-con")
-    public void testingCon(@RequestBody CountyGeoTemp conTemp) {
+    @GetMapping("/test/add")
+    public void testingCon() throws IOException {
+        CountyGeoTemp[] conTemp = new CountyGeoTemp[2];
+        conTemp[0] = mapper.readValue(new File("/Users/administrator/Documents/GitHub/edq/src/main/resources/ri_kent.json"), CountyGeoTemp.class);
+        conTemp[1] = mapper.readValue(new File("/Users/administrator/Documents/GitHub/edq/src/main/resources/ri_providence.json"), CountyGeoTemp.class);
+
+        String[] nameList = new String[2];
+        nameList[0] = "ri_kent";
+        nameList[1] = "ri_providence";
+
         State state = new State();
         state.setId("ri");
         state.setName("Rhode Island");
-        state.setCounties(new HashSet<County>());
 
-        County county = new County();
+        i = 0;
+        for (int j = 0; j < conTemp.length; j++) {
 
-        {
-            county.setId(state.getId() + "_" + conTemp.getCounty());
-            county.setName(conTemp.getCounty());
+            County county = new County();
 
-            DemoData demoData = new DemoData();
-            demoData.setId(0);
-            demoData.setTotalPop(100);
-            demoData.setWhitePop(10);
-            demoData.setBlackPop(9);
-            demoData.setLatinPop(8);
-            demoData.setAsianPop(7);
+            {
+                county.setId(nameList[j]);
+                county.setName(conTemp[j].getCounty());
 
-            county.setDemoData(demoData);
-            county.setBoundary(new ArrayList<GeoVertex>());
+                DemoData demoData = new DemoData();
+                demoData.setId(0);
+                demoData.setTotalPop(100);
+                demoData.setWhitePop(10);
+                demoData.setBlackPop(9);
+                demoData.setLatinPop(8);
+                demoData.setAsianPop(7);
+                county.setDemoData(demoData);
 
-            i = 0;
-            for (double[] pos : conTemp.getGeometry().getCoordinates().get(0)) {
-                GeoVertex geo = new GeoVertex();
-                geo.setId(i++);
-                geo.setX_pos(pos[0]);
-                geo.setY_pos(pos[1]);
-                county.getBoundary().add(geo);
+                for (List<double[]> polygon : conTemp[j].getGeometry().getCoordinates()) {
+                    Polygon poly = new Polygon();
+                    for (double[] pos : polygon) {
+                        GeoVertex geo = new GeoVertex();
+                        geo.setId(i++);
+                        geo.setX_pos(pos[0]);
+                        geo.setY_pos(pos[1]);
+                        poly.getVertices().add(geo);
+                    }
+                    county.getBoundary().add(poly);
+                }
+
+                ElectionData electionData = new ElectionData();
+                electionData.setId(10);
+                electionData.setYear(2016);
+                electionData.setDemocraticVote(100);
+                electionData.setRepublicanVote(125);
+                electionData.setLibertarianVote(150);
+                electionData.setGreenVote(175);
+
+                county.getPresidentialElectionData().add(electionData);
             }
 
-            ElectionData electionData = new ElectionData();
-            electionData.setId(10);
-            electionData.setYear(2016);
-            electionData.setDemocraticVote(100);
-            electionData.setRepublicanVote(125);
-            electionData.setLibertarianVote(150);
-            electionData.setGreenVote(175);
+            state.getCounties().add(county);
 
-            county.setPresidentialElectionData(new ArrayList<ElectionData>());
-            county.getPresidentialElectionData().add(electionData);
-            county.setPrecincts(new HashSet<Precinct>());
+            container.putState(state);
+
+            testingPre(nameList[j]);
         }
 
-        state.getCounties().add(county);
-
-        container.putState(state);
+        System.out.println("Done");
     }
 
-    @PostMapping("/test/add-pre")
-    public void testingPre(@RequestBody List<PrecinctGeoTemp> preTemp) {
+    public void testingPre(String con_name) throws IOException {
+
+        PrecinctGeoTemp[] preTemp = mapper.readValue(new File("/Users/administrator/Documents/GitHub/edq/src/main/resources/" + con_name + "_precincts.json"), PrecinctGeoTemp[].class);
 
         State state = container.findState("ri");
-        County county = container.findCounty("ri", "ri_Kent");
+        County county = container.findCounty("ri", con_name);
 
         for (PrecinctGeoTemp temp : preTemp) {
             Precinct precinct = new Precinct();
@@ -88,7 +108,7 @@ public class TempController {
             precinct.setType(PrecinctType.NORMAL);
 
             DemoData demoData = new DemoData();
-            demoData.setId(Long.parseLong(temp.getProperties().getPrecinct()));
+            demoData.setId(Integer.parseInt(temp.getProperties().getPrecinct()));
             demoData.setTotalPop(100);
             demoData.setWhitePop(10);
             demoData.setBlackPop(9);
@@ -96,18 +116,21 @@ public class TempController {
             demoData.setAsianPop(7);
 
             precinct.setDemoData(demoData);
-            precinct.setBoundary(new ArrayList<GeoVertex>());
 
-            for (double[] pos : temp.getGeometry().getCoordinates().get(0)) {
-                GeoVertex geo = new GeoVertex();
-                geo.setId(i++);
-                geo.setX_pos(pos[0]);
-                geo.setY_pos(pos[1]);
-                precinct.getBoundary().add(geo);
+            for (List<double[]> polygon : temp.getGeometry().getCoordinates()) {
+                Polygon poly = new Polygon();
+                for (double[] pos : polygon) {
+                    GeoVertex geo = new GeoVertex();
+                    geo.setId(i++);
+                    geo.setX_pos(pos[0]);
+                    geo.setY_pos(pos[1]);
+                    poly.getVertices().add(geo);
+                }
+                precinct.getBoundary().add(poly);
             }
 
             ElectionData electionData = new ElectionData();
-            electionData.setId(Long.parseLong(temp.getProperties().getPrecinct()));
+            electionData.setId(Integer.parseInt(temp.getProperties().getPrecinct()));
             electionData.setYear(2016);
             electionData.setDemocraticVote(Integer.parseInt(temp.getProperties().getDem()));
             electionData.setRepublicanVote(Integer.parseInt(temp.getProperties().getRep()));
@@ -124,7 +147,5 @@ public class TempController {
             county.getPrecincts().add(precinct);
 
         }
-
-        System.out.println("Done");
     }
 }

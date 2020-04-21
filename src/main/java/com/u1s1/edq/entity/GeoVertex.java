@@ -8,20 +8,20 @@ import java.util.List;
 @Entity
 public class GeoVertex implements Serializable {
 
-    private long id;
+    private Integer id;
 
     private double x_pos;
     private double y_pos;
 
 
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

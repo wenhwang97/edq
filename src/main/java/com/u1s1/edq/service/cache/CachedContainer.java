@@ -1,4 +1,4 @@
-package com.u1s1.edq.service.utils;
+package com.u1s1.edq.service.cache;
 
 import com.u1s1.edq.entity.County;
 import com.u1s1.edq.entity.Precinct;
@@ -29,7 +29,7 @@ public class CachedContainer {
             return true;
         }
 
-        System.err.println("[Cached Container] Adding state failed.");
+        System.err.println("[Cached Container] Adding state failed. \"" + state.getName() + "\" already exists.");
         return false;
     }
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 public class DemoData {
 
-    private long id;
+    private Integer id;
 
     private int totalPop;
     private int whitePop;
@@ -16,13 +16,13 @@ public class DemoData {
 
 
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

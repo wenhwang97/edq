@@ -1,6 +1,6 @@
 package com.u1s1.edq.service;
 
-import com.u1s1.edq.service.utils.CachedContainer;
+import com.u1s1.edq.service.cache.CachedContainer;
 import com.u1s1.edq.entity.State;
 import com.u1s1.edq.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;

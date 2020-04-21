@@ -17,7 +17,7 @@ public class County implements Serializable {
     private State state;
     private DemoData demoData;
 
-    private List<GeoVertex> boundary;
+    private List<Polygon> boundary = new ArrayList<Polygon>();
     private List<ElectionData> presidentialElectionData = new ArrayList<ElectionData>();
     private List<ElectionData> congressionalElectionData = new ArrayList<ElectionData>();
 
@@ -34,7 +34,7 @@ public class County implements Serializable {
         this.id = id;
     }
 
-    @Column(nullable = false)
+    @Column
     public String getName() {
         return name;
     }
@@ -44,7 +44,7 @@ public class County implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "state_id")
     public State getState() {
         return state;
     }
@@ -54,7 +54,7 @@ public class County implements Serializable {
     }
 
     @OneToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     public DemoData getDemoData() {
         return demoData;
     }
@@ -64,17 +64,17 @@ public class County implements Serializable {
     }
 
     @OneToMany
-    @JoinColumn(nullable = false)
-    public List<GeoVertex> getBoundary() {
+    @JoinColumn
+    public List<Polygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<GeoVertex> boundary) {
+    public void setBoundary(List<Polygon> boundary) {
         this.boundary = boundary;
     }
 
     @OneToMany
-    @JoinColumn(nullable = false)
+    @JoinColumn
     public List<ElectionData> getPresidentialElectionData() {
         return presidentialElectionData;
     }

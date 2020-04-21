@@ -1,8 +1,9 @@
 package com.u1s1.edq.temp;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GeometryTemp {
+public class GeometryTemp implements Serializable {
 
     private String type;
     private List<List<double[]>> coordinates;

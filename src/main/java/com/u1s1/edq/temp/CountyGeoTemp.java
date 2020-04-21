@@ -1,6 +1,8 @@
 package com.u1s1.edq.temp;
 
-public class CountyGeoTemp {
+import java.io.Serializable;
+
+public class CountyGeoTemp implements Serializable {
 
     private String county;
     private GeometryTemp geometry;

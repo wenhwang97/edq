@@ -1,6 +1,8 @@
 package com.u1s1.edq.temp;
 
-public class PropertiesTemp {
+import java.io.Serializable;
+
+public class PropertiesTemp implements Serializable {
 
     private String precinct;
     private String county;

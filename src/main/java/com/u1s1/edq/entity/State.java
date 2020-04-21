@@ -30,7 +30,7 @@ public class State implements Serializable {
         this.id = id;
     }
 
-    @Column(nullable = false)
+    @Column
     public String getName() {
         return name;
     }
@@ -40,7 +40,7 @@ public class State implements Serializable {
     }
 
     @OneToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     public DemoData getDemoData() {
         return demoData;
     }
@@ -50,7 +50,7 @@ public class State implements Serializable {
     }
 
     @OneToMany
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "state_id")
     public Set<County> getCounties() {
         return counties;
     }
