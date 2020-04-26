@@ -17,6 +17,5 @@ Use the ```public static void main(String[] args)``` method in `src/main/java/co
 
 ## Documentation
 ## Issues
-- Only ```StateController``` has been partially implemented. It can only send a hard-coded ```State``` entity to the client in JSON format.
-- Method ```public void receiveState(State state)``` is a testing method. It can receive ```State``` entity from the client and print the information in the console.
+- Some ```POST``` methods are missing. See Google Spreed Sheets for details.
 
