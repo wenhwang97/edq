@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CountyService {
 
-
     private CountyRepository countyRepo;
     private CachedContainer cachedContainer;
 
@@ -19,7 +18,6 @@ public class CountyService {
         this.countyRepo = countyRepo;
         this.cachedContainer = cachedContainer;
     }
-
 
     public County getCounty(String stateId, String countyId) {
         return cachedContainer.findCounty(stateId, countyId);

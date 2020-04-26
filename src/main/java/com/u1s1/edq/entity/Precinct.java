@@ -23,7 +23,7 @@ public class Precinct implements Serializable {
     private List<Polygon> boundary = new ArrayList<Polygon>();
     private List<ElectionData> electionData = new ArrayList<ElectionData>();
 
-    private List<Precinct> neighborWith = new ArrayList<Precinct>();
+    private List<Precinct> neighbors = new ArrayList<Precinct>();
 
     @Id
     @Column(name = "precinct_id")
@@ -97,12 +97,12 @@ public class Precinct implements Serializable {
     @JoinTable(name = "precinct_neighbors",
             joinColumns = @JoinColumn(name = "precinct_id"),
             inverseJoinColumns = @JoinColumn(name = "neighbor_id"))
-    public List<Precinct> getNeighborWith() {
-        return neighborWith;
+    public List<Precinct> getNeighbors() {
+        return neighbors;
     }
 
-    public void setNeighborWith(List<Precinct> neighborWith) {
-        this.neighborWith = neighborWith;
+    public void setNeighborWith(List<Precinct> neighbors) {
+        this.neighbors = neighbors;
     }
 
 }

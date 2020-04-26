@@ -22,9 +22,13 @@ public class StateController {
     }
 
     @GetMapping(value = "")
-    public void selectState(@PathVariable String stateId) {
+    public Boolean selectState(@PathVariable String stateId) {
 
-        stateService.fetchState(stateId);
+        if (stateService.fetchState(stateId)) {
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
     }
 
     @GetMapping(value = "/show-counties")

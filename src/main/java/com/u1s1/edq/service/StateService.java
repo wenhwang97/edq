@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class StateService {
 
-
     private StateRepository stateRepo;
     private CachedContainer cachedContainer;
 
@@ -19,21 +18,18 @@ public class StateService {
         this.cachedContainer = cachedContainer;
     }
 
-
-    public void fetchState(String stateId) {
-
+    public boolean fetchState(String stateId) {
         if (cachedContainer.hasState(stateId)) {
-            return;
+            return true;
         }
 
         State state = stateRepo.findStateById(stateId);
         if (cachedContainer.putState(state)) {
-            // when success...
+            return true;
         }
         else {
-            // when failed...
+            return false;
         }
-
     }
 
     public State getState(String stateId) {
