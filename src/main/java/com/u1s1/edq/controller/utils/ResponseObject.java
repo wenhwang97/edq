@@ -2,16 +2,13 @@ package com.u1s1.edq.controller.utils;
 
 public class ResponseObject {
 
-
     private String id;
     private Object obj;
-
 
     public ResponseObject(String id, Object obj) {
         this.id = id;
         this.obj = obj;
     }
-
 
     public String getId() {
         return id;
@@ -28,7 +25,6 @@ public class ResponseObject {
     public void setObj(Object obj) {
         this.obj = obj;
     }
-
 
     @Override
     public String toString() {

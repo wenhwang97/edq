@@ -14,7 +14,6 @@ import java.util.Set;
 @RestController
 public class StateController {
 
-
     private StateService stateService;
 
     @Autowired
@@ -22,13 +21,11 @@ public class StateController {
         this.stateService = stateService;
     }
 
-
     @GetMapping(value = "")
     public void selectState(@PathVariable String stateId) {
 
         stateService.fetchState(stateId);
     }
-
 
     @GetMapping(value = "/show-counties")
     public Set<ResponseObject> sendCounties(@PathVariable String stateId) {
