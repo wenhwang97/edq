@@ -18,8 +18,6 @@ public class State implements Serializable {
     // later districts...
     // later geographics...
 
-
-
     @Id
     @Column(name = "state_id")
     public String getId() {
@@ -49,7 +47,8 @@ public class State implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "state")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "state_id")
     public Set<County> getCounties() {
         return counties;
     }
@@ -57,7 +56,6 @@ public class State implements Serializable {
     public void setCounties(Set<County> counties) {
         this.counties = counties;
     }
-
 
     @Override
     public String toString() {

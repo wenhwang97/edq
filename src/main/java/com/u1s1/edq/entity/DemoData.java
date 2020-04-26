@@ -14,8 +14,6 @@ public class DemoData {
     private int latinPop;
     private int asianPop;
 
-
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     public Integer getId() {

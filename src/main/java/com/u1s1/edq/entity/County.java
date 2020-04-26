@@ -14,14 +14,12 @@ public class County implements Serializable {
     private String id;
 
     private String name;
-    private State state;
     private DemoData demoData;
 
-    private List<CountyPolygon> boundary = new ArrayList<CountyPolygon>();
-    private List<CountyElectionData> electionData = new ArrayList<CountyElectionData>();
+    private List<Polygon> boundary = new ArrayList<Polygon>();
+    private List<ElectionData> electionData = new ArrayList<ElectionData>();
 
     private Set<Precinct> precincts = new HashSet<Precinct>();
-
 
     @Id
     @Column(name = "county_id")
@@ -33,23 +31,13 @@ public class County implements Serializable {
         this.id = id;
     }
 
-    @Column
+    @Column(nullable = false)
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -62,25 +50,28 @@ public class County implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "county")
-    public List<CountyPolygon> getBoundary() {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "county_id")
+    public List<Polygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<CountyPolygon> boundary) {
+    public void setBoundary(List<Polygon> boundary) {
         this.boundary = boundary;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "county")
-    public List<CountyElectionData> getElectionData() {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "county_id")
+    public List<ElectionData> getElectionData() {
         return electionData;
     }
 
-    public void setElectionData(List<CountyElectionData> electionData) {
+    public void setElectionData(List<ElectionData> electionData) {
         this.electionData = electionData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "county")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "county_id")
     public Set<Precinct> getPrecincts() {
         return precincts;
     }

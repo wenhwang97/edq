@@ -5,9 +5,7 @@ import com.u1s1.edq.enums.PrecinctType;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "PRECINCT")
 @Entity
@@ -17,18 +15,15 @@ public class Precinct implements Serializable {
 
     private String name;
     private String canonicalName;
-    private County county;
 
     private PrecinctType type;
 
     private DemoData demoData;
 
-    private List<PrecinctPolygon> boundary = new ArrayList<PrecinctPolygon>();
-    private List<PrecinctElectionData> electionData = new ArrayList<PrecinctElectionData>();
+    private List<Polygon> boundary = new ArrayList<Polygon>();
+    private List<ElectionData> electionData = new ArrayList<ElectionData>();
 
-//    private Set<Precinct> neighborWith = new HashSet<Precinct>();
-//    private Set<Precinct> neighborBy = new HashSet<Precinct>();
-
+    private List<Precinct> neighborWith = new ArrayList<Precinct>();
 
     @Id
     @Column(name = "precinct_id")
@@ -40,7 +35,7 @@ public class Precinct implements Serializable {
         this.id = id;
     }
 
-    @Column
+    @Column(nullable = false)
     public String getName() {
         return name;
     }
@@ -49,7 +44,7 @@ public class Precinct implements Serializable {
         this.name = name;
     }
 
-    @Column
+    @Column(nullable = false)
     public String getCanonicalName() {
         return canonicalName;
     }
@@ -58,17 +53,8 @@ public class Precinct implements Serializable {
         this.canonicalName = canonicalName;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "county")
-    public County getCounty() {
-        return county;
-    }
-
-    public void setCounty(County county) {
-        this.county = county;
-    }
-
-    @Column
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     public PrecinctType getType() {
         return type;
     }
@@ -87,45 +73,36 @@ public class Precinct implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "precinct")
-    public List<PrecinctPolygon> getBoundary() {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "precinct_id")
+    public List<Polygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<PrecinctPolygon> boundary) {
+    public void setBoundary(List<Polygon> boundary) {
         this.boundary = boundary;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "precinct")
-    public List<PrecinctElectionData> getElectionData() {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "precinct_id")
+    public List<ElectionData> getElectionData() {
         return electionData;
     }
 
-    public void setElectionData(List<PrecinctElectionData> electionData) {
+    public void setElectionData(List<ElectionData> electionData) {
         this.electionData = electionData;
     }
 
-//    @ManyToMany(mappedBy = "neighborBy", cascade = CascadeType.ALL)
-//    @JoinTable(name = "NeighborRel",
-//            joinColumns = @JoinColumn(name = "selfId"),
-//            inverseJoinColumns = @JoinColumn(name = "neighborId"))
-//    public Set<Precinct> getNeighborWith() {
-//        return neighborWith;
-//    }
-//
-//    public void setNeighborWith(Set<Precinct> neighborWith) {
-//        this.neighborWith = neighborWith;
-//    }
-//
-//    @ManyToMany(mappedBy = "neighborWith",cascade = CascadeType.ALL)
-//    @JoinTable(name = "NeighborRel",
-//            joinColumns = @JoinColumn(name = "neighborId"),
-//            inverseJoinColumns = @JoinColumn(name = "selfId"))
-//    public Set<Precinct> getNeighborBy() {
-//        return neighborBy;
-//    }
-//
-//    public void setNeighborBy(Set<Precinct> neighborBy) {
-//        this.neighborBy = neighborBy;
-//    }
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "precinct_neighbors",
+            joinColumns = @JoinColumn(name = "precinct_id"),
+            inverseJoinColumns = @JoinColumn(name = "neighbor_id"))
+    public List<Precinct> getNeighborWith() {
+        return neighborWith;
+    }
+
+    public void setNeighborWith(List<Precinct> neighborWith) {
+        this.neighborWith = neighborWith;
+    }
+
 }

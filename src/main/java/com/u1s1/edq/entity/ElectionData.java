@@ -5,23 +5,17 @@ import com.u1s1.edq.enums.ElectionType;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "COUNTY_ELECTION")
+@Table(name = "ELECTION")
 @Entity
-public class CountyElectionData implements Serializable {
+public class ElectionData implements Serializable {
 
     private Integer id;
-
-    private County county;
-
-    private ElectionType type;
 
     private int year;
     private int republicanVote;
     private int democraticVote;
     private int libertarianVote;
     private int greenVote;
-
-
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -31,24 +25,6 @@ public class CountyElectionData implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "county_id")
-    public County getCounty() {
-        return county;
-    }
-
-    public void setCounty(County county) {
-        this.county = county;
-    }
-
-    public ElectionType getType() {
-        return type;
-    }
-
-    public void setType(ElectionType type) {
-        this.type = type;
     }
 
     public int getYear() {
@@ -97,7 +73,7 @@ public class CountyElectionData implements Serializable {
 
     @Override
     public String toString() {
-        return "CountyElectionData{" +
+        return "ElectionData{" +
                 "year=" + year +
                 ", republicanVote=" + republicanVote +
                 ", democraticVote=" + democraticVote +
