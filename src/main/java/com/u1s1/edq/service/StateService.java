@@ -20,7 +20,6 @@ public class StateService {
         this.cachedContainer = cachedContainer;
     }
 
-    @Transactional
     public boolean fetchState(String stateId) {
         if (cachedContainer.hasState(stateId)) {
             return true;
