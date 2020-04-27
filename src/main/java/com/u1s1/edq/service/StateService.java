@@ -24,7 +24,8 @@ public class StateService {
         }
 
         State state = stateRepo.findStateById(stateId);
-        if (cachedContainer.putState(state)) {
+        if (state != null) {
+            cachedContainer.putState(state);
             return true;
         }
         else {
