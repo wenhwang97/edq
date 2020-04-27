@@ -101,7 +101,7 @@ public class Precinct implements Serializable {
         return neighbors;
     }
 
-    public void setNeighborWith(List<Precinct> neighbors) {
+    public void setNeighbors(List<Precinct> neighbors) {
         this.neighbors = neighbors;
     }
 
