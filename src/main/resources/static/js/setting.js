@@ -38,6 +38,8 @@ const US_BORDER_PATH = "../data/usBorder.json";
 const TEXAS_COUNTY_PATH = "../data/texas/texasCounties.json"; // texas county data path
 const TEXAS_PRECINCT_PATH = "../data/texas/texasPrecinct.json"; // texas precinct data path
 const TEXAS_BODER = "../data/texas/texaBoder.json";
+const RI_BODER = "../data/RI/RiBoder.json";
+const RI_STATE= "../data/RI/RI_State_Converted.json"
 
 const SILVIR_STYLE = [
   {

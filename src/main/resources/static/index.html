@@ -8,103 +8,135 @@
 
     <!-- Boostrap CDNs -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 
     <!-- custom css -->
     <!-- <link rel="stylesheet" href="../styles/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="/js/bstable/css/bootstrap-table.css"/>
-    <link rel="stylesheet" href="/styles/index.css">
-    <link rel="stylesheet" href="/styles/rightStyle.css">
+    <!-- <link rel="stylesheet" href="../js/bstable/css/bootstrap-table.css"/> -->
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/rightStyle.css">
 
 </head>
 
 <body>
-    <!-- Navbar -->
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="#" style="color: #FFFFFF">Congressional Redistricting System</a>
-                <!-- Dropdown for states -->
-                <ul class="nav nav-pills">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">States</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#!">California</a>
-                            <a class="dropdown-item" href="#!">Texas</a>
-                            <a class="dropdown-item" href="#!">Rhode Island</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+<!-- Navbar -->
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#" style="color: #FFFFFF">Congressional Redistricting System</a>
+            <!-- Dropdown for states -->
+            <ul class="nav nav-pills">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">States</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#!">California</a>
+                        <a class="dropdown-item" href="#!">Texas</a>
+                        <a class="dropdown-item" href="#!">Rhode Island</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="content">
+    <div class="content-left">
+        <div class="map_box" id="map"></div>
+        <div class="left-btn" onclick="leftBtn()">
+            <img src="../images/left.png">
         </div>
     </div>
+    <div class="content-right" id = "right">
+        <div class="ifrm-html">
+            <div class="right_up">
+                <div class="right_up_tab">Map info</div>
+                <div class="right_up_con">
+                    <div id = "precinct title info" class="tit_top">Data infor: </div>
+                    <input type="checkbox" id="countyCheckBox">Show County<br>
+                    <input type="checkbox" id="PrecinctCheckBox">Show Precinct<br>
+                    <div class="table-context"></div>
+                    <div class="right_up_con_all" id="tol">
+                    </div>
 
-    <div class="content">
-        <div class="content-left">
-            <div class="map_box" id="map"></div>
-            <div class="left-btn" onclick="leftBtn()">
-                <img src="../styles/left.png">
+
+                </div>
             </div>
-        </div>
-        <div class="content-right" id = "right">
-            <div class="ifrm-html">
-                <div class="right_up">
-                    <div class="right_up_tab">Map info</div>
-                    <div class="right_up_con">
-                        <div id = "precinct title info" class="tit_top">Data infor: </div>
-                        <input type="checkbox" id="countyCheckBox">Show County<br>
-                        <input type="checkbox" id="PrecinctCheckBox">Show Precinct<br>
-                        <div class="table-context"></div>
-                        <div class="right_up_con_all" id="tol">
-                        </div>
-                        <div class="right_up_con_text">
-                            <div class="text_left_a">Population: <span id="per"></span></div>
-                            <div class="text_left_a">Democracy: <span id="car"></span></div>
-                            <div class="text_left_a">Republican: <span id="video"></span></div>
-                            <div class="text_left_a">Demographic: <span id="set"></span></div>
-                        </div>
-                        <!-- <div class="right_up_con_text">
-                            <div class="text_left_a">Republican: <span id="video"></span></div>
-                            <div class="text_right_a">Demographic: <span id="set"></span></div>
-                        </div> -->
-
+            <!-- The grey part -->
+            <div class="right_up_magin_top">
+                <div class="right_up_con_text">Voting Data
+                    <div class="text_left_a">Republican:
+                        <!-- <input class="PupulationInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
+                    </div>
+                    <div class="text_left_a">Democracy:
+                        <!-- <input class="DemocracyInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
+                    </div>
+                    <div class="text_left_a" >Libertatian:
+                        <!-- <input class="RepublicanInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
+                    </div>
+                    <div class="text_left_a">Green Parties:
+                        <!-- <input class="DemographicInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
                     </div>
                 </div>
-                <div class="right_up magin_top">
-
+                <div class="text_left_a_data" >
+                    <div class="testdata" id="RepublicanData"></div>
+                    <div class="testdata" id="DemocraticData"></div>
+                    <div class="testdata" id="LibertarianData"></div>
+                    <div class="testdata" id="GreenData"></div>
                 </div>
-                <div class="right_down magin_top">
-                    <div class="right_up_tab">Change the Data</div>
+                <div class="right_up_con_text_right" id = "right_up_con_text_right">
 
-                    <table class="right_table" id="table">
-                    </table>
-
-
+                    <div class="RepublicanInput" id="RepublicanInput">
+                        <input id = "RepublicanChange" class="Change"  type="image"  src="../images/submit.png" onclick="addRepubBotton()"/>
+                    </div>
+                    <div class="DemocracyInput" id="DemocracyInput">
+                        <input id = "DemocracyChange" class="Change"  type="image"  src="../images/submit.png" onclick="addDemoBotton()"/>
+                    </div>
+                    <div class="LibertatianInput" id="LibertatianInput">
+                        <input id = "LibertatianChange" class="Change"  type="image"  src="../images/submit.png" onclick="addLibBotton()"/>
+                    </div>
+                    <div class="GreenInput" id="GreenInput">
+                        <input id = "GreenChange" class="Change"  type="image"  src="../images/submit.png" onclick="addGreenBotton()"/>
+                    </div>
                 </div>
+
+            </div>
+            <!-- Change the data part -->
+            <div class="right_down magin_top">
+                <div class="right_up_tab"></div>
+                <textarea class = "CommentArea" ></textarea>
+                <button class="CommentSubmit" type="button">Submit</button>
+                <table class="right_table" id="table">
+                </table>
+
+
             </div>
         </div>
-
     </div>
 
+</div>
 
-    <!-- Scripts -->
-    <!-- <script src="../js/jquery-2.2.0.min.js"></script> -->
-    <script src="/js/setting.js"></script>
-    <script src="/js/map.js"></script>
-    <script src="/js/index.js"></script>
-    <script src="/js/sidebar.js"></script>
-    <!-- <script src="../js/mapControl.js"></script> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDmXQKCLMhm__Uu6PWSH3Cf-PgCzEG_4&callback=initMap"
+
+<!-- Scripts -->
+<!-- <script src="../js/jquery-2.2.0.min.js"></script> -->
+<script src="../js/setting.js"></script>
+<script src="../js/Precinct.js"></script>
+<script src="../js/County.js"></script>
+<script src="../js/State.js"></script>
+<script src="../js/map.js"></script>
+<script src="../js/index.js"></script>
+<script src="../js/sidebar.js"></script>
+<!-- <script src="../js/mapControl.js"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDmXQKCLMhm__Uu6PWSH3Cf-PgCzEG_4&callback=initMap"
         async defer></script>
 
 </body>

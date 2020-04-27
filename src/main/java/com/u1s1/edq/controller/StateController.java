@@ -35,6 +35,7 @@ public class StateController {
     public Set<ResponseObject> sendCounties(@PathVariable String stateId) {
 
         State state = stateService.getState(stateId);
+        System.out.println(state);
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 
         for(County county : state.getCounties()) {
