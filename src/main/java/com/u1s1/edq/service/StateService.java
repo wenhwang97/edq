@@ -5,6 +5,8 @@ import com.u1s1.edq.entity.State;
 import com.u1s1.edq.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StateService {
@@ -18,6 +20,7 @@ public class StateService {
         this.cachedContainer = cachedContainer;
     }
 
+    @Transactional
     public boolean fetchState(String stateId) {
         if (cachedContainer.hasState(stateId)) {
             return true;
