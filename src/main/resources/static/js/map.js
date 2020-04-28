@@ -60,6 +60,11 @@ function initMap() {
 
         case THREE_STATES[2]:// Rhode Island
           r.disabled=false;
+          let response = await fetch("http://localhost:8080/state/ri");
+          if(response.status==500){
+            break;
+          }
+          // console.log(response);
           await handleRedirect("Rhode Island State Level", 9, RI_CENTER, RI_STRICT_BOUND);
           console.log(allStates["ri"].getAllCounties());
           break;
@@ -182,8 +187,8 @@ async function handleRedirect(
       styleState(riBoderLayer);
       var rhode = new State("ri", "Rhode Island");
       allStates["ri"] = rhode;
-      let response = await fetch("http://localhost:8080/state/ri");
-      console.log(response);
+      // let response = await fetch("http://localhost:8080/state/ri");
+      // console.log(response);
       // let RIJson = await response.json();
       // console.log(RIJson);
       if (rhode.hasCounties()) {  //
