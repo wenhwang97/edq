@@ -28,7 +28,7 @@ public class PrecinctController {
         return precinctService.getPrecinctFromMem(stateId, countyId, precinctId).getDemoData();
     }
 
-    @PostMapping(value = "/data/demo")
+    @PutMapping(value = "/data/demo")
     public void receivePrecinctDemoData(@PathVariable String stateId, @PathVariable String countyId,
                                         @PathVariable String precinctId, @RequestBody DemoData data) {
         precinctService.updatePrecinctDemoData(stateId, countyId, precinctId, data);
@@ -40,13 +40,13 @@ public class PrecinctController {
         return precinctService.getPrecinctFromMem(stateId, countyId, precinctId).getType().toString();
     }
 
-    @PostMapping(value = "/data/define-ghost")
+    @PutMapping(value = "/data/define-ghost")
     public void definePrecinctAsGhost(@PathVariable String stateId, @PathVariable String countyId,
                                       @PathVariable String precinctId) {
         precinctService.updatePrecinctType(stateId, countyId, precinctId, PrecinctType.GHOST);
     }
 
-    @PostMapping(value = "/data/undefine-ghost")
+    @PutMapping(value = "/data/undefine-ghost")
     public void undefinePrecinctFromGhost(@PathVariable String stateId, @PathVariable String countyId,
                                           @PathVariable String precinctId) {
         precinctService.updatePrecinctType(stateId, countyId, precinctId, PrecinctType.NORMAL);
@@ -58,7 +58,7 @@ public class PrecinctController {
         return precinctService.getPrecinctVoteDataFromMem(stateId, countyId, precinctId, year);
     }
 
-    @PostMapping(value = "/data/vote/presidential/{year}")
+    @PutMapping(value = "/data/vote/presidential/{year}")
     public void receivePrecinctPresVoteData(@PathVariable String stateId, @PathVariable String countyId,
                                             @PathVariable String precinctId, @PathVariable int year,
                                             @RequestBody ElectionData data) {

@@ -41,7 +41,7 @@ public class CountyController {
         return countyService.getCountyFromMem(stateId, countyId).getDemoData();
     }
 
-    @PostMapping(value = "/data/demo")
+    @PutMapping(value = "/data/demo")
     public void receiveCountyDemoData(@PathVariable String stateId, @PathVariable String countyId,
                                       @RequestBody DemoData demoData) {
 
