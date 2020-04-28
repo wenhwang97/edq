@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Table(name = "GEO_VERTEX")
 @Entity
-public class GeoVertex implements Serializable {
+public class GeoVertex implements Serializable, Cloneable {
 
     private Integer id;
 
@@ -36,5 +36,14 @@ public class GeoVertex implements Serializable {
 
     public void setY_pos(double y_pos) {
         this.y_pos = y_pos;
+    }
+
+    @Override
+    public GeoVertex clone() throws CloneNotSupportedException {
+        GeoVertex vertex = new GeoVertex();
+        vertex.setId(id);
+        vertex.setX_pos(x_pos);
+        vertex.setY_pos(y_pos);
+        return vertex;
     }
 }

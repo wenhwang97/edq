@@ -8,7 +8,7 @@ import java.util.List;
 
 @Table(name = "POLYGON")
 @Entity
-public class Polygon implements Serializable {
+public class Polygon implements Serializable, Cloneable {
 
     private Integer id;
 
@@ -33,5 +33,15 @@ public class Polygon implements Serializable {
 
     public void setVertices(List<GeoVertex> vertices) {
         this.vertices = vertices;
+    }
+
+    @Override
+    public Polygon clone() throws CloneNotSupportedException {
+        Polygon polygon = new Polygon();
+        polygon.setId(id);
+        for (GeoVertex vertex : vertices) {
+            polygon.getVertices().add(vertex.clone());
+        }
+        return polygon;
     }
 }

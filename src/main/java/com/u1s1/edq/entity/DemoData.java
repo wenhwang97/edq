@@ -1,10 +1,11 @@
 package com.u1s1.edq.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Table(name = "DEMO_DATA")
 @Entity
-public class DemoData {
+public class DemoData implements Serializable, Cloneable {
 
     private Integer id;
 
@@ -70,13 +71,14 @@ public class DemoData {
     }
 
     @Override
-    public String toString() {
-        return "DemoDataRepository{" +
-                "totalPop=" + totalPop +
-                ", whitePop=" + whitePop +
-                ", blackPop=" + blackPop +
-                ", latinPop=" + latinPop +
-                ", asianPop=" + asianPop +
-                '}';
+    public DemoData clone() throws CloneNotSupportedException {
+        DemoData data = new DemoData();
+        data.setId(id);
+        data.setTotalPop(totalPop);
+        data.setWhitePop(whitePop);
+        data.setBlackPop(blackPop);
+        data.setLatinPop(latinPop);
+        data.setAsianPop(asianPop);
+        return data;
     }
 }

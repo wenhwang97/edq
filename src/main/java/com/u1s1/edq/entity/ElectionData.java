@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Table(name = "ELECTION")
 @Entity
-public class ElectionData implements Serializable {
+public class ElectionData implements Serializable, Cloneable {
 
     private Integer id;
 
@@ -72,13 +72,14 @@ public class ElectionData implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "ElectionData{" +
-                "year=" + year +
-                ", republicanVote=" + republicanVote +
-                ", democraticVote=" + democraticVote +
-                ", libertarianVote=" + libertarianVote +
-                ", greenVote=" + greenVote +
-                '}';
+    public ElectionData clone() throws CloneNotSupportedException {
+        ElectionData data = new ElectionData();
+        data.setId(id);
+        data.setYear(year);
+        data.setRepublicanVote(republicanVote);
+        data.setDemocraticVote(democraticVote);
+        data.setLibertarianVote(libertarianVote);
+        data.setGreenVote(greenVote);
+        return data;
     }
 }
