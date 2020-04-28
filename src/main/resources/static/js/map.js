@@ -60,6 +60,11 @@ function initMap() {
 
         case THREE_STATES[2]:// Rhode Island
           r.disabled=false;
+          let response = await fetch("http://localhost:8080/state/ri");
+          if(response.status==500){
+            break;
+          }
+          // console.log(response);
           await handleRedirect("Rhode Island State Level", 9, RI_CENTER, RI_STRICT_BOUND);
           console.log(allStates["ri"].getAllCounties());
           break;
@@ -182,26 +187,31 @@ async function handleRedirect(
       styleState(riBoderLayer);
       var rhode = new State("ri", "Rhode Island");
       allStates["ri"] = rhode;
-      let response = await fetch("http://localhost:8080/state/RI");
-      console.log(response);
-      let RIJson = await response.json();
-      console.log(RIJson);
+      // let response = await fetch("http://localhost:8080/state/ri");
+      // console.log(response);
+      // let RIJson = await response.json();
+      // console.log(RIJson);
       if (rhode.hasCounties()) {  //
         console.log("has!!!!!");
         counties = rhode.getAllCounties();
         addCountiesToMap(counties);
       } else {  //fetch the data
+        console.log("???");
         var url = 'http://localhost:8080/state/ri/show-counties';
         let response = await fetch(url);
         let myJson = await response.json();
         var tottalCounties = [];
+        console.log("start to fetch");
         console.log(myJson);
+        console.log("fetch done!");
         for (i = 0; i < myJson.length; i++) {  //how many counties
           var countyCoords = [];
           var county = new County(myJson[i].id);
-          for (j = 0; j < myJson[i].obj.length; j++) {  //for current counties
+          for (j = 0; j < myJson[i].obj.length; j++) {  //for current counties ri_providence 414
             var countyPolygon = [];
             for (k = 0; k < myJson[i].obj[j].vertices.length; k++) { //for current counties'polygon
+              // console.log("y coord"+myJson[i].obj[j].vertices[k].y_pos);
+              // console.log("x coord"+myJson[i].obj[j].vertices[k].x_pos);
               countyPolygon.push({lat: myJson[i].obj[j].vertices[k].y_pos, lng: myJson[i].obj[j].vertices[k].x_pos});
             }
             countyCoords.push(countyPolygon);
@@ -216,6 +226,7 @@ async function handleRedirect(
           console.log(county.id);
           // localStorage.setItem(rhode);
         }
+        console.log(tottalCounties);
         r.addEventListener('change', function () {  //county's check boxes
           if (this.checked) {
             console.log("checked!");
@@ -362,7 +373,7 @@ function precinctEvents(RIcounty){
       var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
       var url = "/precinct/" + precinctID;
       var neighbourVrl = "/data/neighbors";
-      getNeighbour(urlpart1 + url + neighbourVrl,precincts[ID]);
+      getNeighbour(urlpart1 + url + neighbourVrl,precincts);
     });
 
   }
@@ -381,9 +392,13 @@ async function precinctFetchData(url,precinct) {
   document.getElementById("LibertarianData").textContent = myJson.libertarianVote;
   document.getElementById("DemocraticData").textContent = myJson.democraticVote;
 }
-async function getNeighbour(url, precinct) {
+async function getNeighbour(url, precincts) {
   let response = await fetch(url);
   let myJson = await response.json();
   console.log("neighbour");
-  console.log(myJson);
+  // console.log(myJson);
+  for(i=0;i<myJson.length; i++){
+    precincts[i].getPrecinctLayer().overrideStyle( { strokeWeight: 9 });
+  }
+
 }
