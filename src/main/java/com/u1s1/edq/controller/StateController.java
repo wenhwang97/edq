@@ -27,7 +27,7 @@ public class StateController {
     public ResponseEntity<String> selectState(@PathVariable String stateId) {
 
         if (stateService.getStateFromDB(stateId)) {
-            return ResponseEntity.ok().body("State cached");
+            return ResponseEntity.ok().body("");
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to cache state");
