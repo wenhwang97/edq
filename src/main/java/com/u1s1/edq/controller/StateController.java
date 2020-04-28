@@ -5,6 +5,8 @@ import com.u1s1.edq.entity.County;
 import com.u1s1.edq.entity.State;
 import com.u1s1.edq.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -22,13 +24,13 @@ public class StateController {
     }
 
     @GetMapping(value = "")
-    public Boolean selectState(@PathVariable String stateId) {
+    public ResponseEntity<String> selectState(@PathVariable String stateId) {
 
         if (stateService.getStateFromDB(stateId)) {
-            return Boolean.TRUE;
+            return ResponseEntity.ok().body("State cached");
         }
 
-        return Boolean.FALSE;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to cache state");
     }
 
     @GetMapping(value = "/show-counties")
