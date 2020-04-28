@@ -67,25 +67,25 @@
                     <div class="table-context"></div>
                     <div class="right_up_con_all" id="tol">
                     </div>
-
+                    <a class="side-data dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false" id="ChooseData">Data</a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item1" onclick="changeData('2016 Presidential Voting','Voting')">2016 Presidential Voting</div>
+                        <div class="dropdown-item2" onclick="changeData('2016 Congressional Voting')">2016 Congressional Voting</div>
+                        <div class="dropdown-item3" onclick="changeData('2018 Congressional Voting')">2018 Congressional Voting</div>
+                        <div class="dropdown-item4" onclick="changeData('Demographic')">Demographic</div>
+                    </div>
 
                 </div>
             </div>
             <!-- The grey part -->
+            <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data</div>
             <div class="right_up_magin_top">
-                <div class="right_up_con_text">Voting Data
-                    <div class="text_left_a">Republican:
-                        <!-- <input class="PupulationInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
-                    </div>
-                    <div class="text_left_a">Democracy:
-                        <!-- <input class="DemocracyInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
-                    </div>
-                    <div class="text_left_a" >Libertatian:
-                        <!-- <input class="RepublicanInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
-                    </div>
-                    <div class="text_left_a">Green Parties:
-                        <!-- <input class="DemographicInput" type="text" name="PopulationData"/><input class="submitbutton"  type="image"  src="../images/submit.png"/> -->
-                    </div>
+                <div class='DataName'id = "DataType">
+                    <div class="text_left_a">Republican:</div>
+                    <div class="text_left_a">Democracy:</div>
+                    <div class="text_left_a" >Libertatian: </div>
+                    <div class="text_left_a">Green Parties:</div>
                 </div>
                 <div class="text_left_a_data" >
                     <div class="testdata" id="RepublicanData"></div>
