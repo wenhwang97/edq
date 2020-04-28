@@ -22,6 +22,7 @@ public class GeoVertex implements Serializable, Cloneable {
         this.id = id;
     }
 
+    @Column(precision = 20, scale = 15)
     public double getX_pos() {
         return x_pos;
     }
@@ -30,6 +31,7 @@ public class GeoVertex implements Serializable, Cloneable {
         this.x_pos = x_pos;
     }
 
+    @Column(precision = 20, scale = 15)
     public double getY_pos() {
         return y_pos;
     }
