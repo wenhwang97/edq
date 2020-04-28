@@ -19,7 +19,7 @@ public class CountyService {
         this.cachedContainer = cachedContainer;
     }
 
-    public County getCounty(String stateId, String countyId) {
+    public County getCountyFromMem(String stateId, String countyId) {
         return cachedContainer.findCounty(stateId, countyId);
     }
 

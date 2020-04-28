@@ -22,7 +22,7 @@ public class PrecinctService {
         this.cachedContainer = cachedContainer;
     }
 
-    public Precinct getPrecinct(String stateId, String countyId, String precinctId) {
+    public Precinct getPrecinctFromMem(String stateId, String countyId, String precinctId) {
         return cachedContainer.findPrecinct(stateId, countyId, precinctId);
     }
 
@@ -47,7 +47,7 @@ public class PrecinctService {
         precinctRepo.save(precinct);
     }
 
-    public ElectionData getPrecinctVoteData(String stateId, String countyId, String precinctId, int year) {
+    public ElectionData getPrecinctVoteDataFromMem(String stateId, String countyId, String precinctId, int year) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctId);
         for (ElectionData electionData : precinct.getElectionData()) {
             if (electionData.getYear() == year) {

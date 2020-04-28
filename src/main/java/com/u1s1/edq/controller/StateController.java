@@ -24,7 +24,7 @@ public class StateController {
     @GetMapping(value = "")
     public Boolean selectState(@PathVariable String stateId) {
 
-        if (stateService.fetchState(stateId)) {
+        if (stateService.getStateFromDB(stateId)) {
             return Boolean.TRUE;
         }
 
@@ -34,7 +34,7 @@ public class StateController {
     @GetMapping(value = "/show-counties")
     public Set<ResponseObject> sendCounties(@PathVariable String stateId) {
 
-        State state = stateService.getState(stateId);
+        State state = stateService.getStateFromMem(stateId);
         System.out.println(state);
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 

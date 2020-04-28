@@ -25,7 +25,7 @@ public class CountyController {
     @GetMapping(value = "/show-precincts")
     public Set<ResponseObject> sendPrecincts(@PathVariable String stateId, @PathVariable String countyId) {
 
-        County county = countyService.getCounty(stateId, countyId);
+        County county = countyService.getCountyFromMem(stateId, countyId);
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 
         for (Precinct precinct : county.getPrecincts()) {
@@ -38,7 +38,7 @@ public class CountyController {
     @GetMapping(value = "/data/demo")
     public DemoData sendCountyDemoData(@PathVariable String stateId, @PathVariable String countyId) {
 
-        return countyService.getCounty(stateId, countyId).getDemoData();
+        return countyService.getCountyFromMem(stateId, countyId).getDemoData();
     }
 
     @PostMapping(value = "/data/demo")

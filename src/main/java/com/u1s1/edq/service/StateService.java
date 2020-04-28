@@ -18,7 +18,7 @@ public class StateService {
         this.cachedContainer = cachedContainer;
     }
 
-    public boolean fetchState(String stateId) {
+    public boolean getStateFromDB(String stateId) {
         if (cachedContainer.hasState(stateId)) {
             return true;
         }
@@ -33,7 +33,7 @@ public class StateService {
         }
     }
 
-    public State getState(String stateId) {
+    public State getStateFromMem(String stateId) {
         return cachedContainer.findState(stateId);
     }
 }

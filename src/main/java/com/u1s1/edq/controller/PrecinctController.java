@@ -25,7 +25,7 @@ public class PrecinctController {
     @GetMapping(value = "/data/demo")
     public DemoData sendPrecinctDemoData(@PathVariable String stateId, @PathVariable String countyId,
                                          @PathVariable String precinctId) {
-        return precinctService.getPrecinct(stateId, countyId, precinctId).getDemoData();
+        return precinctService.getPrecinctFromMem(stateId, countyId, precinctId).getDemoData();
     }
 
     @PostMapping(value = "/data/demo")
@@ -37,7 +37,7 @@ public class PrecinctController {
     @GetMapping(value = "/data/type")
     public String sendPrecinctType(@PathVariable String stateId, @PathVariable String countyId,
                                    @PathVariable String precinctId) {
-        return precinctService.getPrecinct(stateId, countyId, precinctId).getType().toString();
+        return precinctService.getPrecinctFromMem(stateId, countyId, precinctId).getType().toString();
     }
 
     @PostMapping(value = "/data/define-ghost")
@@ -55,7 +55,7 @@ public class PrecinctController {
     @GetMapping(value = "/data/vote/presidential/{year}")
     public ElectionData sendPrecinctPresVoteData(@PathVariable String stateId, @PathVariable String countyId,
                                                  @PathVariable String precinctId, @PathVariable int year) {
-        return precinctService.getPrecinctVoteData(stateId, countyId, precinctId, year);
+        return precinctService.getPrecinctVoteDataFromMem(stateId, countyId, precinctId, year);
     }
 
     @PostMapping(value = "/data/vote/presidential/{year}")
@@ -68,7 +68,7 @@ public class PrecinctController {
     @GetMapping(value = "/data/neighbors")
     public Set<String> sendPrecinctNeighbors(@PathVariable String stateId, @PathVariable String countyId,
                                              @PathVariable String precinctId) {
-        Precinct precinct = precinctService.getPrecinct(stateId, countyId, precinctId);
+        Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctId);
         Set<String> neighbors = new HashSet<String>();
 
         for (Precinct neighbor : precinct.getNeighbors()) {
