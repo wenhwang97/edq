@@ -126,13 +126,15 @@ function getState(ID){
   }
 }
 function addCountiesToMap(counties){
+  console.log(counties);
   for (var id in counties){
     countyLayer = counties[id].getLayer();
+    console.log(countyLayer);
     countyLayer.setMap(map);
   }
 }
 function addPrecinctsToMap(precincts){
-  // console.log(precinctLayers);
+  console.log(precinctLayers);
   // var number =0;
   for (let ID in precincts){
     // number++;
@@ -189,7 +191,7 @@ async function handleRedirect(
         counties = rhode.getAllCounties();
         addCountiesToMap(counties);
       } else {  //fetch the data
-        var url = 'http://localhost:8080/state/RI/show-counties';
+        var url = 'http://localhost:8080/state/ri/show-counties';
         let response = await fetch(url);
         let myJson = await response.json();
         var tottalCounties = [];
@@ -207,6 +209,7 @@ async function handleRedirect(
           tottalCounties.push(countyCoords);
           Countydata = new google.maps.Data();
           geometry = new google.maps.Data.Polygon(countyCoords);
+          console.log(countyCoords);
           Countydata.add({geometry: geometry, id: myJson[i].id});
           county.setCountyLayer(Countydata);
           rhode.addCounty(county.id, county);
@@ -215,6 +218,7 @@ async function handleRedirect(
         }
         r.addEventListener('change', function () {  //county's check boxes
           if (this.checked) {
+            console.log("checked!");
             addCountiesToMap(rhode.getAllCounties());
           } else {
             counties = rhode.getAllCounties();

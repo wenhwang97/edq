@@ -278,3 +278,10 @@ function addGreenBotton(){
     cont.appendChild(conbut);
     cont.appendChild(canbut);
 }
+function changeData(DataTail,VoteType){
+    console.log("change data la!!");
+    document.getElementById("DataTitle").textContent = DataTail+" Data";
+    if(VoteType=="Voting"){
+
+    }
+}
