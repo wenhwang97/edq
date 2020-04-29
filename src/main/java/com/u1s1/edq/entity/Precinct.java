@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "PRECINCT")
 @Entity
+@Table(name = "PRECINCTS")
 public class Precinct implements Serializable {
 
     private String id;

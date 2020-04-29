@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Table(name = "CORRECTION_LOG")
 @Entity
+@Table(name = "CORRECTION_LOGS")
 public class CorrectionLog implements Serializable {
 
     private Integer id;

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name="ERROR")
 @Entity
+@Table(name="ERRORS")
 public class Error implements Serializable {
 
     private Integer id;

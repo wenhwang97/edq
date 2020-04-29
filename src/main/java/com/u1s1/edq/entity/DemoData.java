@@ -3,8 +3,8 @@ package com.u1s1.edq.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "DEMO_DATA")
 @Entity
+@Table(name = "DEMO_DATA")
 public class DemoData implements Serializable, Cloneable {
 
     private Integer id;

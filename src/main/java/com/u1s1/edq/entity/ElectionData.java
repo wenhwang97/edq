@@ -5,8 +5,8 @@ import com.u1s1.edq.enums.ElectionType;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "ELECTION")
 @Entity
+@Table(name = "ELECTION_DATA")
 public class ElectionData implements Serializable, Cloneable {
 
     private Integer id;

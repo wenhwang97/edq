@@ -6,14 +6,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "POLYGON")
 @Entity
+@Table(name = "POLYGONS")
 public class Polygon implements Serializable, Cloneable {
 
     private Integer id;
 
     private List<GeoVertex> vertices = new ArrayList<GeoVertex>();
-
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id

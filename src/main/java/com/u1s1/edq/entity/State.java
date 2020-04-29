@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "STATE")
 @Entity
+@Table(name = "STATES")
 public class State implements Serializable {
 
     private String id;

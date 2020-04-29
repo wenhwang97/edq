@@ -1,10 +1,12 @@
 package com.u1s1.edq.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "GEO_VERTEX")
 @Entity
+@Table(name = "GEO_VERTICES")
 public class GeoVertex implements Serializable, Cloneable {
 
     private Integer id;
