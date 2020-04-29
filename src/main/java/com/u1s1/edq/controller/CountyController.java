@@ -43,15 +43,9 @@ public class CountyController {
     }
 
     @PutMapping(value = "/data/demo")
-    public ResponseEntity<String> receiveCountyDemoData(@PathVariable String stateId, @PathVariable String countyId,
+    public void receiveCountyDemoData(@PathVariable String stateId, @PathVariable String countyId,
                                                 @RequestBody DemoData demoData) {
-        try {
-            countyService.updateCountyDemoData(stateId, countyId, demoData);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update demographic data");
-        }
-
-        return ResponseEntity.ok().body("Demographic data updated");
+        countyService.updateCountyDemoData(stateId, countyId, demoData);
     }
 
 }
