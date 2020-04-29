@@ -1,5 +1,8 @@
 package com.u1s1.edq.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,6 +55,7 @@ public class County implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "county_id")
+    @Fetch(FetchMode.JOIN)
     public List<Polygon> getBoundary() {
         return boundary;
     }

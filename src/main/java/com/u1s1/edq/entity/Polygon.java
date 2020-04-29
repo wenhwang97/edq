@@ -1,6 +1,9 @@
 package com.u1s1.edq.entity;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class Polygon implements Serializable, Cloneable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "polygon_id")
+    @Fetch(FetchMode.JOIN)
     public List<GeoVertex> getVertices() {
         return vertices;
     }
