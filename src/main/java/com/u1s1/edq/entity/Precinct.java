@@ -13,29 +13,15 @@ import java.util.List;
 @Table(name = "PRECINCTS")
 public class Precinct implements Serializable {
 
-    private String id;
-
-    private String name;
     private String canonicalName;
 
+    private String name;
     private PrecinctType type;
-
     private DemoData demoData;
 
     private List<Polygon> boundary = new ArrayList<Polygon>();
     private List<ElectionData> electionData = new ArrayList<ElectionData>();
-
     private List<Precinct> neighbors = new ArrayList<Precinct>();
-
-    @Id
-    @Column(name = "precinct_id")
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Column(nullable = false)
     public String getName() {
@@ -46,7 +32,8 @@ public class Precinct implements Serializable {
         this.name = name;
     }
 
-    @Column(nullable = false)
+    @Id
+    @Column(name = "cname", nullable = false)
     public String getCanonicalName() {
         return canonicalName;
     }
@@ -98,8 +85,8 @@ public class Precinct implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "precinct_neighbors",
-            joinColumns = @JoinColumn(name = "precinct_id"),
-            inverseJoinColumns = @JoinColumn(name = "neighbor_id"))
+            joinColumns = @JoinColumn(name = "precinct_cname"),
+            inverseJoinColumns = @JoinColumn(name = "neighbor_cname"))
     public List<Precinct> getNeighbors() {
         return neighbors;
     }

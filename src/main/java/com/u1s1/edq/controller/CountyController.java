@@ -31,7 +31,7 @@ public class CountyController {
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 
         for (Precinct precinct : county.getPrecincts()) {
-            response.add(new ResponseObject(precinct.getId(), precinct.getBoundary()));
+            response.add(new ResponseObject(precinct.getCanonicalName(), precinct.getBoundary()));
         }
 
         return response;

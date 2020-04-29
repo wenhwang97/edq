@@ -3,7 +3,6 @@ package com.u1s1.edq.service;
 import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
 import com.u1s1.edq.entity.Precinct;
-import com.u1s1.edq.enums.ElectionType;
 import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.repository.PrecinctRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
@@ -22,18 +21,18 @@ public class PrecinctService {
         this.cachedContainer = cachedContainer;
     }
 
-    public Precinct getPrecinctFromMem(String stateId, String countyId, String precinctId) {
-        return cachedContainer.findPrecinct(stateId, countyId, precinctId);
+    public Precinct getPrecinctFromMem(String stateId, String countyId, String precinctCName) {
+        return cachedContainer.findPrecinct(stateId, countyId, precinctCName);
     }
 
-    public void updatePrecinctDemoData(String stateId, String countyId, String precinctId, DemoData data) {
-        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctId);
+    public void updatePrecinctDemoData(String stateId, String countyId, String precinctCName, DemoData data) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         precinct.setDemoData(data);
         precinctRepo.save(precinct);
     }
 
-    public void updatePrecinctType(String stateId, String countyId, String precinctId, PrecinctType type) {
-        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctId);
+    public void updatePrecinctType(String stateId, String countyId, String precinctCName, PrecinctType type) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         if (type == PrecinctType.NORMAL) {
             precinct.setType(PrecinctType.NORMAL);
         }
@@ -47,8 +46,8 @@ public class PrecinctService {
         precinctRepo.save(precinct);
     }
 
-    public ElectionData getPrecinctVoteDataFromMem(String stateId, String countyId, String precinctId, int year) {
-        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctId);
+    public ElectionData getPrecinctVoteDataFromMem(String stateId, String countyId, String precinctCName, int year) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         for (ElectionData electionData : precinct.getElectionData()) {
             if (electionData.getYear() == year) {
                 return electionData;
@@ -58,8 +57,8 @@ public class PrecinctService {
         return null;
     }
 
-    public void updatePrecinctVoteData(String stateId, String countyId, String precinctId, int year, ElectionData data) {
-        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctId);
+    public void updatePrecinctVoteData(String stateId, String countyId, String precinctCName, int year, ElectionData data) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         for (ElectionData electionData : precinct.getElectionData()) {
             if (electionData.getYear() == year) {
                 electionData.setDemocraticVote(data.getDemocraticVote());

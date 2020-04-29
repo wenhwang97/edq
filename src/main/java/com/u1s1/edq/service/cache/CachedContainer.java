@@ -53,7 +53,7 @@ public class CachedContainer {
         return null;
     }
 
-    public Precinct findPrecinct(String stateId, String countyId, String precinctId) {
+    public Precinct findPrecinct(String stateId, String countyId, String precinctCName) {
         County county = findCounty(stateId, countyId);
         if (county == null) return null;
 
@@ -61,7 +61,7 @@ public class CachedContainer {
         if (precincts.size() == 0) return null;
 
         for (Precinct precinct : precincts) {
-            if (precinct.getId().equals(precinctId)) {
+            if (precinct.getCanonicalName().equals(precinctCName)) {
                 return precinct;
             }
         }

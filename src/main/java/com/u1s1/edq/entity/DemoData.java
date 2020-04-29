@@ -12,7 +12,7 @@ public class DemoData implements Serializable, Cloneable {
     private int totalPop;
     private int whitePop;
     private int blackPop;
-    private int latinPop;
+    private int hispanicPop;
     private int asianPop;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,12 +53,12 @@ public class DemoData implements Serializable, Cloneable {
     }
 
     @Column(name = "hispanic_population")
-    public int getLatinPop() {
-        return latinPop;
+    public int getHispanicPop() {
+        return hispanicPop;
     }
 
-    public void setLatinPop(int latinPop) {
-        this.latinPop = latinPop;
+    public void setHispanicPop(int latinPop) {
+        this.hispanicPop = latinPop;
     }
 
     @Column(name = "asian_population")
@@ -77,7 +77,7 @@ public class DemoData implements Serializable, Cloneable {
         data.setTotalPop(totalPop);
         data.setWhitePop(whitePop);
         data.setBlackPop(blackPop);
-        data.setLatinPop(latinPop);
+        data.setHispanicPop(hispanicPop);
         data.setAsianPop(asianPop);
         return data;
     }
