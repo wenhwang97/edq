@@ -200,6 +200,11 @@ async function handleRedirect(
         var url = 'http://localhost:8080/state/ri/show-counties';
         let response = await fetch(url);
         let myJson = await response.json();
+        console.log(myJson);
+        // testBoderLayer = new google.maps.Data();
+        // testBoderLayer.loadGeoJson(myJson);
+        // testBoderLayer.setMap(map);
+        //======================4-28===========================================
         var tottalCounties = [];
         console.log("start to fetch");
         console.log(myJson);
@@ -283,13 +288,14 @@ async function handleRedirect(
             }
           }
         });
+        //=================================================================================================================
       }
   }
 }
 // console.log(allStates);
 // console.log(allStates["ri"]);
 var b = [];
-async function PrectinceFetch(countyID, RIcounty) {
+async function PrectinceFetch(countyID, RIcounty) {   //fetch the precinct
   var precintUrlpart1 = "http://localhost:8080/state/ri/county/";
   var precintUrlpart2 = "/show-precincts";
   var precintUrl = precintUrlpart1 + countyID + precintUrlpart2;
@@ -297,6 +303,7 @@ async function PrectinceFetch(countyID, RIcounty) {
   let response = await fetch(precintUrl);
   let myJson = await response.json();
   console.log("the length of myjson");
+  console.log(myJson);
   console.log(myJson.length);
   var tottalPrecinct = [];
   for (i = 0; i < myJson.length; i++) {  //how many precincts
