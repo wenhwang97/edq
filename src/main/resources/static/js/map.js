@@ -2,7 +2,7 @@ const THREE_STATES = ["California", "Texas", "Rhode Island"];
 var map;
 var dataLayers = {}; // all dataLayer (geojson)
 var r = document.getElementById("countyCheckBox");
-var PrecinctCheckBox=document.getElementById("PrecinctCheckBox");
+var precinctCheckBox=document.getElementById("precinctCheckBox");
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -46,7 +46,7 @@ function initMap() {
   });
 
   r.disabled=true;
-  PrecinctCheckBox.disabled=true;
+  precinctCheckBox.disabled=true;
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
     if (THREE_STATES.includes(event.feature.j.name)) {
@@ -244,7 +244,7 @@ async function handleRedirect(
         let countyID;
         console.log("counties:  ");
         console.log(counties);
-        let selectedCounty;
+        let currentCounty;
         for (let ID in counties) {
           console.log(counties[ID]);
           countyLayer = counties[ID].getLayer();
@@ -252,11 +252,10 @@ async function handleRedirect(
 
           google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
             countyID = event.feature.o; //get the current county ID
-            var RIcounty = state.getCountyByID(countyID); //get current county object in the state
-            console.log(RIcounty.hasPrecincts());
-            if (RIcounty.hasPrecincts()) {  //when there is precinct exist
-              console.log("has!!!!!!!!!!!!!!!!!!!!!");
-              precincts = RIcounty.getPrecincts();  //load the precinct
+            var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
+            console.log(selectedCounty.hasPrecincts());
+            if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
+              precincts = selectedCounty.getPrecincts();  //load the precinct
               // console.log(precinctLayers);
               var i = 0;
               for (let ID in precincts) {  //check the map is loaded or not
@@ -268,41 +267,41 @@ async function handleRedirect(
               if (i != 0) {//not loaded
                 console.log("no precincts");
                 addPrecinctsToMap(precincts);
-                PrecinctCheckBox.checked = true;
+                precinctCheckBox.checked = true;
               }
-              if(selectedCounty==null||selectedCounty==RIcounty){//di yi ci dian
-                selectedCounty= RIcounty;
+              if(currentCounty==null||currentCounty==selectedCounty){//di yi ci dian
+                currentCounty= selectedCounty;
               }else{
                 console.log("have precincts");
-                removePrecinctToMap(selectedCounty);
-                selectedCounty= RIcounty;
+                removePrecinctToMap(currentCounty);
+                currentCounty= selectedCounty;
               }
-              precinctEvents(RIcounty);
-              // selectedCounty= RIcounty;
+              precinctEvents(selectedCounty);
+              // currentCounty= selectedCounty;
             } else {//find precinct in server
-              precincts = RIcounty.getPrecincts();
-              PrecinctCheckBox.disabled = false;
-              PrecinctCheckBox.checked = true;
-              PrectinctFetch(RIcounty);
+              precincts = selectedCounty.getPrecincts();
+              precinctCheckBox.disabled = false;
+              precinctCheckBox.checked = true;
+              precinctFetch(selectedCounty);
               havePrecinct=1;
               console.log("after fetch");
-              if(selectedCounty==null){ //no county has been clicked yet
-                selectedCounty= RIcounty;
+              if(currentCounty==null){ //no county has been clicked yet
+                currentCounty= selectedCounty;
               }else{  //remove last clicked county
-                // console.log(selectedCounty);
-                removePrecinctToMap(selectedCounty);
-                selectedCounty= RIcounty;
+                // console.log(currentCounty);
+                removePrecinctToMap(currentCounty);
+                currentCounty= selectedCounty;
               }
             }
           });
         }
-        PrecinctCheckBox.addEventListener('change', function () {//show precinct on the county or not
+        precinctCheckBox.addEventListener('change', function () {//show precinct on the county or not
           if (this.checked) {
             addPrecinctsToMap(precincts);
           } else {
             for (let ID in precincts) {  //not show
               precincts[ID].getPrecinctLayer().setMap(null);
-              PrecinctCheckBox.checked = false;
+              precinctCheckBox.checked = false;
             }
           }
         });
@@ -312,7 +311,7 @@ async function handleRedirect(
 // console.log(allStates);
 // console.log(allStates["ri"]);
 var b = [];
-async function PrectinctFetch(county) {
+async function precinctFetch(county) {
   var countyID =county.id;
   var precintUrlpart1 = "http://localhost:8080/state/ri/county/";
   var precintUrlpart2 = "/show-precincts";
@@ -328,7 +327,7 @@ async function PrectinctFetch(county) {
     var precinctCoords = [];
     for (let j in precinctJson[i].obj) {  //for current precinct
       var precinctPolygon = [];
-      for (let k in precinctJson[i].obj[j].vertices) { //for current precinct's polygon
+      for (let k in precinctJson[i].obj[j].vertices) { //for current precinct's polygon coord
         precinctPolygon.push({lat: precinctJson[i].obj[j].vertices[k].y_pos, lng: precinctJson[i].obj[j].vertices[k].x_pos});
       }
       precinctCoords.push(precinctPolygon);
@@ -400,33 +399,12 @@ function precinctEvents(county){  //here shouldn't be county should be state
         };
       });
       /*show the neighbour(fake for now)*/
-      // ri-kent-0605
-      // precincts["ri-kent-0605"].getPrecinctLayer().setStyle((feature) => {
-      //   return {
-      //     fillColor: "rgba(168,50,158,0.25)",
-      //     strokeColor: "rgba(168,50,158,0.28)",
-      //     strokeWeight: 2,
-      //     zIndex: 1,
-      //   };
-      // });
+
       var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
       var url = "/precinct/" + precinctID;
       var neighbourUrl = "/data/neighbors";
-      getNeighbour(urlpart1 + url + neighbourUrl, county);
-      // console.log(neighbourlist);
-      // // for(let i in precincts){
-      // //   styleCounties(precincts[i].getPrecinctLayer());
-      // // }
-      // for(let i=0; i<neighbourlist.length; i++){
-      //   precincts[i].getPrecinctLayer().setStyle((feature) => {
-      //     return {
-      //       fillColor: "rgba(168,50,158,0.25)",
-      //       strokeColor: "rgba(168,50,158,0.28)",
-      //       strokeWeight: 2,
-      //       zIndex: 1,
-      //     };
-      //   });
-      // }
+      getNeighbour(urlpart1 + url + neighbourUrl, county, precinctID);
+
 
       lastPrecinct=precinctID;
     });
@@ -447,30 +425,30 @@ async function precinctFetchData(url,precinct) {
   document.getElementById("LibertarianData").textContent = myJson.libertarianVote;
   document.getElementById("DemocraticData").textContent = myJson.democraticVote;
 }
-async function getNeighbour(url, county) {
+async function getNeighbour(url, county, precinctID) {
   precincts = county.getPrecincts();
   console.log(precincts);
   let response = await fetch(url);
-  let myJson = await response.json();
+  let neighbourList = await response.json();
   console.log("neighbour");
-  console.log(myJson);
-  // for(let i in precincts){
-  //   styleCounties(precincts[i].getPrecinctLayer());
-  // }
+  console.log(neighbourList);
   for(var key in precincts){
-    styleCounties(precincts[key].getPrecinctLayer());
+    if(key!=precinctID) {
+      styleCounties(precincts[key].getPrecinctLayer());
+    }
   }
-  for(let i=0; i<myJson.length; i++){
-    console.log(myJson[i]);
-    console.log(myJson[i].substring(0,myJson[i].length-5));
+  // for(let i=0; i<neighbourList.length; i++){
+  for(let i in neighbourList){
+    console.log(neighbourList[i]);
+    console.log(neighbourList[i].substring(0,neighbourList[i].length-5));
     console.log(county.id);
     // console.log(list(precincts.values()));
-    if(myJson[i].substring(0,myJson[i].length-5)!=county.id){
-      // console.log(myJson[i].substring(0,myJson[i].length-4));
+    if(neighbourList[i].substring(0,neighbourList[i].length-5)!=county.id){
+      // console.log(neighbourList[i].substring(0,neighbourList[i].length-4));
       console.log("different??");
       continue;
     }
-    precincts[myJson[i]].getPrecinctLayer().setStyle((feature) => {
+    precincts[neighbourList[i]].getPrecinctLayer().setStyle((feature) => {
       return {
         fillColor: "rgba(168,50,158,0.25)",
         strokeColor: "rgba(168,50,158,0.28)",
@@ -479,5 +457,5 @@ async function getNeighbour(url, county) {
       };
     });
   }
-  // lastNeighbour= myJson;
+  // lastNeighbour= neighbourList;
 }
