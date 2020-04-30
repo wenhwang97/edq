@@ -9,6 +9,8 @@ import com.u1s1.edq.service.cache.CachedContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class PrecinctService {
 
@@ -66,6 +68,34 @@ public class PrecinctService {
                 electionData.setLibertarianVote(data.getLibertarianVote());
                 electionData.setGreenVote(data.getGreenVote());
                 break;
+            }
+        }
+
+        precinctRepo.save(precinct);
+    }
+
+    public void addPrecinctNeighbors(String stateId, String countyId, String precinctCName, Set<String> neighbors) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
+        for (String neighborCName : neighbors) {
+            Precinct neighbor = cachedContainer.findPrecinct(stateId, countyId, neighborCName);
+            if (neighbor != null) {
+                precinct.getNeighbors().add(neighbor);
+                neighbor.getNeighbors().add(precinct);
+                precinctRepo.save(neighbor);
+            }
+        }
+
+        precinctRepo.save(precinct);
+    }
+
+    public void removePrecinctNeighbors(String stateId, String countyId, String precinctCName, Set<String> neighbors) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
+        for (String neighborCName : neighbors) {
+            Precinct neighbor = cachedContainer.findPrecinct(stateId, countyId, neighborCName);
+            if (neighbor != null) {
+                precinct.getNeighbors().remove(neighbor);
+                neighbor.getNeighbors().remove(precinct);
+                precinctRepo.save(neighbor);
             }
         }
 
