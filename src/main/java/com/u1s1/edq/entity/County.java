@@ -19,7 +19,7 @@ public class County implements Serializable {
     private String name;
     private DemoData demoData;
 
-    private List<Polygon> boundary = new ArrayList<Polygon>();
+    private Set<Polygon> boundary = new HashSet<Polygon>();
     private List<ElectionData> electionData = new ArrayList<ElectionData>();
 
     private Set<Precinct> precincts = new HashSet<Precinct>();
@@ -55,12 +55,11 @@ public class County implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "county_id")
-    @Fetch(FetchMode.JOIN)
-    public List<Polygon> getBoundary() {
+    public Set<Polygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<Polygon> boundary) {
+    public void setBoundary(Set<Polygon> boundary) {
         this.boundary = boundary;
     }
 
