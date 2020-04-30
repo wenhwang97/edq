@@ -65,8 +65,14 @@ function initMap() {
             break;
           }
           // console.log(response);
-          await handleRedirect("Rhode Island State Level", 9, RI_CENTER, RI_STRICT_BOUND);
-          console.log(allStates["ri"].getAllCounties());
+          riBoderLayer = new google.maps.Data();
+          riBoderLayer.loadGeoJson(RI_STATE);
+          riBoderLayer.setMap(map);
+          styleState(riBoderLayer);
+          var rhode = new State("ri", "Rhode Island");
+          allStates["ri"] = rhode;
+          await handleRedirect("Rhode Island State Level", 9, RI_CENTER, RI_STRICT_BOUND,rhode);
+          // console.log(allStates["ri"].getAllCounties());
           break;
       }
     }
@@ -173,8 +179,7 @@ async function handleRedirect(
     zoomLevel,
     mapCenter,
     borderRestriction,
-    countyDataPath,
-    precinctDataPath
+    state
 ) {
   // change page title
   // refreshButton.page_title = pageTitle;
@@ -188,21 +193,14 @@ async function handleRedirect(
     case "Texas State Level":
 
     case "Rhode Island State Level":
-      riBoderLayer = new google.maps.Data();
-      riBoderLayer.loadGeoJson(RI_STATE);
-      riBoderLayer.setMap(map);
-      styleState(riBoderLayer);
-
-
-      var rhode = new State("ri", "Rhode Island");
-      allStates["ri"] = rhode;
+      rhode = state;
       // let response = await fetch("http://localhost:8080/state/ri");
       // console.log(response);
       // let RIJson = await response.json();
       // console.log(RIJson);
-      if (rhode.hasCounties()) {  //
+      if (state.hasCounties()) {  //
         console.log("has!!!!!");
-        counties = rhode.getAllCounties();
+        counties = state.getAllCounties();
         addCountiesToMap(counties);
       } else {  //fetch the data
         var url = 'http://localhost:8080/state/ri/show-counties';
@@ -226,23 +224,23 @@ async function handleRedirect(
           geometry = new google.maps.Data.Polygon(countyCoords);
           Countydata.add({geometry: geometry, id: myJson[i].id});
           county.setCountyLayer(Countydata);
-          rhode.addCounty(county.id, county);
+          state.addCounty(county.id, county);
           console.log(county.id);
           // localStorage.setItem(rhode);
         }
         r.addEventListener('change', function () {  //county's check boxes
           if (this.checked) {
-            addCountiesToMap(rhode.getAllCounties());
+            addCountiesToMap(state.getAllCounties());
           } else {
-            counties = rhode.getAllCounties();
+            counties = state.getAllCounties();
             for (let ID in counties) {
               countyLayer = counties[ID].getLayer();
               countyLayer.setMap(null);
             }
           }
         });
-        console.log(rhode.getAllCounties());
-        counties = rhode.getAllCounties();
+        console.log(state.getAllCounties());
+        counties = state.getAllCounties();
         let countyID;
         console.log("counties:  ");
         console.log(counties);
@@ -254,7 +252,7 @@ async function handleRedirect(
 
           google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
             countyID = event.feature.o; //get the current county ID
-            var RIcounty = rhode.getCountyByID(countyID); //get current county object
+            var RIcounty = state.getCountyByID(countyID); //get current county object in the state
             if (RIcounty.hasPrecincts()) {  //when there is precinct exist
               // console.log("has!!!!!!!!!!!!!!!!!!!!!");
               precincts = RIcounty.getPrecincts();  //load the precinct
@@ -282,7 +280,7 @@ async function handleRedirect(
               precincts = RIcounty.getPrecincts();
               PrecinctCheckBox.disabled = false;
               PrecinctCheckBox.checked = true;
-              PrectinctFetch(countyID, RIcounty);
+              PrectinctFetch(RIcounty);
               havePrecinct=1;
               console.log("after fetch");
               if(selectedCounty==null){ //no county has been clicked yet
@@ -311,48 +309,45 @@ async function handleRedirect(
 // console.log(allStates);
 // console.log(allStates["ri"]);
 var b = [];
-async function PrectinctFetch(countyID, RIcounty) {
+async function PrectinctFetch(county) {
+  var countyID =county.id;
   var precintUrlpart1 = "http://localhost:8080/state/ri/county/";
   var precintUrlpart2 = "/show-precincts";
   var precintUrl = precintUrlpart1 + countyID + precintUrlpart2;
   let response = await fetch(precintUrl);
-
-  let myJson = await response.json();
-  console.log(myJson);
-  console.log("the length of myjson");
-  console.log(myJson.length);
-  var tottalPrecinct = [];
-  for (i = 0; i < myJson.length; i++) {  //how many precincts
-    // var precinct = new County(myJson[i].id);
-    var precinct = new Precinct(myJson[i].id);
+  let precinctJson = await response.json();
+  console.log(precinctJson);
+  console.log("the length of precinctJson");
+  console.log(precinctJson.length);
+  var totalPrecinct = [];
+  for (let i in precinctJson) {  //how many precincts
+    var precinct = new Precinct(precinctJson[i].id);
     var precinctCoords = [];
-    for (j = 0; j < myJson[i].obj.length; j++) {  //for current precinct
+    for (let j in precinctJson[i].obj) {  //for current precinct
       var precinctPolygon = [];
-      for (k = 0; k < myJson[i].obj[j].vertices.length; k++) { //for current precinct's polygon
-        precinctPolygon.push({lat: myJson[i].obj[j].vertices[k].y_pos, lng: myJson[i].obj[j].vertices[k].x_pos});
+      for (let k in precinctJson[i].obj[j].vertices) { //for current precinct's polygon
+        precinctPolygon.push({lat: precinctJson[i].obj[j].vertices[k].y_pos, lng: precinctJson[i].obj[j].vertices[k].x_pos});
       }
       precinctCoords.push(precinctPolygon);
     }
-    tottalPrecinct.push(precinctCoords);
-    Precinctdata = new google.maps.Data();
+    totalPrecinct.push(precinctCoords);
+    precinctData = new google.maps.Data();
     Precinctgeometry = new google.maps.Data.Polygon(precinctCoords);
-    Precinctdata.add({geometry: Precinctgeometry, id: myJson[i].id});
-    precinct.setPrecinctLayer(Precinctdata);
-    RIcounty.addPrecinct(myJson[i].id, precinct);
-
-    var number=0;
+    precinctData.add({geometry: Precinctgeometry, id: precinctJson[i].id});
+    precinct.setPrecinctLayer(precinctData);
+    county.addPrecinct(precinctJson[i].id, precinct);
   }
-  precinctLayers = RIcounty.getPrecincts();
+  precinctLayers = county.getPrecincts();
   for (let ID in precinctLayers) {
     precinctLayers[ID].getPrecinctLayer().setMap(null);
   }
   addPrecinctsToMap(precinctLayers);
-  precinctEvents(RIcounty);
+  precinctEvents(county);
 }
-function precinctEvents(RIcounty){  //here shouldn't be county should be state
+function precinctEvents(county){  //here shouldn't be county should be state
   console.log("???test");
-  precincts = RIcounty.getPrecincts();
-  var countyID=RIcounty.id;
+  precincts = county.getPrecincts();
+  var countyID=county.id;
   console.log(countyID);
   let lastPrecinct;
   for (let ID in precincts) {
@@ -402,14 +397,6 @@ function precinctEvents(RIcounty){  //here shouldn't be county should be state
         };
       });
       /*show the neighbour(fake for now)*/
-      // precincts["0605"].getPrecinctLayer().setStyle((feature) => {
-      //   return {
-      //     fillColor: "rgba(50,154,168,0.38)",
-      //     strokeColor: "#3250a8",
-      //     strokeWeight: 2,
-      //     zIndex: 1,
-      //   };
-      // });
       // var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
       // var url = "/precinct/" + precinctID;
       // var neighbourVrl = "/data/neighbors";
