@@ -77,4 +77,16 @@ public class PrecinctController {
 
         return neighbors;
     }
+
+    @PostMapping(value = "/data/neighbors")
+    public void receivePrecinctAddedNeighbors(@PathVariable String stateId, @PathVariable String countyId,
+                                         @PathVariable String precinctCName, @RequestBody Set<String> neighbors) {
+        precinctService.addPrecinctNeighbors(stateId, countyId, precinctCName, neighbors);
+    }
+
+    @DeleteMapping(value = "/data/neighbors")
+    public void receivePrecinctDeletedNeighbors(@PathVariable String stateId, @PathVariable String countyId,
+                                                @PathVariable String precinctCName, @RequestBody Set<String> neighbors) {
+        precinctService.removePrecinctNeighbors(stateId, countyId, precinctCName, neighbors);
+    }
 }
