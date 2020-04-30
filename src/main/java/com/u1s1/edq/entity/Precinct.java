@@ -83,7 +83,7 @@ public class Precinct implements Serializable {
         this.electionData = electionData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "precinct_neighbors",
             joinColumns = @JoinColumn(name = "precinct_cname"),
             inverseJoinColumns = @JoinColumn(name = "neighbor_cname"))
