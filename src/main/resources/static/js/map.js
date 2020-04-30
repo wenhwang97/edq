@@ -400,10 +400,34 @@ function precinctEvents(county){  //here shouldn't be county should be state
         };
       });
       /*show the neighbour(fake for now)*/
-      // var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
-      // var url = "/precinct/" + precinctID;
-      // var neighbourVrl = "/data/neighbors";
-      // getNeighbour(urlpart1 + url + neighbourVrl,precincts[ID]);
+      // ri-kent-0605
+      // precincts["ri-kent-0605"].getPrecinctLayer().setStyle((feature) => {
+      //   return {
+      //     fillColor: "rgba(168,50,158,0.25)",
+      //     strokeColor: "rgba(168,50,158,0.28)",
+      //     strokeWeight: 2,
+      //     zIndex: 1,
+      //   };
+      // });
+      var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
+      var url = "/precinct/" + precinctID;
+      var neighbourUrl = "/data/neighbors";
+      getNeighbour(urlpart1 + url + neighbourUrl, county);
+      // console.log(neighbourlist);
+      // // for(let i in precincts){
+      // //   styleCounties(precincts[i].getPrecinctLayer());
+      // // }
+      // for(let i=0; i<neighbourlist.length; i++){
+      //   precincts[i].getPrecinctLayer().setStyle((feature) => {
+      //     return {
+      //       fillColor: "rgba(168,50,158,0.25)",
+      //       strokeColor: "rgba(168,50,158,0.28)",
+      //       strokeWeight: 2,
+      //       zIndex: 1,
+      //     };
+      //   });
+      // }
+
       lastPrecinct=precinctID;
     });
 
@@ -423,9 +447,33 @@ async function precinctFetchData(url,precinct) {
   document.getElementById("LibertarianData").textContent = myJson.libertarianVote;
   document.getElementById("DemocraticData").textContent = myJson.democraticVote;
 }
-async function getNeighbour(url, precinct) {
+async function getNeighbour(url, county) {
+  precincts = county.getPrecincts();
+  console.log(precincts);
   let response = await fetch(url);
   let myJson = await response.json();
   console.log("neighbour");
   console.log(myJson);
+  // for(let i in precincts){
+  //   styleCounties(precincts[i].getPrecinctLayer());
+  // }
+  for(let i=0; i<myJson.length; i++){
+    console.log(myJson[i]);
+    console.log(myJson[i].substring(0,myJson[i].length-5));
+    console.log(county.id);
+    if(myJson[i].substring(0,myJson[i].length-5)!=county.id){
+      // console.log(myJson[i].substring(0,myJson[i].length-4));
+      console.log("different??");
+      continue;
+    }
+    precincts[myJson[i]].getPrecinctLayer().setStyle((feature) => {
+      return {
+        fillColor: "rgba(168,50,158,0.25)",
+        strokeColor: "rgba(168,50,158,0.28)",
+        strokeWeight: 2,
+        zIndex: 1,
+      };
+    });
+  }
+  // lastNeighbour= myJson;
 }
