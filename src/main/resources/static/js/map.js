@@ -253,8 +253,9 @@ async function handleRedirect(
           google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
             countyID = event.feature.o; //get the current county ID
             var RIcounty = state.getCountyByID(countyID); //get current county object in the state
+            console.log(RIcounty.hasPrecincts());
             if (RIcounty.hasPrecincts()) {  //when there is precinct exist
-              // console.log("has!!!!!!!!!!!!!!!!!!!!!");
+              console.log("has!!!!!!!!!!!!!!!!!!!!!");
               precincts = RIcounty.getPrecincts();  //load the precinct
               // console.log(precinctLayers);
               var i = 0;
@@ -265,12 +266,14 @@ async function handleRedirect(
               }
               // console.log(i);
               if (i != 0) {//not loaded
+                console.log("no precincts");
                 addPrecinctsToMap(precincts);
                 PrecinctCheckBox.checked = true;
               }
-              if(selectedCounty==null){
+              if(selectedCounty==null||selectedCounty==RIcounty){//di yi ci dian
                 selectedCounty= RIcounty;
               }else{
+                console.log("have precincts");
                 removePrecinctToMap(selectedCounty);
                 selectedCounty= RIcounty;
               }
