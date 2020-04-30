@@ -457,10 +457,14 @@ async function getNeighbour(url, county) {
   // for(let i in precincts){
   //   styleCounties(precincts[i].getPrecinctLayer());
   // }
+  for(var key in precincts){
+    styleCounties(precincts[key].getPrecinctLayer());
+  }
   for(let i=0; i<myJson.length; i++){
     console.log(myJson[i]);
     console.log(myJson[i].substring(0,myJson[i].length-5));
     console.log(county.id);
+    // console.log(list(precincts.values()));
     if(myJson[i].substring(0,myJson[i].length-5)!=county.id){
       // console.log(myJson[i].substring(0,myJson[i].length-4));
       console.log("different??");
