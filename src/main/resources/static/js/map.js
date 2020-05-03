@@ -2,7 +2,7 @@ const THREE_STATES = ["California", "Texas", "Rhode Island"];
 var map;
 var dataLayers = {}; // all dataLayer (geojson)
 var r = document.getElementById("countyCheckBox");
-var precinctCheckBox=document.getElementById("precinctCheckBox");
+var precinctCheckBox=document.getElementById("PrecinctCheckBox");
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
