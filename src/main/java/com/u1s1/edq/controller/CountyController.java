@@ -28,6 +28,9 @@ public class CountyController {
     public Set<ResponseObject> sendPrecincts(@PathVariable String stateId, @PathVariable String countyId) {
 
         County county = countyService.getCountyFromMem(stateId, countyId);
+        if (county.getPrecincts().size() == 0) {
+            countyService.initPrecincts(county);
+        }
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 
         for (Precinct precinct : county.getPrecincts()) {

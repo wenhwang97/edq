@@ -29,7 +29,6 @@ public class Polygon implements Serializable, Cloneable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "polygon_id")
-    @Fetch(FetchMode.JOIN)
     public List<GeoVertex> getVertices() {
         return vertices;
     }

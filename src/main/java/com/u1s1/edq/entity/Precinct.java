@@ -1,25 +1,27 @@
 package com.u1s1.edq.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.u1s1.edq.enums.PrecinctType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "PRECINCTS")
 public class Precinct implements Serializable {
 
     private String canonicalName;
+    private County county;
 
     private String name;
     private PrecinctType type;
     private DemoData demoData;
 
-    private List<Polygon> boundary = new ArrayList<Polygon>();
+    private Set<Polygon> boundary = new HashSet<Polygon>();
     private List<ElectionData> electionData = new ArrayList<ElectionData>();
     private List<Precinct> neighbors = new ArrayList<Precinct>();
 
@@ -40,6 +42,17 @@ public class Precinct implements Serializable {
 
     public void setCanonicalName(String canonicalName) {
         this.canonicalName = canonicalName;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "county_id")
+    @JsonIgnore
+    public County getCounty() {
+        return county;
+    }
+
+    public void setCounty(County county) {
+        this.county = county;
     }
 
     @Column(nullable = false)
@@ -64,12 +77,11 @@ public class Precinct implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "precinct_id")
-    @Fetch(FetchMode.JOIN)
-    public List<Polygon> getBoundary() {
+    public Set<Polygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(List<Polygon> boundary) {
+    public void setBoundary(Set<Polygon> boundary) {
         this.boundary = boundary;
     }
 

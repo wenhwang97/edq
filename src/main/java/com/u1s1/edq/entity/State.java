@@ -47,8 +47,7 @@ public class State implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "state_id")
+    @Transient
     public Set<County> getCounties() {
         return counties;
     }

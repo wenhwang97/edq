@@ -1,7 +1,6 @@
 package com.u1s1.edq.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +14,7 @@ import java.util.Set;
 public class County implements Serializable {
 
     private String id;
+    private State state;
 
     private String name;
     private DemoData demoData;
@@ -32,6 +32,17 @@ public class County implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "state_id")
+    @JsonIgnore
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Column(nullable = false)
@@ -73,8 +84,7 @@ public class County implements Serializable {
         this.electionData = electionData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "county_id")
+    @Transient
     public Set<Precinct> getPrecincts() {
         return precincts;
     }
