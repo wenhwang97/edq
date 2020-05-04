@@ -374,7 +374,7 @@ function precinctEvents(county){  //here shouldn't be county should be state
         // precincts[lastPrecinct].getPrecinctLayer().revertStyle();
         styleCounties(precincts[lastPrecinct].getPrecinctLayer());
       }
-      inforChange(countyID+" "+event.feature.o);  //change the title for
+      inforChange(event.feature.o);  //change the title for
       let precinctID=event.feature.o;
       if(precincts[ID].hasData==true){//if have the voting data
         document.getElementById("RepublicanData").textContent = precincts[ID].getPresidentialVote("republicanVote");

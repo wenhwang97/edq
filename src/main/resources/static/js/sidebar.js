@@ -78,7 +78,7 @@ function ChangeData(InputField, DataText,voteType){
         }
         document.getElementById(DataText).textContent=Data;
         var str = document.getElementById("precinct title info").textContent;
-        var PrecinctId=str.substring(str.length-4);
+        var PrecinctId=str.substring(13);
         var StateId = str.substring(13,15);
         var countyID= str.substring(13,str.length-5);
         console.log(StateId);   //stateID
@@ -89,7 +89,12 @@ function ChangeData(InputField, DataText,voteType){
         // }
         // console.log(allStates["ri"].getAllCounties());
         // allStates[StateId].
-        let Preicinct = allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId);
+        console.log(allStates[StateId]);
+        console.log(allStates[StateId].getCountyByID(countyID));
+        console.log();
+        // console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(parseInt(PrecinctId)));
+        let Preicinct = allStates[StateId].getCountyByID(countyID).getPrecinctByID(parseInt(PrecinctId));
+        console.log(PrecinctId);
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote(voteType,Data);
         //然后post
         var url = 'http://localhost:8080/state/';
@@ -122,7 +127,7 @@ function ChangeData(InputField, DataText,voteType){
         //
         // }
         fetch(url+url2+url3+url4, {
-            method: 'POST', // or 'PUT'
+            method: 'PUT', // or 'PUT'
             body:JSON.stringify(data), // data can be `string` or {object}!
             headers: new Headers({
                 'Content-Type': 'application/json'
