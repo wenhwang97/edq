@@ -1,4 +1,4 @@
-const THREE_STATES = ["California", "Texas", "Rhode Island"];
+const THREE_STATES = ["Virginia", "Texas", "Rhode Island"];
 var map;
 var dataLayers = {}; // all dataLayer (geojson)
 var r = document.getElementById("countyCheckBox");
@@ -50,9 +50,23 @@ function initMap() {
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
     if (THREE_STATES.includes(event.feature.j.name)) {
+      let response;
       switch (event.feature.j.name) {
 
-        case THREE_STATES[0]:// California
+        case THREE_STATES[0]:// fujiniya
+          // r.disabled=false;
+          // response = await fetch("http://localhost:8080/state/va");
+          // if(response.status==500){
+          //   break;
+          // }
+          // // console.log(response);
+          // vgBoderLayer = new google.maps.Data();
+          // vgBoderLayer.loadGeoJson(RI_STATE);
+          // vgBoderLayer.setMap(map);
+          // styleState(vgBoderLayer);
+          // var virginia = new State("va", "Virginia");
+          // allStates["ri"] = rhode;
+          // await handleRedirect("Virginia State Level", 9, RI_CENTER, RI_STRICT_BOUND,rhode);
           break;
 
         case THREE_STATES[1]:// Texas
@@ -60,7 +74,7 @@ function initMap() {
 
         case THREE_STATES[2]:// Rhode Island
           r.disabled=false;
-          let response = await fetch("http://localhost:8080/state/ri");
+          response = await fetch("http://localhost:8080/state/ri");
           if(response.status==500){
             break;
           }
