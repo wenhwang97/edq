@@ -54,7 +54,7 @@ public class County implements Serializable {
         this.name = name;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "demo_data")
     public DemoData getDemoData() {
         return demoData;

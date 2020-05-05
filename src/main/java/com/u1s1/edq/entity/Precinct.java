@@ -65,7 +65,7 @@ public class Precinct implements Serializable {
         this.type = type;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "demo_data")
     public DemoData getDemoData() {
         return demoData;
@@ -85,7 +85,7 @@ public class Precinct implements Serializable {
         this.boundary = boundary;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "precinct_id")
     public List<ElectionData> getElectionData() {
         return electionData;
@@ -95,7 +95,7 @@ public class Precinct implements Serializable {
         this.electionData = electionData;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "precinct_neighbors",
             joinColumns = @JoinColumn(name = "precinct_cname"),
             inverseJoinColumns = @JoinColumn(name = "neighbor_cname"))
