@@ -23,10 +23,10 @@ const RI_STRICT_BOUND = {
 };
 const VA_STRICT_BOUND = {
   // bound the map in Rhode Island zone
-  north: 37.7916,
-  south: 37.07,
-  west: -81.4569,
-  east: -75.3569,
+  north: 42.7916,
+  south: 32.07,
+  west: -85.4569,
+  east: -72.3569,
 };
 
 const US_CENTER = { lat: 37.0902405, lng: -95.7128906 };

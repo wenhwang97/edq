@@ -136,7 +136,8 @@
   white-space: nowrap;
 }
 .right_up_con_text_right{
-  /* margin-top: 10%; */
+  /* margin-left: 10%; */
+  width: 40%;
   padding: 5px;
   float: left;
 }
@@ -262,4 +263,38 @@
 .table_p tbody tr:nth-child(2n + 1) {
   background-color: #072951;
   box-shadow: -10px 0px 15px #034c6a inset, 10px 0px 15px #034c6a inset;
+}
+/* Tabs*/
+section {
+  padding: 60px 0;
+}
+
+section .section-title {
+  text-align: center;
+  color: #337ab7;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+#tabs{
+background: #337ab7;
+  color: #eee;
+}
+#tabs h6.section-title{
+  color: #eee;
+}
+
+#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #f3f3f3;
+  background-color: transparent;
+  border-color: transparent transparent #f3f3f3;
+  border-bottom: 4px solid !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+#tabs .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  color: #eee;
+  font-size: 20px;
 }

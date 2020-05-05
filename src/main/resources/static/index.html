@@ -8,16 +8,16 @@
 
     <!-- Boostrap CDNs -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
     <!-- custom css -->
     <!-- <link rel="stylesheet" href="../styles/bootstrap.min.css"> -->
@@ -28,42 +28,154 @@
 </head>
 
 <body>
-<!-- Navbar -->
-<div class="container-fluid">
-    <div class="row">
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="#" style="color: #FFFFFF">Congressional Redistricting System</a>
-            <!-- Dropdown for states -->
-            <ul class="nav nav-pills">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="true" aria-expanded="false">States</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#!">California</a>
-                        <a class="dropdown-item" href="#!">Texas</a>
-                        <a class="dropdown-item" href="#!">Rhode Island</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-<div class="content">
-    <div class="content-left">
-        <div class="map_box" id="map"></div>
-        <div class="left-btn" onclick="leftBtn()">
-            <img src="../images/left.png">
+    <!-- Navbar -->
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="#" style="color: #FFFFFF">Congressional Redistricting System</a>
+                <!-- Dropdown for states -->
+                <ul class="nav nav-pills">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">States</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#!">California</a>
+                            <a class="dropdown-item" href="#!">Texas</a>
+                            <a class="dropdown-item" href="#!">Rhode Island</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-    <div class="content-right" id = "right">
-        <div class="ifrm-html">
-            <div class="right_up">
-                <div class="right_up_tab">Map info</div>
+
+    <div class="content">
+        <div class="content-left">
+            <div class="map_box" id="map"></div>
+            <div class="left-btn" onclick="leftBtn()">
+                <img src="../images/left.png">
+            </div>
+        </div>
+        <div class="content-right" id="right">
+
+            <div class="ifrm-html">
+                <div class="right_up">
+                    <section id="tabs">
+                        <div class="container">
+                            <h6 class="section-title h1">Data Center</h6>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <nav>
+                                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                                href="#nav-home" role="tab" aria-controls="nav-home"
+                                                aria-selected="true">Change Data</a>
+                                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                                href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                                aria-selected="false">History</a>
+                                            <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                                        <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content py-1 px-1 px-sm-2" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                            aria-labelledby="nav-home-tab">
+                                            <div class="right_up_con">
+                                                <div id="precinct title info" class="tit_top">Data infor: </div>
+                                                <input class="ml-2" type="checkbox" id="countyCheckBox">Show County<br>
+                                                <input class="ml-2" type="checkbox" id="PrecinctCheckBox">Show
+                                                Precinct<br>
+                                                <div class="table-context"></div>
+                                                <div class="right_up_con_all" id="tol">
+                                                </div>
+                                                <a class="side-data dropdown-toggle" data-toggle="dropdown"
+                                                    role="button" aria-haspopup="true" aria-expanded="false"
+                                                    id="ChooseData">Data</a>
+                                                <div class="dropdown-menu">
+                                                    <div class="dropdown-item1"
+                                                        onclick="changeData('2016 Presidential Voting','Voting')">2016
+                                                        Presidential Voting</div>
+                                                    <div class="dropdown-item2"
+                                                        onclick="changeData('2016 Congressional Voting')">2016
+                                                        Congressional Voting</div>
+                                                    <div class="dropdown-item3"
+                                                        onclick="changeData('2018 Congressional Voting')">2018
+                                                        Congressional Voting</div>
+                                                    <div class="dropdown-item4" onclick="changeData('Demographic')">
+                                                        Demographic</div>
+                                                </div>
+                                            </div>
+                                            <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data
+                                            </div>
+                                            <div class="right_up_magin_top">
+                                                <div class='DataName' id="DataType">
+                                                    <div class="text_left_a">Republican:</div>
+                                                    <div class="text_left_a">Democracy:</div>
+                                                    <div class="text_left_a">Libertatian: </div>
+                                                    <div class="text_left_a">Green Parties:</div>
+                                                </div>
+                                                <div class="text_left_a_data">
+                                                    <div class="testdata" id="RepublicanData">123</div>
+                                                    <div class="testdata" id="DemocraticData">123</div>
+                                                    <div class="testdata" id="LibertarianData">321</div>
+                                                    <div class="testdata" id="GreenData">312</div>
+                                                </div>
+                                                <div class="right_up_con_text_right" id="right_up_con_text_right">
+
+                                                    <div class="RepublicanInput" id="RepublicanInput">
+                                                        <input id="RepublicanChange" class="Change" type="image"
+                                                            src="../images/submit.png" onclick="addRepubBotton()" />
+                                                    </div>
+                                                    <div class="DemocracyInput" id="DemocracyInput">
+                                                        <input id="DemocracyChange" class="Change" type="image"
+                                                            src="../images/submit.png" onclick="addDemoBotton()" />
+                                                    </div>
+                                                    <div class="LibertatianInput" id="LibertatianInput">
+                                                        <input id="LibertatianChange" class="Change" type="image"
+                                                            src="../images/submit.png" onclick="addLibBotton()" />
+                                                    </div>
+                                                    <div class="GreenInput" id="GreenInput">
+                                                        <input id="GreenChange" class="Change" type="image"
+                                                            src="../images/submit.png" onclick="addGreenBotton()" />
+                                                    </div>
+                                                </div>
+                                                <div class="right_down magin_top">
+                                                    <div class="right_up_tab"></div>
+                                                    <textarea class="CommentArea"></textarea>
+                                                    <button class="CommentSubmit btn btn-primary"
+                                                        type="button">Submit</button>
+                                                    <table class="right_table" id="table">
+                                                    </table>
+
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                            aria-labelledby="nav-profile-tab">
+                                            
+                                        </div>
+                                        <!-- <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                        Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                        Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                                    </div> -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- <div class="right_up_tab">Map info</div>
+
                 <div class="right_up_con">
                     <div id = "precinct title info" class="tit_top">Data infor: </div>
-                    <input type="checkbox" id="countyCheckBox">Show County<br>
-                    <input type="checkbox" id="PrecinctCheckBox">Show Precinct<br>
+                    <input class="ml-2" type="checkbox" id="countyCheckBox">Show County<br>
+                    <input class="ml-2" type="checkbox" id="PrecinctCheckBox">Show Precinct<br>
                     <div class="table-context"></div>
                     <div class="right_up_con_all" id="tol">
                     </div>
@@ -76,10 +188,10 @@
                         <div class="dropdown-item4" onclick="changeData('Demographic')">Demographic</div>
                     </div>
 
+                </div> -->
                 </div>
-            </div>
-            <!-- The grey part -->
-            <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data</div>
+                <!-- The grey part -->
+                <!-- <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data</div>
             <div class="right_up_magin_top">
                 <div class='DataName'id = "DataType">
                     <div class="text_left_a">Republican:</div>
@@ -111,32 +223,32 @@
 
             </div>
             <!-- Change the data part -->
-            <div class="right_down magin_top">
+                <!-- <div class="right_down magin_top">
                 <div class="right_up_tab"></div>
                 <textarea class = "CommentArea" ></textarea>
-                <button class="CommentSubmit" type="button">Submit</button>
+                <button class="CommentSubmit btn btn-primary" type="button">Submit</button>
                 <table class="right_table" id="table">
                 </table>
 
 
+            </div> -->
             </div>
         </div>
+
     </div>
 
-</div>
 
-
-<!-- Scripts -->
-<!-- <script src="../js/jquery-2.2.0.min.js"></script> -->
-<script src="../js/setting.js"></script>
-<script src="../js/Precinct.js"></script>
-<script src="../js/County.js"></script>
-<script src="../js/State.js"></script>
-<script src="../js/map.js"></script>
-<script src="../js/index.js"></script>
-<script src="../js/sidebar.js"></script>
-<!-- <script src="../js/mapControl.js"></script> -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDmXQKCLMhm__Uu6PWSH3Cf-PgCzEG_4&callback=initMap"
+    <!-- Scripts -->
+    <!-- <script src="../js/jquery-2.2.0.min.js"></script> -->
+    <script src="../js/setting.js"></script>
+    <script src="../js/Precinct.js"></script>
+    <script src="../js/County.js"></script>
+    <script src="../js/State.js"></script>
+    <script src="../js/map.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <!-- <script src="../js/mapControl.js"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDmXQKCLMhm__Uu6PWSH3Cf-PgCzEG_4&callback=initMap"
         async defer></script>
 
 </body>

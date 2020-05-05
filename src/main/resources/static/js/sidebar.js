@@ -37,8 +37,8 @@ function resore(NewInputId,conbutId,concleId,origional,changeButtion){
         but.setAttribute("onclick","addGreenBotton()");
     }
     but.style.marginLeft="5%";
-    but.style.height="20px";
-    but.style.width="20px";
+    but.style.height="15px";
+    but.style.width="15px";
     NewInput.remove(NewInput);
     conbut.remove(conbut);
     canbut.remove(canbut);

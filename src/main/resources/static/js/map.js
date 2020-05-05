@@ -66,7 +66,7 @@ function initMap() {
           styleState(vgBoderLayer);
           var virginia = new State("va", "Virginia");
           allStates["va"] = virginia;
-          await handleRedirect("Virginia State Level", 4, VA_CENTER, VA_STRICT_BOUND,virginia);
+          await handleRedirect("Virginia State Level", 6, VA_CENTER, VA_STRICT_BOUND,virginia);
           break;
 
         case THREE_STATES[1]:// Texas
@@ -125,7 +125,16 @@ function styleCounties(dataLayer) {
     // #101778 = light blue
     return {
       strokeColor: "#4582e6",
-      strokeWeight: 2,
+      strokeWeight: 1,
+      zIndex: 2,
+    };
+  });
+}
+function styleCounty(dataLayer) {
+  dataLayer.setStyle((feature) => {
+    // #101778 = light blue
+    return {
+      strokeWeight: 1,
       zIndex: 1,
     };
   });
@@ -154,6 +163,7 @@ function addCountiesToMap(counties){
   for (var id in counties){
     countyLayer = counties[id].getLayer();
     countyLayer.setMap(map);
+    styleCounty(countyLayer);
   }
 }
 function addPrecinctsToMap(precincts){
@@ -474,7 +484,7 @@ async function getNeighbour(url, county, precinctID) {
         fillColor: "rgba(168,50,158,0.25)",
         strokeColor: "rgba(168,50,158,0.28)",
         strokeWeight: 2,
-        zIndex: 1,
+        zIndex: 2,
       };
     });
   }
