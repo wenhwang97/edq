@@ -4,6 +4,8 @@ import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
 import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.enums.PrecinctType;
+import com.u1s1.edq.repository.DemoDataRepository;
+import com.u1s1.edq.repository.ElectionDataRepository;
 import com.u1s1.edq.repository.PrecinctRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,15 @@ import java.util.Set;
 public class PrecinctService {
 
     private PrecinctRepository precinctRepo;
+    private DemoDataRepository demoDataRepo;
+    private ElectionDataRepository electionDataRepo;
     private CachedContainer cachedContainer;
 
     @Autowired
-    public PrecinctService(PrecinctRepository precinctRepo, CachedContainer cachedContainer) {
+    public PrecinctService(PrecinctRepository precinctRepo, DemoDataRepository demoDataRepo, ElectionDataRepository electionDataRepo, CachedContainer cachedContainer) {
         this.precinctRepo = precinctRepo;
+        this.demoDataRepo = demoDataRepo;
+        this.electionDataRepo = electionDataRepo;
         this.cachedContainer = cachedContainer;
     }
 
@@ -29,8 +35,14 @@ public class PrecinctService {
 
     public void updatePrecinctDemoData(String stateId, String countyId, String precinctCName, DemoData data) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
-        precinct.setDemoData(data);
-        precinctRepo.save(precinct);
+
+        precinct.getDemoData().setTotalPop(data.getTotalPop());
+        precinct.getDemoData().setWhitePop(data.getWhitePop());
+        precinct.getDemoData().setBlackPop(data.getBlackPop());
+        precinct.getDemoData().setHispanicPop(data.getHispanicPop());
+        precinct.getDemoData().setAsianPop(data.getAsianPop());
+
+        demoDataRepo.save(precinct.getDemoData());
     }
 
     public void updatePrecinctType(String stateId, String countyId, String precinctCName, PrecinctType type) {
@@ -67,11 +79,11 @@ public class PrecinctService {
                 electionData.setRepublicanVote(data.getRepublicanVote());
                 electionData.setLibertarianVote(data.getLibertarianVote());
                 electionData.setGreenVote(data.getGreenVote());
+
+                electionDataRepo.save(electionData);
                 break;
             }
         }
-
-        precinctRepo.save(precinct);
     }
 
     public void addPrecinctNeighbors(String stateId, String countyId, String precinctCName, Set<String> neighbors) {
