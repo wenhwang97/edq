@@ -187,7 +187,6 @@ function removePrecinctToMap(County){
 }
 
 
-
 /**
  * this function handles redirection via clicking on US map
  * @param {*} pageTitle : (string) title of new page
@@ -234,9 +233,12 @@ async function handleRedirect(
     addCountiesToMap(counties);
   } else {  //fetch the data
     var url = 'http://localhost:8080/state/'+stateName+'/show-counties';
-
+    // document.body.style.cursor="not-allowed";
+    $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
     let response = await fetch(url);
     let myJson = await response.json();
+    document.body.style.cursor = "default";
+    $.unblockUI();
     console.log(myJson);
     var tottalCounties = [];
     console.log(myJson);

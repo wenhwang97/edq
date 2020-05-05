@@ -102,9 +102,10 @@ function ChangeData(InputField, DataText,voteType){
         var url3=countyID+'/precinct/';
         var url4 = PrecinctId+'/data/vote/presidential/2016';
         console.log(url+url2+url3+url4);
-        var PrecinctIdInt = parseInt(PrecinctId);
+        // console.log()
+        // var PrecinctIdInt = parseInt(PrecinctId);
         var data = {
-            "id" : PrecinctIdInt,
+            "id" : PrecinctId,
             "type" : "PRESIDENTIAL",
             "year" : 2016,
             "republicanVote" : RData,
@@ -126,6 +127,7 @@ function ChangeData(InputField, DataText,voteType){
         // }catch{
         //
         // }
+        console.log(JSON.stringify(data));
         fetch(url+url2+url3+url4, {
             method: 'PUT', // or 'PUT'
             body:JSON.stringify(data), // data can be `string` or {object}!
