@@ -54,19 +54,19 @@ function initMap() {
       switch (event.feature.j.name) {
 
         case THREE_STATES[0]:// fujiniya
-          // r.disabled=false;
-          // response = await fetch("http://localhost:8080/state/va");
-          // if(response.status==500){
-          //   break;
-          // }
-          // // console.log(response);
-          // vgBoderLayer = new google.maps.Data();
-          // vgBoderLayer.loadGeoJson(RI_STATE);
-          // vgBoderLayer.setMap(map);
-          // styleState(vgBoderLayer);
-          // var virginia = new State("va", "Virginia");
-          // allStates["ri"] = rhode;
-          // await handleRedirect("Virginia State Level", 9, RI_CENTER, RI_STRICT_BOUND,rhode);
+          r.disabled=false;
+          response = await fetch("http://localhost:8080/state/va");
+          if(response.status==500){
+            break;
+          }
+          // console.log(response);
+          vgBoderLayer = new google.maps.Data();
+          vgBoderLayer.loadGeoJson(VA_STATE);
+          vgBoderLayer.setMap(map);
+          styleState(vgBoderLayer);
+          var virginia = new State("va", "Virginia");
+          allStates["va"] = virginia;
+          await handleRedirect("Virginia State Level", 4, VA_CENTER, VA_STRICT_BOUND,virginia);
           break;
 
         case THREE_STATES[1]:// Texas
@@ -203,131 +203,137 @@ async function handleRedirect(
   map.setRestriction({latLngBounds: borderRestriction});
   // load texas geographic data
   removeAllGeojson(); // clear map
+  var stateName;
   switch (pageTitle) {
-    case "Texas State Level":
-
+    case "Virginia State Level":
+      stateName='va';
+      break;
     case "Rhode Island State Level":
-      rhode = state;
-      // let response = await fetch("http://localhost:8080/state/ri");
-      // console.log(response);
-      // let RIJson = await response.json();
-      // console.log(RIJson);
-      if (state.hasCounties()) {  //
-        console.log("has!!!!!");
-        counties = state.getAllCounties();
-        addCountiesToMap(counties);
-      } else {  //fetch the data
-        var url = 'http://localhost:8080/state/ri/show-counties';
-        let response = await fetch(url);
-        let myJson = await response.json();
-        console.log(myJson);
-        var tottalCounties = [];
-        console.log(myJson);
-        for (i = 0; i < myJson.length; i++) {  //how many counties
-          var countyCoords = [];
-          var county = new County(myJson[i].id);
-          for (j = 0; j < myJson[i].obj.length; j++) {  //for current counties
-            var countyPolygon = [];
-            for (k = 0; k < myJson[i].obj[j].vertices.length; k++) { //for current counties'polygon
-              countyPolygon.push({lat: myJson[i].obj[j].vertices[k].y_pos, lng: myJson[i].obj[j].vertices[k].x_pos});
-            }
-            countyCoords.push(countyPolygon);
-          }
-          tottalCounties.push(countyCoords);
-          Countydata = new google.maps.Data();
-          geometry = new google.maps.Data.Polygon(countyCoords);
-          Countydata.add({geometry: geometry, id: myJson[i].id});
-          county.setCountyLayer(Countydata);
-          state.addCounty(county.id, county);
-          console.log(county.id);
-          // localStorage.setItem(rhode);
-        }
-        r.addEventListener('change', function () {  //county's check boxes
-          if (this.checked) {
-            addCountiesToMap(state.getAllCounties());
-          } else {
-            counties = state.getAllCounties();
-            for (let ID in counties) {
-              countyLayer = counties[ID].getLayer();
-              countyLayer.setMap(null);
-            }
-          }
-        });
-        console.log(state.getAllCounties());
-        counties = state.getAllCounties();
-        let countyID;
-        console.log("counties:  ");
-        console.log(counties);
-        let currentCounty;
-        for (let ID in counties) {
-          console.log(counties[ID]);
-          countyLayer = counties[ID].getLayer();
-          let havePrecinct = 0;
+      stateName='ri';
+      break;
 
-          google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
-            countyID = event.feature.o; //get the current county ID
-            var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
-            console.log(selectedCounty.hasPrecincts());
-            if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
-              precincts = selectedCounty.getPrecincts();  //load the precinct
-              // console.log(precinctLayers);
-              var i = 0;
-              for (let ID in precincts) {  //check the map is loaded or not
-                if (precincts[ID].getPrecinctLayer().getMap() == null) {
-                  i++;
-                }
-              }
-              // console.log(i);
-              if (i != 0) {//not loaded
-                console.log("no precincts");
-                addPrecinctsToMap(precincts);
-                precinctCheckBox.checked = true;
-              }
-              if(currentCounty==null||currentCounty==selectedCounty){//di yi ci dian
-                currentCounty= selectedCounty;
-              }else{
-                console.log("have precincts");
-                removePrecinctToMap(currentCounty);
-                currentCounty= selectedCounty;
-              }
-              precinctEvents(selectedCounty);
-              // currentCounty= selectedCounty;
-            } else {//find precinct in server
-              precincts = selectedCounty.getPrecincts();
-              precinctCheckBox.disabled = false;
-              precinctCheckBox.checked = true;
-              precinctFetch(selectedCounty);
-              havePrecinct=1;
-              console.log("after fetch");
-              if(currentCounty==null){ //no county has been clicked yet
-                currentCounty= selectedCounty;
-              }else{  //remove last clicked county
-                // console.log(currentCounty);
-                removePrecinctToMap(currentCounty);
-                currentCounty= selectedCounty;
-              }
-            }
-          });
+  }
+  rhode = state;
+  // let response = await fetch("http://localhost:8080/state/ri");
+  // console.log(response);
+  // let RIJson = await response.json();
+  // console.log(RIJson);
+  if (state.hasCounties()) {  //
+    console.log("has!!!!!");
+    counties = state.getAllCounties();
+    addCountiesToMap(counties);
+  } else {  //fetch the data
+    var url = 'http://localhost:8080/state/'+stateName+'/show-counties';
+
+    let response = await fetch(url);
+    let myJson = await response.json();
+    console.log(myJson);
+    var tottalCounties = [];
+    console.log(myJson);
+    for (i = 0; i < myJson.length; i++) {  //how many counties
+      var countyCoords = [];
+      var county = new County(myJson[i].id);
+      for (j = 0; j < myJson[i].obj.length; j++) {  //for current counties
+        var countyPolygon = [];
+        for (k = 0; k < myJson[i].obj[j].vertices.length; k++) { //for current counties'polygon
+          countyPolygon.push({lat: myJson[i].obj[j].vertices[k].y_pos, lng: myJson[i].obj[j].vertices[k].x_pos});
         }
-        precinctCheckBox.addEventListener('change', function () {//show precinct on the county or not
-          if (this.checked) {
-            addPrecinctsToMap(precincts);
-          } else {
-            for (let ID in precincts) {  //not show
-              precincts[ID].getPrecinctLayer().setMap(null);
-              precinctCheckBox.checked = false;
+        countyCoords.push(countyPolygon);
+      }
+      tottalCounties.push(countyCoords);
+      Countydata = new google.maps.Data();
+      geometry = new google.maps.Data.Polygon(countyCoords);
+      Countydata.add({geometry: geometry, id: myJson[i].id});
+      county.setCountyLayer(Countydata);
+      state.addCounty(county.id, county);
+      console.log(county.id);
+      // localStorage.setItem(rhode);
+    }
+    r.addEventListener('change', function () {  //county's check boxes
+      if (this.checked) {
+        addCountiesToMap(state.getAllCounties());
+      } else {
+        counties = state.getAllCounties();
+        for (let ID in counties) {
+          countyLayer = counties[ID].getLayer();
+          countyLayer.setMap(null);
+        }
+      }
+    });
+    console.log(state.getAllCounties());
+    counties = state.getAllCounties();
+    let countyID;
+    console.log("counties:  ");
+    console.log(counties);
+    let currentCounty;
+    for (let ID in counties) {
+      console.log(counties[ID]);
+      countyLayer = counties[ID].getLayer();
+      let havePrecinct = 0;
+
+      google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
+        countyID = event.feature.o; //get the current county ID
+        var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
+        console.log(selectedCounty.hasPrecincts());
+        if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
+          precincts = selectedCounty.getPrecincts();  //load the precinct
+          // console.log(precinctLayers);
+          var i = 0;
+          for (let ID in precincts) {  //check the map is loaded or not
+            if (precincts[ID].getPrecinctLayer().getMap() == null) {
+              i++;
             }
           }
-        });
+          // console.log(i);
+          if (i != 0) {//not loaded
+            console.log("no precincts");
+            addPrecinctsToMap(precincts);
+            precinctCheckBox.checked = true;
+          }
+          if(currentCounty==null||currentCounty==selectedCounty){//di yi ci dian
+            currentCounty= selectedCounty;
+          }else{
+            console.log("have precincts");
+            removePrecinctToMap(currentCounty);
+            currentCounty= selectedCounty;
+          }
+          precinctEvents(stateName,selectedCounty);
+          // currentCounty= selectedCounty;
+        } else {//find precinct in server
+          precincts = selectedCounty.getPrecincts();
+          precinctCheckBox.disabled = false;
+          precinctCheckBox.checked = true;
+          precinctFetch(stateName,selectedCounty);
+          havePrecinct=1;
+          console.log("after fetch");
+          if(currentCounty==null){ //no county has been clicked yet
+            currentCounty= selectedCounty;
+          }else{  //remove last clicked county
+            // console.log(currentCounty);
+            removePrecinctToMap(currentCounty);
+            currentCounty= selectedCounty;
+          }
+        }
+      });
+    }
+    precinctCheckBox.addEventListener('change', function () {//show precinct on the county or not
+      if (this.checked) {
+        addPrecinctsToMap(precincts);
+      } else {
+        for (let ID in precincts) {  //not show
+          precincts[ID].getPrecinctLayer().setMap(null);
+          precinctCheckBox.checked = false;
+        }
       }
+    });
   }
 }
 // console.log(allStates);
 // console.log(allStates["ri"]);
 var b = [];
-async function precinctFetch(county) {
+async function precinctFetch(stateName, county) {
   var countyID =county.id;
-  var precintUrlpart1 = "http://localhost:8080/state/ri/county/";
+  var precintUrlpart1 = "http://localhost:8080/state/"+stateName+"/county/";
   var precintUrlpart2 = "/show-precincts";
   var precintUrl = precintUrlpart1 + countyID + precintUrlpart2;
   let response = await fetch(precintUrl);
@@ -358,9 +364,9 @@ async function precinctFetch(county) {
     precinctLayers[ID].getPrecinctLayer().setMap(null);
   }
   addPrecinctsToMap(precinctLayers);
-  precinctEvents(county);
+  precinctEvents(stateName,county);
 }
-function precinctEvents(county){  //here shouldn't be county should be state
+function precinctEvents(stateName,county){  //here shouldn't be county should be state
   console.log("???test");
   precincts = county.getPrecincts();
   var countyID=county.id;
@@ -397,7 +403,7 @@ function precinctEvents(county){  //here shouldn't be county should be state
         document.getElementById("DemocraticData").textContent = precincts[ID].getPresidentialVote("democraticVote");
       }else { //no voting data
         // var url1 ="/state/{stateId}/county/{countyId}/precinct/{precinctId}/data/vote/presidential/{year}";
-        var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
+        var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
         var url = "/precinct/" + precinctID;
         var urlpart3 = "/data/vote/presidential/2016";
         precinctFetchData(urlpart1 + url + urlpart3, precincts[ID]);
@@ -414,7 +420,7 @@ function precinctEvents(county){  //here shouldn't be county should be state
       });
       /*show the neighbour(fake for now)*/
 
-      var urlpart1 = "http://localhost:8080/state/ri/county/" + countyID;
+      var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
       var url = "/precinct/" + precinctID;
       var neighbourUrl = "/data/neighbors";
       getNeighbour(urlpart1 + url + neighbourUrl, county, precinctID);
@@ -440,6 +446,7 @@ async function precinctFetchData(url,precinct) {
   document.getElementById("DemocraticData").textContent = myJson.democraticVote;
 }
 async function getNeighbour(url, county, precinctID) {
+  console.log(url);
   precincts = county.getPrecincts();
   console.log(precincts);
   let response = await fetch(url);

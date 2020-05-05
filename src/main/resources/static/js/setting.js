@@ -21,11 +21,19 @@ const RI_STRICT_BOUND = {
   west: -72.567629,
   east: -70.295666,
 };
+const VA_STRICT_BOUND = {
+  // bound the map in Rhode Island zone
+  north: 37.7916,
+  south: 37.07,
+  west: -81.4569,
+  east: -75.3569,
+};
 
 const US_CENTER = { lat: 37.0902405, lng: -95.7128906 };
 const CAL_CENTER = { lat: 37.0902405, lng: -121.7128906 }; // coordinate for center of CAL
 const TEXAS_CENTER = { lat: 31.0902405, lng: -98.7128906 }; // coordinate for center of Texas
 const RI_CENTER = { lat: 42.0902405, lng: -71.7128906 }; // coordinate for center of Rhode Island
+const VA_CENTER = {lat: 37.4316, lng: -78.6569};
 const US_STRICT_BOUND = {
   // bound the map in US zone
   north: 49.384359,
@@ -40,6 +48,7 @@ const TEXAS_PRECINCT_PATH = "../data/texas/texasPrecinct.json"; // texas precinc
 const TEXAS_BODER = "../data/texas/texaBoder.json";
 const RI_BODER = "../data/RI/RiBoder.json";
 const RI_STATE= "../data/RI/RI_State_Converted.json"
+const VA_STATE= "../data/VA/VA_State.json"
 
 const SILVIR_STYLE = [
   {
