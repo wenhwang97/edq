@@ -83,7 +83,7 @@ function ChangeData(InputField, DataText,voteType){
         var countyID= str.substring(13,str.length-5);
         console.log(StateId);   //stateID
         console.log(str.substring(13,str.length-5));   //county ID
-        console.log(parseInt(PrecinctId));    //precinct ID
+        // console.log(parseInt(PrecinctId));    //precinct ID
         // for(i=0; i<PrecinctId.length;i++){
         //
         // }
@@ -93,7 +93,7 @@ function ChangeData(InputField, DataText,voteType){
         console.log(allStates[StateId].getCountyByID(countyID));
         console.log();
         // console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(parseInt(PrecinctId)));
-        let Preicinct = allStates[StateId].getCountyByID(countyID).getPrecinctByID(parseInt(PrecinctId));
+        // let Preicinct = allStates[StateId].getCountyByID(countyID).getPrecinctByID(parseInt(PrecinctId));
         console.log(PrecinctId);
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote(voteType,Data);
         //然后post
@@ -105,7 +105,7 @@ function ChangeData(InputField, DataText,voteType){
         // console.log()
         // var PrecinctIdInt = parseInt(PrecinctId);
         var data = {
-            "id" : PrecinctId,
+            // "id" : PrecinctId,
             "type" : "PRESIDENTIAL",
             "year" : 2016,
             "republicanVote" : RData,

@@ -345,11 +345,14 @@ async function handleRedirect(
 var b = [];
 async function precinctFetch(stateName, county) {
   var countyID =county.id;
+
   var precintUrlpart1 = "http://localhost:8080/state/"+stateName+"/county/";
   var precintUrlpart2 = "/show-precincts";
   var precintUrl = precintUrlpart1 + countyID + precintUrlpart2;
+  $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
   let response = await fetch(precintUrl);
   let precinctJson = await response.json();
+  $.unblockUI();
   console.log(precinctJson);
   console.log("the length of precinctJson");
   console.log(precinctJson.length);
