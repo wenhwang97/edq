@@ -1,5 +1,7 @@
 package com.u1s1.edq.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ public class GeoVertex implements Serializable, Cloneable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @JsonIgnore
     public Integer getId() {
         return id;
     }
