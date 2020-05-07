@@ -39,8 +39,9 @@ public class PrecinctService {
         precinct.getDemoData().setTotalPop(data.getTotalPop());
         precinct.getDemoData().setWhitePop(data.getWhitePop());
         precinct.getDemoData().setBlackPop(data.getBlackPop());
-        precinct.getDemoData().setHispanicPop(data.getHispanicPop());
+        precinct.getDemoData().setNativePop(data.getNativePop());
         precinct.getDemoData().setAsianPop(data.getAsianPop());
+        precinct.getDemoData().setOtherPop(data.getOtherPop());
 
         demoDataRepo.save(precinct.getDemoData());
     }
