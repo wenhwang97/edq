@@ -3,6 +3,8 @@ var map;
 var dataLayers = {}; // all dataLayer (geojson)
 var r = document.getElementById("countyCheckBox");
 var precinctCheckBox=document.getElementById("PrecinctCheckBox");
+var changeBoundaryButton = document.getElementById("changeBoundary");
+
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -47,6 +49,7 @@ function initMap() {
 
   r.disabled=true;
   precinctCheckBox.disabled=true;
+  changeBoundaryButton.disabled=true;
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
     if (THREE_STATES.includes(event.feature.j.name)) {
@@ -371,6 +374,7 @@ async function precinctFetch(stateName, county) {
     precinctData = new google.maps.Data();
     Precinctgeometry = new google.maps.Data.Polygon(precinctCoords);
     precinctData.add({geometry: Precinctgeometry, id: precinctJson[i].id});
+    precinct.setBoundary(precinctCoords);
     precinct.setPrecinctLayer(precinctData);
     county.addPrecinct(precinctJson[i].id, precinct);
   }
@@ -387,6 +391,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
   var countyID=county.id;
   console.log(countyID);
   let lastPrecinct;
+  var clickedPrecinct;
   for (let ID in precincts) {
     // console.log("how many precincts");
     precinctLayer=precincts[ID].getPrecinctLayer();
@@ -400,9 +405,18 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     google.maps.event.addListener(precinctLayer, "mouseout", (event) => {
       precincts[ID].getPrecinctLayer().revertStyle();
     });
+    var rectangle;
     google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
       // console.log("qwe!!");
       // console.log(event);
+      clickedPrecinct=ID;
+      if(rectangle!=null){
+        console.log("it is null");
+        rectangle.setMap(null);
+        rectangle.setPaths(null);
+      }
+      changeBoundaryButton.disabled=true;
+      changeBoundaryButton.disabled=false;
       console.log(lastPrecinct);
       if(lastPrecinct!=null){
         console.log(precincts[lastPrecinct]);
@@ -433,18 +447,31 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
           zIndex: 1,
         };
       });
-      /*show the neighbour(fake for now)*/
 
       var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
       var url = "/precinct/" + precinctID;
       var neighbourUrl = "/data/neighbors";
       getNeighbour(urlpart1 + url + neighbourUrl, county, precinctID);
 
-
       lastPrecinct=precinctID;
-    });
 
+    });
   }
+  changeBoundaryButton.addEventListener("click", function(){
+    console.log("start to change boundary");
+    console.log(precincts[clickedPrecinct].getBoundary());
+    rectangle = new google.maps.Polygon({
+      paths: precincts[clickedPrecinct].getBoundary(),
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      zIndex: 3,
+      editable: true
+    });
+    rectangle.setMap(map);
+  });
 }
 
 async function precinctFetchData(url,precinct) {

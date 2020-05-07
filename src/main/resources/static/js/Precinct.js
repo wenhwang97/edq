@@ -5,12 +5,18 @@ class Precinct{
         this.PresidentialVote={
         };
         this.hasData=false;
+        this.boundary=null;
 
     }
     setPrecinctLayer(layer){
         this.layer= layer;
     }
-
+    setBoundary(Coord){
+        this.boundary=Coord;
+    }
+    getBoundary(Coord){
+        return this.boundary;
+    }
     getPrecinctLayer(){
         return this.layer;
     }
