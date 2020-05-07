@@ -2,6 +2,7 @@ package com.u1s1.edq.controller;
 
 import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
+import com.u1s1.edq.entity.Polygon;
 import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.service.PrecinctService;
@@ -88,5 +89,12 @@ public class PrecinctController {
     public void receivePrecinctDeletedNeighbors(@PathVariable String stateId, @PathVariable String countyId,
                                                 @PathVariable String precinctCName, @RequestBody Set<String> neighbors) {
         precinctService.removePrecinctNeighbors(stateId, countyId, precinctCName, neighbors);
+    }
+
+    @PutMapping(value = "/data/boundaries/{polygonId}")
+    public void receivePrecinctNewBoundary(@PathVariable String stateId, @PathVariable String countyId,
+                                           @PathVariable String precinctCName, @PathVariable Integer polygonId,
+                                           @RequestBody Polygon polygon) {
+        precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, polygonId, polygon);
     }
 }

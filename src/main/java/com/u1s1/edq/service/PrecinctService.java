@@ -2,14 +2,17 @@ package com.u1s1.edq.service;
 
 import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
+import com.u1s1.edq.entity.Polygon;
 import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.repository.DemoDataRepository;
 import com.u1s1.edq.repository.ElectionDataRepository;
+import com.u1s1.edq.repository.PolygonRepository;
 import com.u1s1.edq.repository.PrecinctRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -19,13 +22,16 @@ public class PrecinctService {
     private PrecinctRepository precinctRepo;
     private DemoDataRepository demoDataRepo;
     private ElectionDataRepository electionDataRepo;
+    private PolygonRepository polygonRepo;
     private CachedContainer cachedContainer;
 
     @Autowired
-    public PrecinctService(PrecinctRepository precinctRepo, DemoDataRepository demoDataRepo, ElectionDataRepository electionDataRepo, CachedContainer cachedContainer) {
+    public PrecinctService(PrecinctRepository precinctRepo, DemoDataRepository demoDataRepo,
+                           ElectionDataRepository electionDataRepo, PolygonRepository polygonRepo, CachedContainer cachedContainer) {
         this.precinctRepo = precinctRepo;
         this.demoDataRepo = demoDataRepo;
         this.electionDataRepo = electionDataRepo;
+        this.polygonRepo = polygonRepo;
         this.cachedContainer = cachedContainer;
     }
 
@@ -87,6 +93,7 @@ public class PrecinctService {
         }
     }
 
+    @Transactional
     public void addPrecinctNeighbors(String stateId, String countyId, String precinctCName, Set<String> neighbors) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         for (String neighborCName : neighbors) {
@@ -101,6 +108,7 @@ public class PrecinctService {
         precinctRepo.save(precinct);
     }
 
+    @Transactional
     public void removePrecinctNeighbors(String stateId, String countyId, String precinctCName, Set<String> neighbors) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         for (String neighborCName : neighbors) {
@@ -113,5 +121,24 @@ public class PrecinctService {
         }
 
         precinctRepo.save(precinct);
+    }
+
+    @Transactional
+    public void updatePrecinctPolygons(String stateId, String countyId, String precinctCName, Integer polygonId, Polygon newPolygon) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
+        Polygon removedPolygon = null;
+        for (Polygon polygon : precinct.getBoundary()) {
+            if (polygon.getId() == polygonId) {
+                precinct.getBoundary().remove(polygon);
+                removedPolygon = polygon;
+                break;
+            }
+        }
+
+        if (removedPolygon != null) {
+            precinct.getBoundary().remove(removedPolygon);
+            precinct.getBoundary().add(newPolygon);
+            precinct = precinctRepo.save(precinct);
+        }
     }
 }
