@@ -12,8 +12,9 @@ public class DemoData implements Serializable, Cloneable {
     private int totalPop;
     private int whitePop;
     private int blackPop;
-    private int hispanicPop;
+    private int nativePop;
     private int asianPop;
+    private int otherPop;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -34,7 +35,7 @@ public class DemoData implements Serializable, Cloneable {
         this.totalPop = totalPop;
     }
 
-    @Column(name = "white_population")
+    @Column(name = "white")
     public int getWhitePop() {
         return whitePop;
     }
@@ -43,7 +44,7 @@ public class DemoData implements Serializable, Cloneable {
         this.whitePop = whitePop;
     }
 
-    @Column(name = "black_population")
+    @Column(name = "black_or_af_american")
     public int getBlackPop() {
         return blackPop;
     }
@@ -52,16 +53,16 @@ public class DemoData implements Serializable, Cloneable {
         this.blackPop = blackPop;
     }
 
-    @Column(name = "hispanic_population")
-    public int getHispanicPop() {
-        return hispanicPop;
+    @Column(name = "native")
+    public int getNativePop() {
+        return nativePop;
     }
 
-    public void setHispanicPop(int latinPop) {
-        this.hispanicPop = latinPop;
+    public void setNativePop(int nativePop) {
+        this.nativePop = nativePop;
     }
 
-    @Column(name = "asian_population")
+    @Column(name = "asian")
     public int getAsianPop() {
         return asianPop;
     }
@@ -70,15 +71,12 @@ public class DemoData implements Serializable, Cloneable {
         this.asianPop = asianPop;
     }
 
-    @Override
-    public DemoData clone() throws CloneNotSupportedException {
-        DemoData data = new DemoData();
-        data.setId(id);
-        data.setTotalPop(totalPop);
-        data.setWhitePop(whitePop);
-        data.setBlackPop(blackPop);
-        data.setHispanicPop(hispanicPop);
-        data.setAsianPop(asianPop);
-        return data;
+    @Column(name = "other")
+    public int getOtherPop() {
+        return otherPop;
+    }
+
+    public void setOtherPop(int otherPop) {
+        this.otherPop = otherPop;
     }
 }
