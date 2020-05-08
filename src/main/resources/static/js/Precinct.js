@@ -6,7 +6,20 @@ class Precinct{
         };
         this.hasData=false;
         this.boundary=null;
+        this.neighbour=[];
 
+    }
+    addNeighbor(neighbor){
+        this.neighbour.push(neighbor);
+    }
+    removeNeighbor(neighbor){
+        if(neighbourlist.indexOf(List[i])>=0){
+            delItem(neighbor, this.neighbour);
+        }
+        // delItem(neighbor, this.neighbour);
+    }
+    getNeighbours(){
+        return this.neighbour;
     }
     setPrecinctLayer(layer){
         this.layer= layer;

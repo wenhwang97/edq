@@ -4,7 +4,8 @@ var dataLayers = {}; // all dataLayer (geojson)
 var r = document.getElementById("countyCheckBox");
 var precinctCheckBox=document.getElementById("PrecinctCheckBox");
 var changeBoundaryButton = document.getElementById("changeBoundary");
-
+var addNeighbourButton = document.getElementById("addNeighbour");
+var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -50,6 +51,8 @@ function initMap() {
   r.disabled=true;
   precinctCheckBox.disabled=true;
   changeBoundaryButton.disabled=true;
+  addNeighbourButton.disabled = true;
+  addNeighbourConfirm.disabled = true;
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
     if (THREE_STATES.includes(event.feature.j.name)) {
@@ -385,6 +388,8 @@ async function precinctFetch(stateName, county) {
   addPrecinctsToMap(precinctLayers);
   precinctEvents(stateName,county);
 }
+var addNeigbourClicked = false;
+var addneighbourlist=[];
 function precinctEvents(stateName,county){  //here shouldn't be county should be state
   console.log("???test");
   precincts = county.getPrecincts();
@@ -406,15 +411,33 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
       precincts[ID].getPrecinctLayer().revertStyle();
     });
     var rectangle;
+
     google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
       // console.log("qwe!!");
       // console.log(event);
+      if(addNeigbourClicked==false){
+        console.log("add neighbour is not clicked!");
       clickedPrecinct=ID;
-      if(rectangle!=null){
+      addNeighbourButton.disabled = false;
+      if(rectangle!=null){  // change border
         console.log("it is null");
         rectangle.setMap(null);
         rectangle.setPaths(null);
       }
+      addNeighbourButton.disabled = false;
+      addNeighbourButton.addEventListener('click',function(){
+        addNeighbourConfirm.disabled=false;
+        console.log("test add neighbour");
+        addNeighbourButton.disabled=true;
+        addNeigbourClicked=true;
+      });
+      // addNeighbourConfirm.addEventListener('click',function(){
+      //   addNeigbourClicked=false;
+      //   console.log("confime button0");
+      //   addNeighbourButton.disabled=false;
+      //   addNeighbourConfirm.disabled=true;
+      //   sendNeighbour(precincts[ID],addneighbourlist, stateName, countyID);  //send the list of neighbour to server
+      // });
       changeBoundaryButton.disabled=true;
       changeBoundaryButton.disabled=false;
       console.log(lastPrecinct);
@@ -454,9 +477,30 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
       getNeighbour(urlpart1 + url + neighbourUrl, county, precinctID);
 
       lastPrecinct=precinctID;
+    }else{
+      addneighbourlist.push(ID);
+      console.log(addneighbourlist);
+      // addNeighbourConfirm.addEventListener('click',function(){
+      //   addNeigbourClicked=false;
+      //   console.log("confime button1");
+      //   addNeighbourButton.disabled=false;
+      //   addNeighbourConfirm.disabled=true;
+      //
+      // });
+    }
 
     });
   }
+  addNeighbourConfirm.addEventListener('click',function(){
+    addNeigbourClicked=false;
+    console.log("confime button0");
+    addNeighbourButton.disabled=false;
+    addNeighbourConfirm.disabled=true;
+    console.log(clickedPrecinct);
+    if(addneighbourlist.lenghth!=0) {
+      sendNeighbour(precincts[clickedPrecinct], addneighbourlist, stateName, countyID);  //send the list of neighbour to server
+    }
+    });
   changeBoundaryButton.addEventListener("click", function(){
     console.log("start to change boundary");
     console.log(precincts[clickedPrecinct].getBoundary());
@@ -472,6 +516,60 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     });
     rectangle.setMap(map);
   });
+}
+async function sendNeighbour(precinct, List, stateName, countyID) {
+  console.log(precinct);
+  precinctID = precinct.id;
+  var neighbourlist = precinct.getNeighbours();
+  var newList = [];
+  var deletList = [];
+  for (i = 0; i < List.length; i++) {
+    if (neighbourlist.indexOf(List[i]) < 0) {
+      newList.push(List[i]);
+    }
+    if (neighbourlist.indexOf(List[i]) >= 0) {
+      deletList.push(List[i]);
+    }
+  }
+  for (i = 0; i < newList.lenght; i++) {
+    precinct.addNeighbor(newList[i]);
+  }
+  for (i = 0; i < deletList.lenght; i++) {
+    precinct.removeNeighbor(deletList[i]);
+  }
+
+  console.log(newList);
+  // var url = "http://localhost:8080/state/{stateId}/county/{countyId}/precinct/{precinctId}/data/neighbors";
+  var urlpart1 = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID + "/data/neighbors";
+  if (newList.length != 0) {
+    console.log("add neighbor");
+    console.log(JSON.stringify(newList));
+    $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
+    console.log("add neighbor?");
+
+    await fetch(urlpart1, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(newList), // data can be `string` or {object}!
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+    $.unblockUI();
+  }
+  if (deletList.length != 0) {
+    fetch(urlpart1, {
+      method: 'DELETE', // or 'PUT'
+      body: JSON.stringify(deletList), // data can be `string` or {object}!
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+  }
+
 }
 
 async function precinctFetchData(url,precinct) {
@@ -511,6 +609,7 @@ async function getNeighbour(url, county, precinctID) {
       console.log("different??");
       continue;
     }
+    precincts[precinctID].addNeighbor(neighbourList[i]);
     precincts[neighbourList[i]].getPrecinctLayer().setStyle((feature) => {
       return {
         fillColor: "rgba(168,50,158,0.25)",
