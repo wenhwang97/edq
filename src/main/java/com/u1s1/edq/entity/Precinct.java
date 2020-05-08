@@ -44,7 +44,7 @@ public class Precinct implements Serializable {
         this.canonicalName = canonicalName;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "county_id")
     @JsonIgnore
     public County getCounty() {
