@@ -34,7 +34,7 @@ public class County implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "state_id")
     @JsonIgnore
     public State getState() {
@@ -64,7 +64,7 @@ public class County implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "county_id")
     public Set<Polygon> getBoundary() {
         return boundary;

@@ -44,7 +44,7 @@ public class Precinct implements Serializable {
         this.canonicalName = canonicalName;
     }
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "county_id")
     @JsonIgnore
     public County getCounty() {
@@ -75,7 +75,7 @@ public class Precinct implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "precinct_id")
     public Set<Polygon> getBoundary() {
         return boundary;
