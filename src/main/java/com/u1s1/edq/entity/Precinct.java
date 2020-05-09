@@ -75,7 +75,7 @@ public class Precinct implements Serializable {
         this.demoData = demoData;
     }
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "precinct_id")
     public Set<Polygon> getBoundary() {
         return boundary;
