@@ -128,7 +128,7 @@ public class PrecinctService {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         Polygon removedPolygon = null;
         for (Polygon polygon : precinct.getBoundary()) {
-            if (polygon.getId() == polygonId) {
+            if (polygon.getId().equals(polygonId)) {
                 precinct.getBoundary().remove(polygon);
                 removedPolygon = polygon;
                 break;
