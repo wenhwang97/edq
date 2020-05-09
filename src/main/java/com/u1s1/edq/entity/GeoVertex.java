@@ -15,7 +15,7 @@ public class GeoVertex implements Serializable, Cloneable {
     private BigDecimal x_pos;
     private BigDecimal y_pos;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @JsonIgnore
     public Integer getId() {

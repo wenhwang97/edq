@@ -17,7 +17,7 @@ public class Polygon implements Serializable, Cloneable {
 
     private List<GeoVertex> vertices = new ArrayList<GeoVertex>();
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     public Integer getId() {
         return id;
