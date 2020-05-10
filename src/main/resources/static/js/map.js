@@ -293,6 +293,14 @@ async function handleRedirect(
         countyID = event.feature.o; //get the current county ID
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
         console.log(selectedCounty.hasPrecincts());
+        if(!isEmptyObject(rectangle)){  // change border
+          console.log("it is not null");
+          console.log(rectangle);
+          for(var i in rectangle){
+            rectangle[i].setMap(null);
+            // rectangle[i].setPath(null);
+          }
+        }
         if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
           precincts = selectedCounty.getPrecincts();  //load the precinct
           // console.log(precinctLayers);

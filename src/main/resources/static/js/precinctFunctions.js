@@ -46,6 +46,7 @@ function isEmptyObject(obj){
     }
     return true;
 }
+var rectangle={};
 function precinctEvents(stateName,county){  //here shouldn't be county should be state
     console.log("???test");
     precincts = county.getPrecincts();
@@ -66,7 +67,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         google.maps.event.addListener(precinctLayer, "mouseout", (event) => {
             precincts[ID].getPrecinctLayer().revertStyle();
         });
-        var rectangle={};
+        // var rectangle={};
 
         google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
             console.log("qwe!!");
