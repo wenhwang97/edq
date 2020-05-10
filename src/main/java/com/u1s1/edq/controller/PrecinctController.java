@@ -1,16 +1,20 @@
 package com.u1s1.edq.controller;
 
+import com.u1s1.edq.controller.utils.ResponseObject;
 import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
-import com.u1s1.edq.entity.Polygon;
+import com.u1s1.edq.entity.GeoPolygon;
 import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.enums.PrecinctType;
-import com.u1s1.edq.service.PolygonService;
+import com.u1s1.edq.service.CountyService;
+import com.u1s1.edq.service.GeoPolygonService;
 import com.u1s1.edq.service.PrecinctService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RequestMapping("/state/{stateId}/county/{countyId}/precinct/{precinctCName}")
@@ -18,12 +22,21 @@ import java.util.Set;
 public class PrecinctController {
 
     private PrecinctService precinctService;
-    private PolygonService polygonService;
+    private CountyService countyService;
+    private GeoPolygonService geoPolygonService;
 
     @Autowired
-    public PrecinctController(PrecinctService precinctService, PolygonService polygonService) {
+    public PrecinctController(PrecinctService precinctService, CountyService countyService, GeoPolygonService geoPolygonService) {
         this.precinctService = precinctService;
-        this.polygonService = polygonService;
+        this.countyService = countyService;
+        this.geoPolygonService = geoPolygonService;
+    }
+
+    @DeleteMapping(value = "")
+    public void removePrecinct(@PathVariable String stateId, @PathVariable String countyId,
+                               @PathVariable String precinctCName) {
+        countyService.removePrecinctFromCounty(stateId, countyId, precinctCName);
+        precinctService.removePrecinct(precinctCName);
     }
 
     @GetMapping(value = "/data/demo")
@@ -94,11 +107,29 @@ public class PrecinctController {
         precinctService.removePrecinctNeighbors(stateId, countyId, precinctCName, neighbors);
     }
 
-    @PutMapping(value = "/data/boundaries/{polygonId}")
+    @PutMapping(value = "/data/boundaries/{geoPolygonId}")
     public void receivePrecinctNewBoundary(@PathVariable String stateId, @PathVariable String countyId,
-                                           @PathVariable String precinctCName, @PathVariable Integer polygonId,
-                                           @RequestBody Polygon polygon) {
-        precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, polygonId, polygon);
-        polygonService.removePolygon(polygonId);
+                                           @PathVariable String precinctCName, @PathVariable Integer geoPolygonId,
+                                           @RequestBody GeoPolygon geoPolygon) {
+        precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, geoPolygonId, geoPolygon);
+        geoPolygonService.removePolygon(geoPolygonId);
+    }
+
+    @PutMapping(value = "/data/merge-donut/{mergeeId}/{polygonId}")
+    public List<ResponseObject> mergePrecinctPolygonDonut(@PathVariable String stateId, @PathVariable String countyId,
+                                                          @PathVariable String precinctCName, @PathVariable String mergeeId,
+                                                          @PathVariable Integer polygonId) {
+        Integer removedHole = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeId, polygonId);
+        if (removedHole != null) {
+            geoPolygonService.removePolygon(polygonId);
+            geoPolygonService.removePolygon(removedHole);
+        }
+
+        List<ResponseObject> response = new ArrayList<ResponseObject>();
+        response.add(new ResponseObject(precinctCName, precinctService.getPrecinctFromMem(stateId, countyId, precinctCName).getBoundary()));
+        response.add(new ResponseObject(mergeeId, precinctService.getPrecinctFromMem(stateId, countyId, mergeeId).getBoundary()));
+
+        return response;
+
     }
 }

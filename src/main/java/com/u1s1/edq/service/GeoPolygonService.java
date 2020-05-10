@@ -1,17 +1,17 @@
 package com.u1s1.edq.service;
 
-import com.u1s1.edq.repository.PolygonRepository;
+import com.u1s1.edq.repository.GeoPolygonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PolygonService {
+public class GeoPolygonService {
 
-    private PolygonRepository polygonRepo;
+    private GeoPolygonRepository polygonRepo;
 
     @Autowired
-    public PolygonService(PolygonRepository polygonRepo) {
+    public GeoPolygonService(GeoPolygonRepository polygonRepo) {
         this.polygonRepo = polygonRepo;
     }
 

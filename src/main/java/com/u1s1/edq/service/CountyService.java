@@ -2,6 +2,7 @@ package com.u1s1.edq.service;
 
 import com.u1s1.edq.entity.County;
 import com.u1s1.edq.entity.DemoData;
+import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.repository.CountyRepository;
 import com.u1s1.edq.repository.PrecinctRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
@@ -28,6 +29,13 @@ public class CountyService {
 
     public void initPrecincts(County county) {
         county.setPrecincts(precinctRepo.findAllByCounty(county));
+    }
+
+    public void removePrecinctFromCounty(String stateId, String countyId, String precinctCName) {
+        County county = cachedContainer.findCounty(stateId, countyId);
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
+        county.getPrecincts().remove(precinct);
+        countyRepo.save(county);
     }
 
     public void updateCountyDemoData(String stateId, String countyId, DemoData demoData) {

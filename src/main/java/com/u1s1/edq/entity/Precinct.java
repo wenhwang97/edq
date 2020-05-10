@@ -21,7 +21,7 @@ public class Precinct implements Serializable {
     private PrecinctType type;
     private DemoData demoData;
 
-    private Set<Polygon> boundary = new HashSet<Polygon>();
+    private Set<GeoPolygon> boundary = new HashSet<GeoPolygon>();
     private List<ElectionData> electionData = new ArrayList<ElectionData>();
     private List<Precinct> neighbors = new ArrayList<Precinct>();
 
@@ -77,11 +77,11 @@ public class Precinct implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "precinct_id")
-    public Set<Polygon> getBoundary() {
+    public Set<GeoPolygon> getBoundary() {
         return boundary;
     }
 
-    public void setBoundary(Set<Polygon> boundary) {
+    public void setBoundary(Set<GeoPolygon> boundary) {
         this.boundary = boundary;
     }
 
