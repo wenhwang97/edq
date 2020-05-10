@@ -136,9 +136,8 @@ public class PrecinctService {
         }
 
         if (removedPolygon != null) {
-            precinct.getBoundary().remove(removedPolygon);
             precinct.getBoundary().add(newPolygon);
-            precinct = precinctRepo.save(precinct);
+            precinctRepo.save(precinct);
         }
     }
 }

@@ -1,9 +1,5 @@
 package com.u1s1.edq.entity;
 
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;

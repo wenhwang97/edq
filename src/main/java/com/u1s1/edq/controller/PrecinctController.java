@@ -5,6 +5,7 @@ import com.u1s1.edq.entity.ElectionData;
 import com.u1s1.edq.entity.Polygon;
 import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.enums.PrecinctType;
+import com.u1s1.edq.service.PolygonService;
 import com.u1s1.edq.service.PrecinctService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,12 @@ import java.util.Set;
 public class PrecinctController {
 
     private PrecinctService precinctService;
+    private PolygonService polygonService;
 
     @Autowired
-    public PrecinctController(PrecinctService precinctService) {
+    public PrecinctController(PrecinctService precinctService, PolygonService polygonService) {
         this.precinctService = precinctService;
+        this.polygonService = polygonService;
     }
 
     @GetMapping(value = "/data/demo")
@@ -96,5 +99,6 @@ public class PrecinctController {
                                            @PathVariable String precinctCName, @PathVariable Integer polygonId,
                                            @RequestBody Polygon polygon) {
         precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, polygonId, polygon);
+        polygonService.removePolygon(polygonId);
     }
 }
