@@ -223,12 +223,20 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     });
 }
 async function precinctChangeBoundary(url, data) {
+    console.log(data);
+    var coord =[];
+    // precinctPolygon.push({lat: precinctJson[i].obj[j].vertices[k].y_pos, lng: precinctJson[i].obj[j].vertices[k].x_pos});
+    for(var i in data){
+        coord.push({x_pos: data[i].lng, y_pos: data[i].lat});
+    }
+    console.log(coord);
     $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
+
     // console.log(JSON.stringify(data));
     // console.log(JSON.stringify({data}));
     await fetch(url, {
         method: 'PUT', // or 'PUT'
-        body: JSON.stringify({data}), // data can be `string` or {object}!
+        body: JSON.stringify({coord}), // data can be `string` or {object}!
         headers: new Headers({
             'Content-Type': 'application/json'
         })
