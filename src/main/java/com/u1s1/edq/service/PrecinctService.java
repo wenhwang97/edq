@@ -126,7 +126,8 @@ public class PrecinctService {
     }
 
     @Transactional
-    public void updatePrecinctPolygons(String stateId, String countyId, String precinctCName, Integer geoPolygonId, GeoPolygon newGeoPolygon) {
+    public void updatePrecinctPolygons(String stateId, String countyId, String precinctCName, Integer geoPolygonId,
+                                       GeoPolygon newGeoPolygon) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         GeoPolygon removedGeoPolygon = null;
         for (GeoPolygon geoPolygon : precinct.getBoundary()) {
@@ -143,11 +144,35 @@ public class PrecinctService {
         }
     }
 
-    @Transactional
-    public Integer mergeGeoPolygonDonut(String stateId, String countyId, String precinctMerger, String precinctMergee,
-                                  Integer geoPolygonId) {
+    public void mergePrecinctData(String stateId, String countyId, String precinctMerger, String countyMergee,
+                                  String precinctMergee) {
         Precinct merger = cachedContainer.findPrecinct(stateId, countyId, precinctMerger);
-        Precinct mergee = cachedContainer.findPrecinct(stateId, countyId, precinctMergee);
+        Precinct mergee = cachedContainer.findPrecinct(stateId, countyMergee, precinctMergee);
+
+        merger.getDemoData().setTotalPop(merger.getDemoData().getTotalPop() + mergee.getDemoData().getTotalPop());
+        merger.getDemoData().setWhitePop(merger.getDemoData().getWhitePop() + mergee.getDemoData().getWhitePop());
+        merger.getDemoData().setBlackPop(merger.getDemoData().getBlackPop() + mergee.getDemoData().getBlackPop());
+        merger.getDemoData().setAsianPop(merger.getDemoData().getAsianPop() + mergee.getDemoData().getAsianPop());
+        merger.getDemoData().setNativePop(merger.getDemoData().getNativePop() + mergee.getDemoData().getNativePop());
+        merger.getDemoData().setOtherPop(merger.getDemoData().getOtherPop() + mergee.getDemoData().getOtherPop());
+
+        for (ElectionData mergeeData : mergee.getElectionData()) {
+            for (ElectionData mergerData : merger.getElectionData()) {
+                if (mergeeData.getYear() == mergerData.getYear()) {
+                    mergerData.setDemocraticVote(mergerData.getDemocraticVote() + mergeeData.getDemocraticVote());
+                    mergerData.setRepublicanVote(mergerData.getRepublicanVote() + mergeeData.getRepublicanVote());
+                    mergerData.setLibertarianVote(mergerData.getLibertarianVote() + mergeeData.getLibertarianVote());
+                    mergerData.setGreenVote(mergerData.getGreenVote() + mergeeData.getGreenVote());
+                }
+            }
+        }
+    }
+
+    @Transactional
+    public Integer mergeGeoPolygonDonut(String stateId, String countyId, String precinctMerger, String countyMergee,
+                                        String precinctMergee, Integer geoPolygonId) {
+        Precinct merger = cachedContainer.findPrecinct(stateId, countyId, precinctMerger);
+        Precinct mergee = cachedContainer.findPrecinct(stateId, countyMergee, precinctMergee);
 
         GeoPolygon removedGeoPolygon = null;
         for (GeoPolygon geoPolygon : mergee.getBoundary()) {

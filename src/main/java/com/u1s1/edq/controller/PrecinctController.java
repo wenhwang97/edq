@@ -115,11 +115,18 @@ public class PrecinctController {
         geoPolygonService.removePolygon(geoPolygonId);
     }
 
-    @PutMapping(value = "/data/merge-donut/{mergeeId}/{polygonId}")
+    @PutMapping(value = "/data/merge-data/{mergeeCountyId}/{mergeePrecinctId}")
+    public void mergePrecinctData(@PathVariable String stateId, @PathVariable String countyId,
+                                  @PathVariable String precinctCName, @PathVariable String mergeeCountyId,
+                                  @PathVariable String mergeePrecinctId) {
+        precinctService.mergePrecinctData(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId);
+    }
+
+    @PutMapping(value = "/data/merge-donut/{mergeeCountyId}/{mergeePrecinctId}/{polygonId}")
     public List<ResponseObject> mergePrecinctPolygonDonut(@PathVariable String stateId, @PathVariable String countyId,
-                                                          @PathVariable String precinctCName, @PathVariable String mergeeId,
-                                                          @PathVariable Integer polygonId) {
-        Integer removedHole = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeId, polygonId);
+                                                          @PathVariable String precinctCName, @PathVariable String mergeeCountyId,
+                                                          @PathVariable String mergeePrecinctId, @PathVariable Integer polygonId) {
+        Integer removedHole = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId, polygonId);
         if (removedHole != null) {
             geoPolygonService.removePolygon(polygonId);
             geoPolygonService.removePolygon(removedHole);
@@ -127,9 +134,8 @@ public class PrecinctController {
 
         List<ResponseObject> response = new ArrayList<ResponseObject>();
         response.add(new ResponseObject(precinctCName, precinctService.getPrecinctFromMem(stateId, countyId, precinctCName).getBoundary()));
-        response.add(new ResponseObject(mergeeId, precinctService.getPrecinctFromMem(stateId, countyId, mergeeId).getBoundary()));
+        response.add(new ResponseObject(mergeePrecinctId, precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId).getBoundary()));
 
         return response;
-
     }
 }
