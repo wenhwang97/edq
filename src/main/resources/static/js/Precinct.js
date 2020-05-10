@@ -7,8 +7,21 @@ class Precinct{
         this.hasData=false;
         this.boundary=null;
         this.neighbour=[];
+        this.PrecinctPolygon={};
 
     }
+    addPrecincePolygon(id,polygon){ //a precinct may have more than one polygon
+        this.PrecinctPolygon[id]=polygon;
+    }
+    removePrecincePolygon(ID){
+        if (ID in this.precincts){
+            delete this.PrecinctPolygon[ID];
+        }
+    }
+    getPrecinctPolygons(){
+        return this.PrecinctPolygon;
+    }
+
     addNeighbor(neighbor){
         this.neighbour.push(neighbor);
     }
