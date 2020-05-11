@@ -1,5 +1,5 @@
 function inforChange(precinctNumber) {
-    document.getElementById("precinct title info").textContent = "Data infor: #"+precinctNumber ;
+    document.getElementById("precinct title info").textContent = "Data info: #"+precinctNumber ;
 }
 function test(){
     console.log("???");

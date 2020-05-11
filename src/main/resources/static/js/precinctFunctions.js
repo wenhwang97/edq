@@ -1,5 +1,11 @@
 var changeBoundaryConfirm = document.getElementById("changeBounayConfirm");
+var MergePrecinct = document.getElementById("mergePrecinct");
+var MergeConfirm = document.getElementById("mergePrecinctConfirm");
+var GhostMergePrecinct = document.getElementById("GhostPrecinct");
 changeBoundaryConfirm.disabled = true;
+MergePrecinct.disabled = true;
+MergeConfirm.disabled = true;
+GhostMergePrecinct.disabled = true;
 async function precinctFetch(stateName, county) {
     var countyID =county.id;
 
