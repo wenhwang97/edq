@@ -5,10 +5,7 @@ import com.u1s1.edq.enums.PrecinctType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "PRECINCTS")
@@ -105,6 +102,33 @@ public class Precinct implements Serializable {
 
     public void setNeighbors(List<Precinct> neighbors) {
         this.neighbors = neighbors;
+    }
+
+    public Precinct removeFromNeighbor(String precinctCName) {
+        Precinct neighbor = null;
+        for (int i = 0; i < this.neighbors.size(); i++) {
+            neighbor = this.neighbors.get(i);
+            if (neighbor.getCanonicalName().equals(precinctCName)) {
+                neighbor.getNeighbors().remove(this);
+                this.neighbors.remove(neighbor);
+                return neighbor;
+            }
+        }
+
+        return null;
+    }
+
+    public GeoPolygon removeFromBoundaries(GeoPolygon poly) {
+        Iterator<GeoPolygon> it = this.boundary.iterator();
+        while (it.hasNext()) {
+            GeoPolygon geoPolygon = it.next();
+            if (geoPolygon.getId().equals(poly.getId())) {
+                it.remove();
+                return geoPolygon;
+            }
+        }
+
+        return null;
     }
 
 }

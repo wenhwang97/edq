@@ -114,10 +114,8 @@ public class PrecinctService {
     public void removePrecinctNeighbors(String stateId, String countyId, String precinctCName, Set<String> neighbors) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         for (String neighborCName : neighbors) {
-            Precinct neighbor = cachedContainer.findPrecinct(stateId, countyId, neighborCName);
+            Precinct neighbor = precinct.removeFromNeighbor(neighborCName);
             if (neighbor != null) {
-                precinct.getNeighbors().remove(neighbor);
-                neighbor.getNeighbors().remove(precinct);
                 precinctRepo.save(neighbor);
             }
         }
@@ -132,8 +130,7 @@ public class PrecinctService {
         GeoPolygon removedGeoPolygon = null;
         for (GeoPolygon geoPolygon : precinct.getBoundary()) {
             if (geoPolygon.getId().equals(geoPolygonId)) {
-                precinct.getBoundary().remove(geoPolygon);
-                removedGeoPolygon = geoPolygon;
+                removedGeoPolygon = precinct.removeFromBoundaries(geoPolygon);
                 break;
             }
         }
@@ -177,8 +174,7 @@ public class PrecinctService {
         GeoPolygon removedGeoPolygon = null;
         for (GeoPolygon geoPolygon : mergee.getBoundary()) {
             if (geoPolygon.getId().equals(geoPolygonId)) {
-                mergee.getBoundary().remove(geoPolygon);
-                removedGeoPolygon = geoPolygon;
+                removedGeoPolygon = mergee.removeFromBoundaries(geoPolygon);
                 break;
             }
         }
@@ -187,7 +183,7 @@ public class PrecinctService {
             Integer hole = geoUtils.detectSimilarGeoPolygon(removedGeoPolygon, merger.getBoundary());
             for (GeoPolygon geoPolygon : merger.getBoundary()) {
                 if (geoPolygon.getId().equals(hole)) {
-                    merger.getBoundary().remove(geoPolygon);
+                    merger.removeFromBoundaries(geoPolygon);
                 }
             }
 
