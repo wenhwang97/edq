@@ -227,6 +227,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             for(let i in rectangle){
                 rectangle[i].setMap(null);
             }
+            changeBoundaryConfirm.disabled = true;
             // modifiedPolygon.length = 0;
         }
 
