@@ -296,7 +296,7 @@ async function handleRedirect(
     console.log(counties);
     let currentCounty;
     for (let ID in counties) {
-      console.log(counties[ID]);
+      // console.log(counties[ID]);
       countyLayer = counties[ID].getLayer();
       let havePrecinct = 0;
 
