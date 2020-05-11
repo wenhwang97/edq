@@ -45,4 +45,12 @@ public class State implements Serializable {
         this.counties = counties;
     }
 
+    @Transient
+    public Set<NationalPark> getParks() {
+        return parks;
+    }
+
+    public void setParks(Set<NationalPark> parks) {
+        this.parks = parks;
+    }
 }

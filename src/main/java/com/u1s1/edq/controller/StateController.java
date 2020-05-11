@@ -2,6 +2,7 @@ package com.u1s1.edq.controller;
 
 import com.u1s1.edq.controller.utils.ResponseObject;
 import com.u1s1.edq.entity.County;
+import com.u1s1.edq.entity.NationalPark;
 import com.u1s1.edq.entity.State;
 import com.u1s1.edq.service.CountyService;
 import com.u1s1.edq.service.StateService;
@@ -29,8 +30,20 @@ public class StateController {
 
     @GetMapping(value = "")
     public ResponseEntity<String> selectState(@PathVariable String stateId) {
-
         if (stateService.getStateFromDB(stateId)) {
+            State state = stateService.getStateFromMem(stateId);
+            stateService.initNationalParks(state);
+            if (state.getCounties().size() == 0) {
+                stateService.initCounties(state);
+                Iterator<County> it = state.getCounties().iterator();
+                while (it.hasNext()) {
+                    County county = it.next();
+                    if (county != null) {
+                        countyService.initPrecincts(county);
+                    }
+                }
+            }
+
             return ResponseEntity.ok().body("");
         }
 
@@ -39,26 +52,21 @@ public class StateController {
 
     @GetMapping(value = "/show-counties")
     public Set<ResponseObject> sendCounties(@PathVariable String stateId) {
-
         State state = stateService.getStateFromMem(stateId);
-        if (state.getCounties().size() == 0) {
-            stateService.initCounties(state);
-            Iterator<County> it = state.getCounties().iterator();
-            while (it.hasNext()) {
-                County county = it.next();
-                if (county != null) {
-                    countyService.initPrecincts(county);
-                }
-            }
-        }
-
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 
-        for(County county : state.getCounties()) {
+        for (County county : state.getCounties()) {
             response.add(new ResponseObject(county.getId(), county.getBoundary()));
         }
 
         return response;
+    }
+
+    @GetMapping(value = "/show-parks")
+    public Set<NationalPark> sendParks(@PathVariable String stateId) {
+        State state = stateService.getStateFromMem(stateId);
+
+        return state.getParks();
     }
 
 }

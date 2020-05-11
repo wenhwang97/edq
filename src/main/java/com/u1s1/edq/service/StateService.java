@@ -2,6 +2,7 @@ package com.u1s1.edq.service;
 
 import com.u1s1.edq.entity.County;
 import com.u1s1.edq.repository.CountyRepository;
+import com.u1s1.edq.repository.NationalParkRepository;
 import com.u1s1.edq.service.cache.CachedContainer;
 import com.u1s1.edq.entity.State;
 import com.u1s1.edq.repository.StateRepository;
@@ -15,12 +16,15 @@ public class StateService {
 
     private StateRepository stateRepo;
     private CountyRepository countyRepo;
+    private NationalParkRepository nationalParkRepo;
     private CachedContainer cachedContainer;
 
     @Autowired
-    public StateService(StateRepository stateRepo, CountyRepository countyRepo, CachedContainer cachedContainer) {
+    public StateService(StateRepository stateRepo, CountyRepository countyRepo,
+                        NationalParkRepository nationalParkRepo, CachedContainer cachedContainer) {
         this.stateRepo = stateRepo;
         this.countyRepo = countyRepo;
+        this.nationalParkRepo = nationalParkRepo;
         this.cachedContainer = cachedContainer;
     }
 
@@ -45,5 +49,9 @@ public class StateService {
 
     public void initCounties(State state) {
         state.setCounties(countyRepo.findAllByState(state));
+    }
+
+    public void initNationalParks(State state) {
+        state.setParks(nationalParkRepo.findAllByState(state));
     }
 }
