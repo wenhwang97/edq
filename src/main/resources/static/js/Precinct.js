@@ -8,10 +8,35 @@ class Precinct{
         this.boundary=null;
         this.neighbour=[];
         this.PrecinctPolygon={};
+        this.PolygonCoord={};
 
     }
     addPrecincePolygon(id,polygon){ //a precinct may have more than one polygon
         this.PrecinctPolygon[id]=polygon;
+    }
+    getPrecinctPolygon(pt){
+        var ifList={};
+        console.log(pt.lat);
+
+       for(var a in this.PrecinctPolygon){
+           console.log(this.PrecinctPolygon[a]);
+           console.log(this.PrecinctPolygon);
+           // console.log(this.PrecinctPolygon[a][0].lat);
+           for (var c = false, i = -1, l = this.PrecinctPolygon[a].length, j = l - 1; ++i < l; j = i)
+               ((this.PrecinctPolygon[a][i].lat <= pt.lat && pt.lat < this.PrecinctPolygon[a][j].lat) || (this.PrecinctPolygon[a][j].lat <= pt.lat && pt.lat < this.PrecinctPolygon[a][i].lat))
+               && (pt.lng < (this.PrecinctPolygon[a][j].lng - this.PrecinctPolygon[a][i].lng) * (pt.lat - this.PrecinctPolygon[a][i].lat) / (this.PrecinctPolygon[a][j].lat - this.PrecinctPolygon[a][i].lat) + this.PrecinctPolygon[a][i].lng)
+               && (c = !c);
+           console.log(c);
+           ifList[a]=c;
+           // return c;
+       }
+       console.log(ifList);
+       for(var i in ifList){
+           if(ifList[i]==true){
+               return i;
+           }
+       }
+
     }
     removePrecincePolygon(ID){
         if (ID in this.precincts){

@@ -23,16 +23,20 @@ async function precinctFetch(stateName, county) {
     for (let i in precinctJson) {  //how many precincts
         var precinct = new Precinct(precinctJson[i].id);
         var precinctCoords = [];
+
         for (let j in precinctJson[i].obj) {  //for current precinct
             var precinctPolygon = [];
+            // var pureCoord=[];
             for (let k in precinctJson[i].obj[j].vertices) { //for current precinct's polygon coord
                 precinctPolygon.push({lat: precinctJson[i].obj[j].vertices[k].y_pos, lng: precinctJson[i].obj[j].vertices[k].x_pos});
+                // pureCoord.push()
             }
             precinctCoords.push(precinctPolygon);
             precinct.addPrecincePolygon(precinctJson[i].obj[j].id, precinctPolygon);
         }
         totalPrecinct.push(precinctCoords);
         precinctData = new google.maps.Data();
+        // console.log(precinctCoords);
         Precinctgeometry = new google.maps.Data.Polygon(precinctCoords);
         precinctData.add({geometry: Precinctgeometry, id: precinctJson[i].id});
         precinct.setBoundary(precinctCoords);
@@ -74,25 +78,30 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             precincts[ID].getPrecinctLayer().revertStyle();
         });
         // var rectangle={};
-
+        var polyinprecinct;
         google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
             console.log("qwe!!");
             console.log(event);
-            if(addNeigbourClicked==false){
+            // console.log(precinctLayer.geometry);
+            console.log(event.latLng.lat());
+            polyinprecinct = precincts[event.feature.o].getPrecinctPolygon({lat:event.latLng.lat(),lng:event.latLng.lng()});
+            // placeMarker(event.latLng);
+            if(addNeigbourClicked==false&&mergeClicked==false){  //没点添加neighbor的时候,也没点击merge的时候
                 console.log("add neighbour is not clicked!");
                 clickedPrecinct=ID;
                 addNeighbourButton.disabled = false;
+                MergePrecinct.disabled = false;
                 if(!isEmptyObject(rectangle)){  // change border
                     console.log("it is not null");
                     console.log(rectangle);
                     for(var i in rectangle){
-                        console.log("test1");
+
                         rectangle[i].setMap(null);
-                        console.log("test2");
+
                         // rectangle[i].setPath(null);
-                        console.log("test3");
+
                     }
-                    console.log("test4");
+
                     // rectangle.setMap(null);
                     // rectangle.setPaths(null);
                 }
@@ -102,6 +111,14 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     console.log("test add neighbour");
                     addNeighbourButton.disabled=true;
                     addNeigbourClicked=true;
+                });
+                MergePrecinct.addEventListener('click',function(){
+                    MergeConfirm.disabled = false;
+                    MergePrecinct.disabled = true;
+                    mergeClicked = true;
+                    mergePrecinctList.push(precincts[ID]);
+                    console.log("第一个merge的precinct");
+                    console.log(ID);
                 });
                 changeBoundaryButton.disabled=true;
                 changeBoundaryButton.disabled=false;
@@ -142,7 +159,8 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 getNeighbour(urlpart1 + url + neighbourUrl, county, precinctID);
 
                 lastPrecinct=precinctID;
-            }else{
+            }
+            if(addNeigbourClicked==true){
                 addneighbourlist.push(ID);
                 console.log(addneighbourlist);
                 // addNeighbourConfirm.addEventListener('click',function(){
@@ -153,9 +171,30 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 //
                 // });
             }
+            if(mergeClicked == true){   //merge precinct
+                if(mergePrecinctList.length=2){
+                    mergePrecinctList.pop();
+                    mergePrecinctList.push(precincts[ID]);
+                    console.log("第二个merge的precinct");
+                    console.log(ID);
+                }else {
+                    mergePrecinctList.push(precincts[ID]);
+                    console.log("第二个merge的precinct");
+                    console.log(ID);
+                }
+            }
 
         });
     }
+    MergeConfirm.addEventListener('click',function(){
+        console.log(mergePrecinctList);
+        mergeClicked=false;
+        MergePrecinct.disabled = false;
+        MergeConfirm.disabled = true;
+        if(mergePrecinctList.length ==2){
+            sendMergePrecinct(mergePrecinctList,stateName, countyID, polyinprecinct);
+        }
+    });
     addNeighbourConfirm.addEventListener('click',function(){
         addNeigbourClicked=false;
         console.log("confime button0");
@@ -187,6 +226,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     // var modifiedPolygon = [];
     changeBoundaryConfirm.addEventListener('click', function(){
         var modifiedPolygon = [];
+        var totalPolygon = [];
         // console.log("start to put boundary");
         console.log(clickedPrecinct);
         var polygons = precincts[clickedPrecinct].getPrecinctPolygons();
@@ -202,6 +242,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             for(var j in rectangle[i].getPath().i){
                 modifiedPolygon.push({lat:rectangle[i].getPath().i[j].lat(), lng: rectangle[i].getPath().i[j].lng()});
             }
+            totalPolygon.push(modifiedPolygon);
             console.log(modifiedPolygon);
             console.log(polygons[i]);
             console.log(modifiedPolygon[0]);
@@ -209,6 +250,17 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             if(modifiedPolygon.toString()!=polygons[i].toString()){
                 console.log("they are different");
                 newPolygon = true;
+            }
+            for(var b in modifiedPolygon){
+                // console.log(modifiedPolygon[b].lat);
+                // console.log(polygons[i][b].lat);
+                // console.log()
+                if(modifiedPolygon[b].lat!=polygons[i][b].lat||modifiedPolygon[b].lng!=polygons[i][b].lng){
+                    console.log("different");
+                    newPolygon = true;
+                    break;
+                }
+                // if(modifiedPolygon[b].toString())
             }
             if(newPolygon==true){   //这里，新的polygon 发送给服务器
                 ///state/{stateId}/county/{countyId}/precinct/{precinctId}/data/boundaries/{polygonId}
@@ -218,12 +270,52 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 var url = "http://localhost:8080/state/"+stateName+"/county/"+countyID+"/precinct/"+clickedPrecinct+"/data/boundaries/"+i;
                 newPolygon=false;
                 precinctChangeBoundary(url, modifiedPolygon);
+                // polygons[i].setMap(null);
+                console.log("after fetch");
+                for(let i in rectangle){
+                    rectangle[i].setMap(null);
+                }
+                console.log("test1");
+                precincts[clickedPrecinct].getPrecinctLayer().setMap(null);
+                // precincts[clickedPrecinct].getPrecinctLayer().setMap(map);
+                console.log(totalPolygon);
+                console.log("test2");
+                newPrecinctData = new google.maps.Data();
+                console.log("test3");
+                geometry = new google.maps.Data.Polygon(totalPolygon);
+                newPrecinctData.add({geometry: geometry, id: precincts[clickedPrecinct].id});
+                console.log("test4");
+                console.log(clickedPrecinct);
+                precincts[clickedPrecinct].setPrecinctLayer(newPrecinctData);
+                // precincts[clickedPrecinct]
+
+                // console.log(precincts[clickedPrecinct].getPrecinctLayer());
+                // newPrecinct.setMap(map);
+                // console.log(precincts[clickedPrecinct].getPrecinctLayer());
+                precincts[clickedPrecinct].getPrecinctLayer().setStyle((feature) => {
+                    return {
+                        fillColor: "#a8329e",
+                        strokeColor: "#a8329e",
+                        strokeWeight: 2,
+                        zIndex: 1,
+                    };
+                });
+                for(var a in polygons){
+                    precincts[clickedPrecinct].addPrecincePolygon(a, modifiedPolygon);
+                }
+                // for(let i in rectangle){
+                //     rectangle[i].setMap(null);
+                // }
+                // precincts[clickedPrecinct].addPrecincePolygon(i, )
+                // polygons[i]=newPolygon;
+                // newPolygo
 
             }
             else{
                 console.log("There is no polygon need to moify")
                 console.log(i);
             }
+
             for(let i in rectangle){
                 rectangle[i].setMap(null);
             }
@@ -233,6 +325,23 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
 
     });
 }
+async function sendMergePrecinct(List, stateName, countyID, polygonID) {
+    var precinctID = [];
+    for (var i in List) {
+        precinctID[i] = List[i].id;
+    }
+    var url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID[0] + "/data/merge-donut/" + countyID + "/" + precinctID[1] + "/" + polygonID;
+    console.log(url);
+    await fetch(url, {
+        method: 'PUT', // or 'PUT'
+        // body: JSON.stringify({vertices}), // data can be `string` or {object}!
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+}
 async function precinctChangeBoundary(url, data) {
     console.log(data);
     var vertices =[];
@@ -241,11 +350,11 @@ async function precinctChangeBoundary(url, data) {
         vertices.push({x_pos: data[i].lng, y_pos: data[i].lat});
     }
     console.log(vertices);
-    console.log(JSON.stringify({vertices}));
+    // console.log(JSON.stringify({vertices}));
     $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
 
-    console.log(JSON.stringify(data));
-    console.log(JSON.stringify({data}));
+    // console.log(JSON.stringify(data));
+    // console.log(JSON.stringify({data}));
     await fetch(url, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify({vertices}), // data can be `string` or {object}!
@@ -256,6 +365,7 @@ async function precinctChangeBoundary(url, data) {
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
     $.unblockUI();
+
 }
 async function precinctFetchData(url,precinct) {
     let response = await fetch(url);
@@ -276,8 +386,8 @@ async function getNeighbour(url, county, precinctID) {
     console.log(precincts);
     let response = await fetch(url);
     let neighbourList = await response.json();
-    console.log("neighbour");
-    console.log(neighbourList);
+    // console.log("neighbour");
+    // console.log(neighbourList);
     for(var key in precincts){
         if(key!=precinctID) {
             styleCounties(precincts[key].getPrecinctLayer());
@@ -285,9 +395,9 @@ async function getNeighbour(url, county, precinctID) {
     }
     // for(let i=0; i<neighbourList.length; i++){
     for(let i in neighbourList){
-        console.log(neighbourList[i]);
-        console.log(neighbourList[i].substring(0,neighbourList[i].length-5));
-        console.log(county.id);
+        // console.log(neighbourList[i]);
+        // console.log(neighbourList[i].substring(0,neighbourList[i].length-5));
+        // console.log(county.id);
         // console.log(list(precincts.values()));
         if(neighbourList[i].substring(0,neighbourList[i].length-5)!=county.id){
             // console.log(neighbourList[i].substring(0,neighbourList[i].length-4));
@@ -307,7 +417,9 @@ async function getNeighbour(url, county, precinctID) {
     // lastNeighbour= neighbourList;
 }
 var addNeigbourClicked = false;
+var mergeClicked = false;
 var addneighbourlist=[];
+var mergePrecinctList=[];
 async function sendNeighbour(precinct, List, stateName, countyID) {
     console.log(precinct);
     precinctID = precinct.id;
@@ -383,5 +495,8 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
     }
     deletList.length = 0;
     List.length=0;
-
 }
+// MergePrecinct.addEventListener('click',function(){
+//     console.log("123qwe!");
+// });
+

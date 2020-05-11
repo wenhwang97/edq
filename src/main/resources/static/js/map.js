@@ -76,6 +76,19 @@ function initMap() {
           break;
 
         case THREE_STATES[1]:// Texas
+          r.disabled=false;
+          response = await fetch("http://localhost:8080/state/tx");
+          if(response.status==500){
+            break;
+          }
+          // console.log(response);
+          txBoderLayer = new google.maps.Data();
+          txBoderLayer.loadGeoJson(TEXAS_BODER);
+          txBoderLayer.setMap(map);
+          styleState(txBoderLayer);
+          var Texas = new State("tx", "Texas");
+          allStates["tx"] = Texas;
+          await handleRedirect("Texas State Level", 6, TEXAS_CENTER, TEXAS_STRICT_BOUND,Texas);
           break;
 
         case THREE_STATES[2]:// Rhode Island
@@ -98,6 +111,11 @@ function initMap() {
     }
   });
 }
+// function clickOnNarv(State){
+//   switch (State) {
+//     case
+//   }
+// }
 // remove all dataLayer from map
 function removeAllGeojson() {
   for (var layer in dataLayers) {
@@ -237,6 +255,9 @@ async function handleRedirect(
     case "Rhode Island State Level":
       stateName='ri';
       break;
+    case "Texas State Level":
+      stateName='tx';
+      break;
 
   }
   rhode = state;
@@ -250,6 +271,7 @@ async function handleRedirect(
     addCountiesToMap(counties);
   } else {  //fetch the data
     var url = 'http://localhost:8080/state/'+stateName+'/show-counties';
+    console.log(url);
     // document.body.style.cursor="not-allowed";
     $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
     let response = await fetch(url);
