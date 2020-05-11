@@ -1,4 +1,58 @@
 package com.u1s1.edq.entity;
 
-public class NationalPark {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "NATIONAL_PARKS")
+public class NationalPark implements Serializable {
+
+    private Integer id;
+    private State state;
+
+    private String name;
+    private Set<GeoPolygon> boundary = new HashSet<GeoPolygon>();
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "state_id")
+    @JsonIgnore
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "park_id")
+    public Set<GeoPolygon> getBoundary() {
+        return boundary;
+    }
+
+    public void setBoundary(Set<GeoPolygon> boundary) {
+        this.boundary = boundary;
+    }
 }

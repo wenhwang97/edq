@@ -40,15 +40,4 @@ public class CountyController {
         return response;
     }
 
-    @GetMapping(value = "/data/demo")
-    public DemoData sendCountyDemoData(@PathVariable String stateId, @PathVariable String countyId) {
-        return countyService.getCountyFromMem(stateId, countyId).getDemoData();
-    }
-
-    @PutMapping(value = "/data/demo")
-    public void receiveCountyDemoData(@PathVariable String stateId, @PathVariable String countyId,
-                                                @RequestBody DemoData demoData) {
-        countyService.updateCountyDemoData(stateId, countyId, demoData);
-    }
-
 }

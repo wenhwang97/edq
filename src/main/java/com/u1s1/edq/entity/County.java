@@ -17,7 +17,6 @@ public class County implements Serializable {
     private State state;
 
     private String name;
-    private DemoData demoData;
 
     private Set<GeoPolygon> boundary = new HashSet<GeoPolygon>();
     private List<ElectionData> electionData = new ArrayList<ElectionData>();
@@ -52,16 +51,6 @@ public class County implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "demo_data")
-    public DemoData getDemoData() {
-        return demoData;
-    }
-
-    public void setDemoData(DemoData demoData) {
-        this.demoData = demoData;
     }
 
     @OneToMany(cascade = CascadeType.REMOVE)
