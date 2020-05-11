@@ -1,6 +1,7 @@
 package com.u1s1.edq.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.u1s1.edq.enums.ErrorType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,13 +12,11 @@ public class Error implements Serializable {
 
     private Integer id;
 
-    private Precinct precinct;
-    private String ErrorInfo;
-    private String ErrorType;
+    private ErrorType type;
+    private String info;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "error_id")
     public Integer getId() {
         return id;
     }
@@ -26,30 +25,20 @@ public class Error implements Serializable {
         this.id = id;
     }
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "precinct_id")
-    public Precinct getPrecinct() {
-        return precinct;
+    @Enumerated(EnumType.STRING)
+    public ErrorType getType() {
+        return type;
     }
 
-    public void setPrecinct(Precinct precinct) {
-        this.precinct = precinct;
+    public void setType(ErrorType type) {
+        this.type = type;
     }
 
-    public String getErrorInfo() {
-        return ErrorInfo;
+    public String getInfo() {
+        return info;
     }
 
-    public void setErrorInfo(String errorInfo) {
-        ErrorInfo = errorInfo;
-    }
-
-    public String getErrorType() {
-        return ErrorType;
-    }
-
-    public void setErrorType(String errorType) {
-        ErrorType = errorType;
+    public void setInfo(String info) {
+        this.info = info;
     }
 }
