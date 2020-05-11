@@ -39,7 +39,7 @@
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">States</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#!">California</a>
+                            <a class="dropdown-item" href="#!">Virginia</a>
                             <a class="dropdown-item" href="#!">Texas</a>
                             <a class="dropdown-item" href="#!">Rhode Island</a>
                         </div>
@@ -94,10 +94,62 @@
                                                 <div class="table-context"></div>
                                                 <div class="right_up_con_all" id="tol">
                                                 </div>
-                                                <a class="side-data dropdown-toggle" data-toggle="dropdown"
-                                                    role="button" aria-haspopup="true" aria-expanded="false"
-                                                    id="ChooseData">Data</a>
-                                                <div class="dropdown-menu">
+                                                <select class="form-control" onchange="ShowImage(parseInt(this.value), 'media');">
+                                                    <option selected="selected" value="1">2016 Presidential Voting</option>
+                                                    <option value="2">2016 Congressional Voting</option>
+                                                    <option value="3">2018 Congressional Voting</option>
+                                                    <option value="3">Population</option>
+                                                </select>
+                                                <div class="row" style="display: block;" id="media1">
+                                                    <div class="right_up_magin_top">
+                                                        <div class='DataName' id="DataType">
+                                                            <div class="text_left_a">Republican:</div>
+                                                            <div class="text_left_a">Democracy:</div>
+                                                            <div class="text_left_a">Libertatian: </div>
+                                                            <div class="text_left_a">Green Parties:</div>
+                                                        </div>
+                                                        <div class="text_left_a_data">
+                                                            <div class="testdata" id="RepublicanData"></div>
+                                                            <div class="testdata" id="DemocraticData"></div>
+                                                            <div class="testdata" id="LibertarianData"></div>
+                                                            <div class="testdata" id="GreenData"></div>
+                                                        </div>
+                                                        <div class="right_up_con_text_right" id="right_up_con_text_right">
+        
+                                                            <div class="RepublicanInput" id="RepublicanInput">
+                                                                <input id="RepublicanChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addRepubBotton()" />
+                                                            </div>
+                                                            <div class="DemocracyInput" id="DemocracyInput">
+                                                                <input id="DemocracyChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addDemoBotton()" />
+                                                            </div>
+                                                            <div class="LibertatianInput" id="LibertatianInput">
+                                                                <input id="LibertatianChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addLibBotton()" />
+                                                            </div>
+                                                            <div class="GreenInput" id="GreenInput">
+                                                                <input id="GreenChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addGreenBotton()" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="right_down magin_top">
+                                                            <div class="right_up_tab"></div>
+                                                            <textarea class="CommentArea"></textarea>
+                                                            <button class="CommentSubmit btn btn-primary"
+                                                                type="button">Submit</button>
+                                                            <table class="right_table" id="table">
+                                                            </table>
+        
+        
+                                                        </div>
+        
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="display: none;" id="media2">
+                                                    qwe?????
+                                                </div>
+                                                <!-- <div class="dropdown-menu">
                                                     <div class="dropdown-item1"
                                                         onclick="changeData('2016 Presidential Voting','Voting')">2016
                                                         Presidential Voting</div>
@@ -105,15 +157,15 @@
                                                         onclick="changeData('2016 Congressional Voting')">2016
                                                         Congressional Voting</div>
                                                     <div class="dropdown-item3"
-                                                        onclick="changeData('2018 Congressional Voting')">2018
+                                                        onclick="changeData('2016 Congressional Voting')">2018
                                                         Congressional Voting</div>
                                                     <div class="dropdown-item4" onclick="changeData('Demographic')">
                                                         Demographic</div>
-                                                </div>
+                                                </div> -->
                                             </div>
-                                            <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data
-                                            </div>
-                                            <div class="right_up_magin_top">
+                                            <!-- <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data
+                                            </div> -->
+                                            <!-- <div class="right_up_magin_top">
                                                 <div class='DataName' id="DataType">
                                                     <div class="text_left_a">Republican:</div>
                                                     <div class="text_left_a">Democracy:</div>
@@ -156,7 +208,7 @@
 
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
 
                                         </div>
@@ -175,12 +227,6 @@
                                             aria-labelledby="nav-profile-tab">
                                             123
                                         </div>
-                                        <!-- <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                        Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                        Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-                                    </div> -->
                                     </div>
 
                                 </div>
