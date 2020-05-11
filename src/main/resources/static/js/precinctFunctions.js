@@ -1,5 +1,11 @@
 var changeBoundaryConfirm = document.getElementById("changeBounayConfirm");
+var MergePrecinct = document.getElementById("mergePrecinct");
+var MergeConfirm = document.getElementById("mergePrecinctConfirm");
+var GhostMergePrecinct = document.getElementById("GhostPrecinct");
 changeBoundaryConfirm.disabled = true;
+MergePrecinct.disabled = true;
+MergeConfirm.disabled = true;
+GhostMergePrecinct.disabled = true;
 async function precinctFetch(stateName, county) {
     var countyID =county.id;
 
@@ -218,6 +224,10 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 console.log("There is no polygon need to moify")
                 console.log(i);
             }
+            for(let i in rectangle){
+                rectangle[i].setMap(null);
+            }
+            changeBoundaryConfirm.disabled = true;
             // modifiedPolygon.length = 0;
         }
 
@@ -342,9 +352,13 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
         $.unblockUI();
+        for(var i in newList) {
+            console.log(precincts[newList]);
+            styleNeighbour(precincts[newList].getPrecinctLayer());
+        }
     }
     newList.length = 0;
-    if (deletList.length != 0) {    //目前不管用
+    if (deletList.length != 0) {    //目前可以用了
         console.log("delet");
         console.log(deletList);
         // deletList.length = 0;
@@ -362,6 +376,10 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
         $.unblockUI();
+        for(var i in deletList) {
+            console.log(precincts[deletList]);
+            styleCounties(precincts[deletList].getPrecinctLayer());
+        }
     }
     deletList.length = 0;
     List.length=0;

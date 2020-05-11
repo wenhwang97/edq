@@ -1,5 +1,5 @@
 function inforChange(precinctNumber) {
-    document.getElementById("precinct title info").textContent = "Data infor: #"+precinctNumber ;
+    document.getElementById("precinct title info").textContent = "Data info: #"+precinctNumber ;
 }
 function test(){
     console.log("???");
@@ -10,7 +10,17 @@ function showCounty(){
 }
 
 // var cont = document.getElementById("DemocracyInput");//这是div
-
+function ShowImage(page, tag){
+    var i = 1;
+    var el;
+    while (el = document.getElementById(tag + i)) {
+        if (i == page)
+        el.style.display = 'block';
+        else
+        el.style.display = 'none';
+        i++;
+    }
+}
 
 function resore(NewInputId,conbutId,concleId,origional,changeButtion){
 
