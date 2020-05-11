@@ -342,9 +342,13 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
         $.unblockUI();
+        for(var i in newList) {
+            console.log(precincts[newList]);
+            styleNeighbour(precincts[newList].getPrecinctLayer());
+        }
     }
     newList.length = 0;
-    if (deletList.length != 0) {    //目前不管用
+    if (deletList.length != 0) {    //目前可以用了
         console.log("delet");
         console.log(deletList);
         // deletList.length = 0;
@@ -362,6 +366,10 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
         $.unblockUI();
+        for(var i in deletList) {
+            console.log(precincts[deletList]);
+            styleCounties(precincts[deletList].getPrecinctLayer());
+        }
     }
     deletList.length = 0;
     List.length=0;
