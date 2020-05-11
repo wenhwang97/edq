@@ -12,11 +12,10 @@ public class State implements Serializable {
     private String id;
 
     private String name;
-    private DemoData demoData;
 
     private Set<County> counties = new HashSet<County>();
+    private Set<NationalPark> parks = new HashSet<NationalPark>();
     // later districts...
-    // later geographics...
 
     @Id
     @Column(name = "state_id")
@@ -37,16 +36,6 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "demo_data")
-    public DemoData getDemoData() {
-        return demoData;
-    }
-
-    public void setDemoData(DemoData demoData) {
-        this.demoData = demoData;
-    }
-
     @Transient
     public Set<County> getCounties() {
         return counties;
@@ -56,13 +45,12 @@ public class State implements Serializable {
         this.counties = counties;
     }
 
-    @Override
-    public String toString() {
-        return "State{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", demoData=" + demoData +
-                ", counties=" + counties +
-                '}';
+    @Transient
+    public Set<NationalPark> getParks() {
+        return parks;
+    }
+
+    public void setParks(Set<NationalPark> parks) {
+        this.parks = parks;
     }
 }

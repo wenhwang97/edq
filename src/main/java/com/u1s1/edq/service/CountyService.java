@@ -38,10 +38,4 @@ public class CountyService {
         countyRepo.save(county);
     }
 
-    public void updateCountyDemoData(String stateId, String countyId, DemoData demoData) {
-        County county = cachedContainer.findCounty(stateId, countyId);
-        county.setDemoData(demoData);
-        countyRepo.save(county);
-    }
-
 }
