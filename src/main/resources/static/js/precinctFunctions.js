@@ -326,8 +326,8 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
     var urlpart1 = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID + "/data/neighbors";
     if (newList.length != 0) {
         console.log("add neighbor");
-        console.log(newList);
-        newList.length = 0;
+        // console.log(newList);
+        // newList.length = 0;
         console.log(newList);
         console.log(JSON.stringify(newList));
         $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
@@ -347,7 +347,7 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
     if (deletList.length != 0) {    //目前不管用
         console.log("delet");
         console.log(deletList);
-        deletList.length = 0;
+        // deletList.length = 0;
         console.log(deletList);
         $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
         console.log(deletList);
