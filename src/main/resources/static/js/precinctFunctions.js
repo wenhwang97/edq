@@ -224,6 +224,9 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 console.log("There is no polygon need to moify")
                 console.log(i);
             }
+            for(let i in rectangle){
+                rectangle[i].setMap(null);
+            }
             // modifiedPolygon.length = 0;
         }
 
