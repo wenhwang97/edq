@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Error implements Serializable {
 
     private Integer id;
+    private State state;
 
     private ErrorType type;
     private String info;
@@ -23,6 +24,17 @@ public class Error implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "state_id")
+    @JsonIgnore
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Enumerated(EnumType.STRING)
