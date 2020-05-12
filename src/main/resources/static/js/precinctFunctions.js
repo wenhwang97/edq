@@ -76,6 +76,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     let lastPrecinct;
     var clickedPrecinct;
     for (let ID in precincts) {
+        console.log(ID);
         // console.log("how many precincts");
         precinctLayer=precincts[ID].getPrecinctLayer();
         precinctLayer.addListener("mouseover", (event) => {
