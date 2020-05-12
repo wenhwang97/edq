@@ -56,14 +56,22 @@ public class PrecinctService {
 
     public void updatePrecinctType(String stateId, String countyId, String precinctCName, PrecinctType type) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
-        if (type == PrecinctType.NORMAL) {
-            precinct.setType(PrecinctType.NORMAL);
-        }
-        else if (type == PrecinctType.GHOST) {
-            precinct.setType(PrecinctType.GHOST);
-        }
-        else {
-            System.err.println("Unsupported Precinct Type.");
+        precinct.setType(type);
+        if (precinct.getType() == PrecinctType.GHOST) {
+            for (ElectionData electionData : precinct.getElectionData()) {
+                electionData.setDemocraticVote(-1);
+                electionData.setRepublicanVote(-1);
+                electionData.setLibertarianVote(-1);
+                electionData.setGreenVote(-1);
+            }
+
+            precinct.getDemoData().setTotalPop(-1);
+            precinct.getDemoData().setWhitePop(-1);
+            precinct.getDemoData().setBlackPop(-1);
+            precinct.getDemoData().setNativePop(-1);
+            precinct.getDemoData().setAsianPop(-1);
+            precinct.getDemoData().setNativePop(-1);
+            precinct.getDemoData().setOtherPop(-1);
         }
 
         precinctRepo.save(precinct);

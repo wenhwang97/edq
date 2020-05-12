@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class ElectionData implements Serializable, Cloneable {
 
     private Integer id;
+    private ElectionType type;
 
     private int year;
     private int republicanVote;
@@ -27,6 +28,15 @@ public class ElectionData implements Serializable, Cloneable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public ElectionType getType() {
+        return type;
+    }
+
+    public void setType(ElectionType type) {
+        this.type = type;
     }
 
     public int getYear() {
