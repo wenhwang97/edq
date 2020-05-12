@@ -5,6 +5,7 @@ import com.u1s1.edq.controller.utils.ResponseObject;
 import com.u1s1.edq.entity.County;
 import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.Precinct;
+import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.service.CountyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,14 @@ public class CountyController {
 
         for (Precinct precinct : county.getPrecincts()) {
             ResponseList reslist = new ResponseList(precinct.getCanonicalName());
-            reslist.getObjs().add(precinct.getDemoData());
-            reslist.getObjs().add(precinct.getElectionData());
+            if (precinct.getType() == PrecinctType.GHOST) {
+                reslist.getObjs().add(null);
+                reslist.getObjs().add(null);
+            }
+            else {
+                reslist.getObjs().add(precinct.getDemoData());
+                reslist.getObjs().add(precinct.getElectionData());
+            }
             reslist.getObjs().add(precinct.getBoundary());
             response.add(reslist);
         }

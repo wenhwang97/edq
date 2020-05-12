@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface PrecinctRepository extends JpaRepository<Precinct, String> {
 
-    @Query("select p from Precinct p join fetch p.boundary b join fetch b.vertices v where p.county = ?1")
+    @Query("select p, p.demoData from Precinct p join fetch p.boundary b join fetch b.vertices v where p.county = ?1")
     Set<Precinct> findAllByCounty(County county);
 
 

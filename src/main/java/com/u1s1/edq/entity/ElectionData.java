@@ -1,5 +1,6 @@
 package com.u1s1.edq.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.u1s1.edq.enums.ElectionType;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class ElectionData implements Serializable, Cloneable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @JsonIgnore
     public Integer getId() {
         return id;
     }

@@ -62,7 +62,7 @@ public class Precinct implements Serializable {
         this.type = type;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "demo_data")
     public DemoData getDemoData() {
         return demoData;
@@ -82,7 +82,7 @@ public class Precinct implements Serializable {
         this.boundary = boundary;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "precinct_id")
     public List<ElectionData> getElectionData() {
         return electionData;

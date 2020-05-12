@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +17,6 @@ public class County implements Serializable {
     private String name;
 
     private Set<GeoPolygon> boundary = new HashSet<GeoPolygon>();
-    private List<ElectionData> electionData = new ArrayList<ElectionData>();
 
     private Set<Precinct> precincts = new HashSet<Precinct>();
 
@@ -61,16 +58,6 @@ public class County implements Serializable {
 
     public void setBoundary(Set<GeoPolygon> boundary) {
         this.boundary = boundary;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "county_id")
-    public List<ElectionData> getElectionData() {
-        return electionData;
-    }
-
-    public void setElectionData(List<ElectionData> electionData) {
-        this.electionData = electionData;
     }
 
     @Transient
