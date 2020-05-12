@@ -330,6 +330,15 @@ async function handleRedirect(
       let havePrecinct = 0;
 
       google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
+        counties[ID].getLayer().setStyle((feature) => {
+          return {
+            fillColor: "#a8329e",
+            strokeColor: "#a8329e",
+            strokeWeight: 2,
+            zIndex: 1,
+          };
+        });
+        // markDrop(event);
         countyID = event.feature.o; //get the current county ID
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
         console.log(selectedCounty.hasPrecincts());
