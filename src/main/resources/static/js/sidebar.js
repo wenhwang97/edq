@@ -264,7 +264,7 @@ function addLibBotton(){
 }
 function addGreenBotton(){
     var cont = document.getElementById("GreenInput");//这是div
-    var but = document.getElementById("GreenChange");
+    var but = document.getElementById("GreenChange");//这是输入框
     if(but!=null){
         but.remove(but);
     }
@@ -295,6 +295,56 @@ function addGreenBotton(){
     cont.appendChild(conbut);
     cont.appendChild(canbut);
 }
+function addBotton(inputID,ChangeID,DataName){
+    var cont = document.getElementById(inputID);//这是div
+    var but = document.getElementById(ChangeID);
+    // var cont = document.getElementById(classid);//这是div
+    // var but = document.getElementById(inputid);
+    if(but!=null){
+        but.remove(but);
+    }
+    var NewInput = document.createElement("input");
+    var conbut = document.createElement("input");
+    var canbut = document.createElement("input");
+    NewInput.setAttribute("size",20);
+    // var nameInput = fildname+"Textinput";
+    // NewInput.setAttribute("id","LibertatianTextinput");
+    NewInput.setAttribute("id",DataName+"Textinput");
+    NewInput.setAttribute("type","text");
+    NewInput.setAttribute("name","new");
+    NewInput.style.border = '1px solid #000';
+    NewInput.style.width = '30%';
+    NewInput.style.height='20px';
+    conbut.setAttribute("type","image");
+    // var confirmName = fildname+"Confirm";
+    conbut.setAttribute("id",DataName+"Confirm");
+    // conbut.setAttribute("id",confirmName);
+    conbut.setAttribute("src","../images/confirm.png")
+    conbut.style.marginLeft="3%";
+    conbut.style.height="20px";
+    conbut.style.width="20px";
+    canbut.setAttribute("type","image");
+    // var cancelName = fildname+"Cancle";
+    canbut.setAttribute("id",DataName+"Cancle");
+    // canbut.setAttribute("id",cancelName);
+    canbut.setAttribute("src","../images/cancle.png")
+    var Textinput = DataName+'Textinput';
+    var Confirm = DataName+'Confirm';
+    var Cancle = DataName+'Cancle';
+    var Input = DataName+'Input';
+    var Change = DataName+'Change';
+    console.log("test1");
+    canbut.setAttribute("onclick","resore(Textinput,Confirm,Cancle,Input,Change)");
+    // console.log(nameInput)
+    canbut.style.marginLeft="1%";
+    canbut.style.height="20px";
+    canbut.style.width="20px";
+    cont.appendChild(NewInput);
+    cont.appendChild(conbut);
+    cont.appendChild(canbut);
+}
+
+
 function changeData(DataTail,VoteType){
     console.log("change data la!!");
     document.getElementById("DataTitle").textContent = DataTail+" Data";
@@ -302,3 +352,5 @@ function changeData(DataTail,VoteType){
 
     }
 }
+
+

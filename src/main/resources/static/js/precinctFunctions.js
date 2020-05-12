@@ -148,7 +148,12 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     document.getElementById("GreenData").textContent = precincts[ID].getPresidentialVote("greenVote");
                     document.getElementById("LibertarianData").textContent = precincts[ID].getPresidentialVote("libertarianVote");
                     document.getElementById("DemocraticData").textContent = precincts[ID].getPresidentialVote("democraticVote");
-                document.getElementById("AsianData").textContent = precincts[ID].getPresidentialVote("democraticVote");
+                document.getElementById("AsianData").textContent = precincts[ID].getDemographic("asianPop");
+                document.getElementById("BlackData").textContent = precincts[ID].getDemographic("blackPop");
+                document.getElementById("WhiteData").textContent = precincts[ID].getDemographic("whitePop");
+                document.getElementById("NativeData").textContent = precincts[ID].getDemographic("nativePop");
+                document.getElementById("OtherData").textContent = precincts[ID].getDemographic("otherPop");
+                document.getElementById("TotalData").textContent = precincts[ID].getDemographic("totalPop");
 
                 // AsianData
                 // }else { //no voting data
