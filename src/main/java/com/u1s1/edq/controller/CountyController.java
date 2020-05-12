@@ -1,5 +1,6 @@
 package com.u1s1.edq.controller;
 
+import com.u1s1.edq.controller.utils.ResponseList;
 import com.u1s1.edq.controller.utils.ResponseObject;
 import com.u1s1.edq.entity.County;
 import com.u1s1.edq.entity.DemoData;
@@ -25,16 +26,20 @@ public class CountyController {
     }
 
     @GetMapping(value = "/show-precincts")
-    public Set<ResponseObject> sendPrecincts(@PathVariable String stateId, @PathVariable String countyId) {
+    public Set<ResponseList> sendPrecincts(@PathVariable String stateId, @PathVariable String countyId) {
 
         County county = countyService.getCountyFromMem(stateId, countyId);
         if (county.getPrecincts().size() == 0) {
             countyService.initPrecincts(county);
         }
-        Set<ResponseObject> response = new HashSet<ResponseObject>();
+        Set<ResponseList> response = new HashSet<ResponseList>();
 
         for (Precinct precinct : county.getPrecincts()) {
-            response.add(new ResponseObject(precinct.getCanonicalName(), precinct.getBoundary()));
+            ResponseList reslist = new ResponseList(precinct.getCanonicalName());
+            reslist.getObjs().add(precinct.getDemoData());
+            reslist.getObjs().add(precinct.getElectionData());
+            reslist.getObjs().add(precinct.getBoundary());
+            response.add(reslist);
         }
 
         return response;

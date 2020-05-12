@@ -20,12 +20,10 @@ import java.util.Set;
 public class StateController {
 
     private StateService stateService;
-    private CountyService countyService;
 
     @Autowired
-    public StateController(StateService stateService, CountyService countyService) {
+    public StateController(StateService stateService) {
         this.stateService = stateService;
-        this.countyService = countyService;
     }
 
     @GetMapping(value = "")
@@ -35,13 +33,6 @@ public class StateController {
             stateService.initNationalParks(state);
             if (state.getCounties().size() == 0) {
                 stateService.initCounties(state);
-                Iterator<County> it = state.getCounties().iterator();
-                while (it.hasNext()) {
-                    County county = it.next();
-                    if (county != null) {
-                        countyService.initPrecincts(county);
-                    }
-                }
             }
 
             return ResponseEntity.ok().body("");
