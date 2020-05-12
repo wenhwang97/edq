@@ -140,7 +140,9 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
                     var url = "/precinct/" + precinctID;
                     var urlpart3 = "/data/vote/presidential/2016";
-                    precinctFetchData(urlpart1 + url + urlpart3, precincts[ID]);
+                    var demourl = urlpart1+url+"/data/demo";
+
+                    precinctFetchData(urlpart1 + url + urlpart3, demourl,precincts[ID]);
                 }
                 // precincts[ID].getPrecinctLayer().overrideStyle(event.feature, { fillColor: "#a8329e",strokeWeight: 9 });
 
@@ -367,7 +369,7 @@ async function precinctChangeBoundary(url, data) {
     $.unblockUI();
 
 }
-async function precinctFetchData(url,precinct) {
+async function precinctFetchData(url,demourl, precinct) {
     let response = await fetch(url);
     let myJson = await response.json();
     // console.log(myJson);
@@ -379,6 +381,9 @@ async function precinctFetchData(url,precinct) {
     document.getElementById("GreenData").textContent = myJson.greenVote;
     document.getElementById("LibertarianData").textContent = myJson.libertarianVote;
     document.getElementById("DemocraticData").textContent = myJson.democraticVote;
+    let demoresponse = await fetch(demourl);
+    let demoJson = await demoresponse.json();
+    console.log(demoJson);
 }
 async function getNeighbour(url, county, precinctID) {
     console.log(url);

@@ -1,3 +1,7 @@
+var DataSelector = document.getElementById("DataSelect");
+var index=DataSelector.selectedIndex;
+var gv=DataSelector[index].text;
+console.log(gv);
 
 $(function(){
     nav();
@@ -49,4 +53,4 @@ var hash = document.location.hash;
 var prefix = "tab_";
 if (hash) {
     $('.nav-tabs a[href="'+hash.replace(prefix,"")+'"]').tab('show');
-} 
+}
