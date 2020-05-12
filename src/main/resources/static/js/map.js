@@ -61,7 +61,9 @@ function initMap() {
 
         case THREE_STATES[0]:// fujiniya
           r.disabled=false;
+          $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
           response = await fetch("http://localhost:8080/state/va");
+          $.unblockUI();
           if(response.status==500){
             break;
           }
@@ -77,7 +79,9 @@ function initMap() {
 
         case THREE_STATES[1]:// Texas
           r.disabled=false;
+          $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
           response = await fetch("http://localhost:8080/state/tx");
+          $.unblockUI();
           if(response.status==500){
             break;
           }
@@ -92,8 +96,11 @@ function initMap() {
           break;
 
         case THREE_STATES[2]:// Rhode Island
+            console.log("RI");
           r.disabled=false;
+          $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
           response = await fetch("http://localhost:8080/state/ri");
+          $.unblockUI();
           if(response.status==500){
             break;
           }

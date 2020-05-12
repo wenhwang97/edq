@@ -89,8 +89,7 @@
                                             <div class="right_up_con">
                                                 <div id="precinct title info" class="tit_top">Data info: </div>
                                                 <input class="ml-2" type="checkbox" id="countyCheckBox">Show County<br>
-                                                <input class="ml-2" type="checkbox" id="PrecinctCheckBox">Show
-                                                Precinct<br>
+                                                <input class="ml-2" type="checkbox" id="PrecinctCheckBox">Show Precinct<br>
                                                 <div class="table-context"></div>
                                                 <div class="right_up_con_all" id="tol">
                                                 </div>
@@ -98,7 +97,7 @@
                                                     <option selected="selected" value="1">2016 Presidential Voting</option>
                                                     <option value="2">2016 Congressional Voting</option>
                                                     <option value="3">2018 Congressional Voting</option>
-                                                    <option value="3">Population</option>
+                                                    <option value="4">Population</option>
                                                 </select>
                                                 <div class="row" style="display: block;" id="media1">
                                                     <div class="right_up_magin_top">
@@ -140,81 +139,143 @@
                                                                 type="button">Submit</button>
                                                             <table class="right_table" id="table">
                                                             </table>
-
-
                                                         </div>
-
                                                     </div>
                                                 </div>
                                                 <div class="row" style="display: none;" id="media2">
                                                     qwe?????
                                                 </div>
-                                                <!-- <div class="dropdown-menu">
-                                                    <div class="dropdown-item1"
-                                                        onclick="changeData('2016 Presidential Voting','Voting')">2016
-                                                        Presidential Voting</div>
-                                                    <div class="dropdown-item2"
-                                                        onclick="changeData('2016 Congressional Voting')">2016
-                                                        Congressional Voting</div>
-                                                    <div class="dropdown-item3"
-                                                        onclick="changeData('2016 Congressional Voting')">2018
-                                                        Congressional Voting</div>
-                                                    <div class="dropdown-item4" onclick="changeData('Demographic')">
-                                                        Demographic</div>
-                                                </div> -->
+                                                <div class="row" style="display: none;" id="media3">
+                                                    media3?
+                                                </div>
+                                                <div class="row" style="display: none;" id="media4">
+                                                    <div class="right_up_magin_top">
+                                                        <div class='DataName' id="DataType">
+                                                            <div class="text_left_a">Asian:</div>
+                                                            <div class="text_left_a">Black American:</div>
+                                                            <div class="text_left_a">White: </div>
+                                                            <div class="text_left_a">Native:</div>
+                                                            <div class="text_left_a">Other:</div>
+                                                            <div class="text_left_a">Total:</div>
+                                                        </div>
+                                                        <div class="text_left_a_data">
+                                                            <div class="testdata" id="AsianData"></div>
+                                                            <div class="testdata" id="BlackData"></div>
+                                                            <div class="testdata" id="WhiteData"></div>
+                                                            <div class="testdata" id="NativeData"></div>
+                                                            <div class="testdata" id="OtherData"></div>
+                                                            <div class="testdata" id="TotalData"></div>
+                                                        </div>
+                                                        <div class="right_up_con_text_right" id="right_up_con_text_right">
+
+                                                            <div class="AsianInput" id="AsianInput">
+                                                                <input id="AsianChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addRepubBotton()" />
+                                                            </div>
+                                                            <div class="BlackInputt" id="BlackInput">
+                                                                <input id="BlackChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addDemoBotton()" />
+                                                            </div>
+                                                            <div class="WhiteInput" id="WhiteInput">
+                                                                <input id="WhiteChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addLibBotton()" />
+                                                            </div>
+                                                            <div class="NativeInput" id="NativeInput">
+                                                                <input id="NativeChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addGreenBotton()" />
+                                                            </div>
+                                                            <div class="OtherInput" id="OtherInput">
+                                                                <input id="OtherChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addGreenBotton()" />
+                                                            </div>
+                                                            <div class="TotalInput" id="TotalInput">
+                                                                <input id="TotalChange" class="Change" type="image"
+                                                                    src="../images/submit.png" onclick="addGreenBotton()" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="right_down magin_top">
+                                                            <div class="right_up_tab"></div>
+                                                            <textarea class="CommentArea"></textarea>
+                                                            <button class="CommentSubmit btn btn-primary"
+                                                                type="button">Submit</button>
+                                                            <table class="right_table" id="table">
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
                                             </div>
-                                            <!-- <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data
-                                            </div> -->
-                                            <!-- <div class="right_up_magin_top">
-                                                <div class='DataName' id="DataType">
-                                                    <div class="text_left_a">Republican:</div>
-                                                    <div class="text_left_a">Democracy:</div>
-                                                    <div class="text_left_a">Libertatian: </div>
-                                                    <div class="text_left_a">Green Parties:</div>
-                                                </div>
-                                                <div class="text_left_a_data">
-                                                    <div class="testdata" id="RepublicanData"></div>
-                                                    <div class="testdata" id="DemocraticData"></div>
-                                                    <div class="testdata" id="LibertarianData"></div>
-                                                    <div class="testdata" id="GreenData"></div>
-                                                </div>
-                                                <div class="right_up_con_text_right" id="right_up_con_text_right">
-
-                                                    <div class="RepublicanInput" id="RepublicanInput">
-                                                        <input id="RepublicanChange" class="Change" type="image"
-                                                            src="../images/submit.png" onclick="addRepubBotton()" />
-                                                    </div>
-                                                    <div class="DemocracyInput" id="DemocracyInput">
-                                                        <input id="DemocracyChange" class="Change" type="image"
-                                                            src="../images/submit.png" onclick="addDemoBotton()" />
-                                                    </div>
-                                                    <div class="LibertatianInput" id="LibertatianInput">
-                                                        <input id="LibertatianChange" class="Change" type="image"
-                                                            src="../images/submit.png" onclick="addLibBotton()" />
-                                                    </div>
-                                                    <div class="GreenInput" id="GreenInput">
-                                                        <input id="GreenChange" class="Change" type="image"
-                                                            src="../images/submit.png" onclick="addGreenBotton()" />
-                                                    </div>
-                                                </div>
-                                                <div class="right_down magin_top">
-                                                    <div class="right_up_tab"></div>
-                                                    <textarea class="CommentArea"></textarea>
-                                                    <button class="CommentSubmit btn btn-primary"
-                                                        type="button">Submit</button>
-                                                    <table class="right_table" id="table">
-                                                    </table>
-
-
-                                                </div>
-
-                                            </div> -->
-
-
+                                           
                                         </div>
                                         <div class="tab-pane fade" id="nav-error" role="tabpanel"
                                             aria-labelledby="nav-error-tab">
-                                            ????
+                                            <div class="container py-3">
+                                                <div class="row">
+                                                    <div class="col-10 mx-auto">
+                                                        <div class="accordion" id="faqExample">
+                                                            <div class="card">
+                                                                <div class="card-header p-2" id="headingOne">
+                                                                    <h5 class="mb-0">
+                                                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                          Q: How does this work?
+                                                                        </button>
+                                                                      </h5>
+                                                                </div>
+                                            
+                                                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqExample">
+                                                                    <div class="card-body">
+                                                                        <b>Answer:</b> It works using the Bootstrap 4 collapse component with cards to make a vertical accordion that expands and collapses as questions are toggled.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card">
+                                                                <div class="card-header p-2" id="headingTwo">
+                                                                    <h5 class="mb-0">
+                                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                      Q: What is Bootstrap 4?
+                                                                    </button>
+                                                                  </h5>
+                                                                </div>
+                                                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqExample">
+                                                                    <div class="card-body">
+                                                                        Bootstrap is the most popular CSS framework in the world. The latest version released in 2018 is Bootstrap 4. Bootstrap can be used to quickly build responsive websites.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card">
+                                                                <div class="card-header p-2" id="headingThree">
+                                                                    <h5 class="mb-0">
+                                                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                          Q. What is another question?
+                                                                        </button>
+                                                                      </h5>
+                                                                </div>
+                                                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqExample">
+                                                                    <div class="card-body">
+                                                                        The answer to the question can go here.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card">
+                                                                <div class="card-header p-2" id="headingFour">
+                                                                    <h5 class="mb-0">
+                                                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                          Q. What is the next question?
+                                                                        </button>
+                                                                      </h5>
+                                                                </div>
+                                                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqExample">
+                                                                    <div class="card-body">
+                                                                        The answer to this question can go here. This FAQ example can contain all the Q/A that is needed.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            
+                                                    </div>
+                                                </div>
+                                                <!--/row-->
+                                            </div>
                                         </div>
                                         <div class="tab-pane fade" id="nav-Tool" role="tabpanel"
                                             aria-labelledby="nav-Tool-tab">
@@ -244,68 +305,9 @@
                             </div>
                         </div>
                     </section>
-                    <!-- <div class="right_up_tab">Map info</div>
-
-                <div class="right_up_con">
-                    <div id = "precinct title info" class="tit_top">Data infor: </div>
-                    <input class="ml-2" type="checkbox" id="countyCheckBox">Show County<br>
-                    <input class="ml-2" type="checkbox" id="PrecinctCheckBox">Show Precinct<br>
-                    <div class="table-context"></div>
-                    <div class="right_up_con_all" id="tol">
-                    </div>
-                    <a class="side-data dropdown-toggle" data-toggle="dropdown"  role="button"
-                       aria-haspopup="true" aria-expanded="false" id="ChooseData">Data</a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-item1" onclick="changeData('2016 Presidential Voting','Voting')">2016 Presidential Voting</div>
-                        <div class="dropdown-item2" onclick="changeData('2016 Congressional Voting')">2016 Congressional Voting</div>
-                        <div class="dropdown-item3" onclick="changeData('2018 Congressional Voting')">2018 Congressional Voting</div>
-                        <div class="dropdown-item4" onclick="changeData('Demographic')">Demographic</div>
-                    </div>
-
-                </div> -->
+                
                 </div>
-                <!-- The grey part -->
-                <!-- <div class="right_up_con_text" id="DataTitle">2016 Presidential Voting Data</div>
-            <div class="right_up_magin_top">
-                <div class='DataName'id = "DataType">
-                    <div class="text_left_a">Republican:</div>
-                    <div class="text_left_a">Democracy:</div>
-                    <div class="text_left_a" >Libertatian: </div>
-                    <div class="text_left_a">Green Parties:</div>
-                </div>
-                <div class="text_left_a_data" >
-                    <div class="testdata" id="RepublicanData"></div>
-                    <div class="testdata" id="DemocraticData"></div>
-                    <div class="testdata" id="LibertarianData"></div>
-                    <div class="testdata" id="GreenData"></div>
-                </div>
-                <div class="right_up_con_text_right" id = "right_up_con_text_right">
-
-                    <div class="RepublicanInput" id="RepublicanInput">
-                        <input id = "RepublicanChange" class="Change"  type="image"  src="../images/submit.png" onclick="addRepubBotton()"/>
-                    </div>
-                    <div class="DemocracyInput" id="DemocracyInput">
-                        <input id = "DemocracyChange" class="Change"  type="image"  src="../images/submit.png" onclick="addDemoBotton()"/>
-                    </div>
-                    <div class="LibertatianInput" id="LibertatianInput">
-                        <input id = "LibertatianChange" class="Change"  type="image"  src="../images/submit.png" onclick="addLibBotton()"/>
-                    </div>
-                    <div class="GreenInput" id="GreenInput">
-                        <input id = "GreenChange" class="Change"  type="image"  src="../images/submit.png" onclick="addGreenBotton()"/>
-                    </div>
-                </div>
-
-            </div>
-            Change the data part -->
-                <!-- <div class="right_down magin_top">
-                <div class="right_up_tab"></div>
-                <textarea class = "CommentArea" ></textarea>
-                <button class="CommentSubmit btn btn-primary" type="button">Submit</button>
-                <table class="right_table" id="table">
-                </table>
-
-
-            </div> -->
+              
             </div>
         </div>
 
