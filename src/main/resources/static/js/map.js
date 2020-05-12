@@ -330,14 +330,14 @@ async function handleRedirect(
       let havePrecinct = 0;
 
       google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
-        counties[ID].getLayer().setStyle((feature) => {
-          return {
-            fillColor: "rgba(255,255,255,0)",
-            strokeColor: "rgb(144,143,143)",
-            strokeWeight: 1,
-            zIndex: 1,
-          };
-        });
+        // counties[ID].getLayer().setStyle((feature) => {
+        //   return {
+        //     fillColor: "rgba(255,255,255,0)",
+        //     strokeColor: "rgb(144,143,143)",
+        //     strokeWeight: 1,
+        //     zIndex: 1,
+        //   };
+        // });
         // markDrop(event);
         countyID = event.feature.o; //get the current county ID
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state

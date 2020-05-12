@@ -2,14 +2,20 @@ class Precinct{
     constructor(id) {
         this.id = id;
         this.layer=null;
-        this.PresidentialVote={
-        };
+        this.PresidentialVote={};
+        this.Demographic={};
         this.hasData=false;
         this.boundary=null;
         this.neighbour=[];
         this.PrecinctPolygon={};
         this.PolygonCoord={};
 
+    }
+    setDemographic(type,value){
+        this.Demographic[type]=value;
+    }
+    getDemographic(type){
+        return this.Demographic[type];
     }
     addPrecincePolygon(id,polygon){ //a precinct may have more than one polygon
         this.PrecinctPolygon[id]=polygon;

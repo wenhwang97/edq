@@ -23,16 +23,27 @@ async function precinctFetch(stateName, county) {
     for (let i in precinctJson) {  //how many precincts
         var precinct = new Precinct(precinctJson[i].id);
         var precinctCoords = [];
+        precinct.setDemographic("asianPop",precinctJson[i].objs[0].asianPop);
+        precinct.setDemographic("blackPop",precinctJson[i].objs[0].blackPop);
+        precinct.setDemographic("nativePop",precinctJson[i].objs[0].nativePop);
+        precinct.setDemographic("otherPop",precinctJson[i].objs[0].otherPop);
+        precinct.setDemographic("totalPop",precinctJson[i].objs[0].totalPop);
+        precinct.setDemographic("whitePop",precinctJson[i].objs[0].whitePop);
 
-        for (let j in precinctJson[i].obj) {  //for current precinct
+        precinct.setPresidentialVote("democraticVote",precinctJson[i].objs[1][0].democraticVote);
+        precinct.setPresidentialVote("greenVote",precinctJson[i].objs[1][0].greenVote);
+        precinct.setPresidentialVote("libertarianVote",precinctJson[i].objs[1][0].libertarianVote);
+        precinct.setPresidentialVote("republicanVote",precinctJson[i].objs[1][0].republicanVote);
+        console.log(precinctJson[i].objs[1][0].democraticVote);
+        for (let j in precinctJson[i].objs[2]) {  //for current precinct
             var precinctPolygon = [];
             // var pureCoord=[];
-            for (let k in precinctJson[i].obj[j].vertices) { //for current precinct's polygon coord
-                precinctPolygon.push({lat: precinctJson[i].obj[j].vertices[k].y_pos, lng: precinctJson[i].obj[j].vertices[k].x_pos});
+            for (let k in precinctJson[i].objs[2][j].vertices) { //for current precinct's polygon coord
+                precinctPolygon.push({lat: precinctJson[i].objs[2][j].vertices[k].y_pos, lng: precinctJson[i].objs[2][j].vertices[k].x_pos});
                 // pureCoord.push()
             }
             precinctCoords.push(precinctPolygon);
-            precinct.addPrecincePolygon(precinctJson[i].obj[j].id, precinctPolygon);
+            precinct.addPrecincePolygon(precinctJson[i].objs[2][j].id, precinctPolygon);
         }
         totalPrecinct.push(precinctCoords);
         precinctData = new google.maps.Data();
@@ -130,20 +141,25 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 }
                 inforChange(event.feature.o);  //change the title for
                 let precinctID=event.feature.o;
-                if(precincts[ID].hasData==true){//if have the voting data
+                // if(precincts[ID].hasData==true){//if have the voting data
+                console.log("qwe????");
+                console.log(precincts[ID].getPresidentialVote("republicanVote"));
                     document.getElementById("RepublicanData").textContent = precincts[ID].getPresidentialVote("republicanVote");
                     document.getElementById("GreenData").textContent = precincts[ID].getPresidentialVote("greenVote");
                     document.getElementById("LibertarianData").textContent = precincts[ID].getPresidentialVote("libertarianVote");
                     document.getElementById("DemocraticData").textContent = precincts[ID].getPresidentialVote("democraticVote");
-                }else { //no voting data
-                    // var url1 ="/state/{stateId}/county/{countyId}/precinct/{precinctId}/data/vote/presidential/{year}";
-                    var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
-                    var url = "/precinct/" + precinctID;
-                    var urlpart3 = "/data/vote/presidential/2016";
-                    var demourl = urlpart1+url+"/data/demo";
+                document.getElementById("AsianData").textContent = precincts[ID].getPresidentialVote("democraticVote");
 
-                    precinctFetchData(urlpart1 + url + urlpart3, demourl,precincts[ID]);
-                }
+                // AsianData
+                // }else { //no voting data
+                //     // var url1 ="/state/{stateId}/county/{countyId}/precinct/{precinctId}/data/vote/presidential/{year}";
+                //     var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
+                //     var url = "/precinct/" + precinctID;
+                //     var urlpart3 = "/data/vote/presidential/2016";
+                //     var demourl = urlpart1+url+"/data/demo";
+                //
+                //     // precinctFetchData(urlpart1 + url + urlpart3, demourl,precincts[ID]);
+                // }
                 // precincts[ID].getPrecinctLayer().overrideStyle(event.feature, { fillColor: "#a8329e",strokeWeight: 9 });
 
                 precincts[ID].getPrecinctLayer().setStyle((feature) => {
@@ -165,13 +181,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             if(addNeigbourClicked==true){
                 addneighbourlist.push(ID);
                 console.log(addneighbourlist);
-                // addNeighbourConfirm.addEventListener('click',function(){
-                //   addNeigbourClicked=false;
-                //   console.log("confime button1");
-                //   addNeighbourButton.disabled=false;
-                //   addNeighbourConfirm.disabled=true;
-                //
-                // });
+
             }
             if(mergeClicked == true){   //merge precinct
                 if(mergePrecinctList.length=2){
