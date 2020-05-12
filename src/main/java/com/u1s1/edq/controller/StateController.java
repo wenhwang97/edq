@@ -2,9 +2,9 @@ package com.u1s1.edq.controller;
 
 import com.u1s1.edq.controller.utils.ResponseObject;
 import com.u1s1.edq.entity.County;
+import com.u1s1.edq.entity.Error;
 import com.u1s1.edq.entity.NationalPark;
 import com.u1s1.edq.entity.State;
-import com.u1s1.edq.service.CountyService;
 import com.u1s1.edq.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @RequestMapping("/state/{stateId}")
@@ -30,7 +29,13 @@ public class StateController {
     public ResponseEntity<String> selectState(@PathVariable String stateId) {
         if (stateService.getStateFromDB(stateId)) {
             State state = stateService.getStateFromMem(stateId);
-            stateService.initNationalParks(state);
+
+            if (state.getParks().size() == 0) {
+                stateService.initNationalParks(state);
+            }
+            if (state.getErrors().size() == 0) {
+                stateService.initErrors(state);
+            }
             if (state.getCounties().size() == 0) {
                 stateService.initCounties(state);
             }
@@ -58,6 +63,13 @@ public class StateController {
         State state = stateService.getStateFromMem(stateId);
 
         return state.getParks();
+    }
+
+    @GetMapping(value = "/data/errors")
+    public Set<Error> sendErrors(@PathVariable String stateId) {
+        State state = stateService.getStateFromMem(stateId);
+
+        return state.getErrors();
     }
 
 }

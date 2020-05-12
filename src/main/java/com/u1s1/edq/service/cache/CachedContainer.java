@@ -1,6 +1,7 @@
 package com.u1s1.edq.service.cache;
 
 import com.u1s1.edq.entity.County;
+import com.u1s1.edq.entity.Error;
 import com.u1s1.edq.entity.Precinct;
 import com.u1s1.edq.entity.State;
 import org.springframework.stereotype.Component;
@@ -12,14 +13,11 @@ import java.util.Set;
 @Component
 public class CachedContainer {
 
-
     private Map<String, State> stateContainer;
 
-
     public CachedContainer() {
-        stateContainer = new HashMap<String, State>();
+        this.stateContainer = new HashMap<String, State>();
     }
-
 
     public boolean putState(State state) {
         if (stateContainer.get(state.getId()) == null) {

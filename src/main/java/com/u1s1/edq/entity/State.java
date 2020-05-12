@@ -15,6 +15,7 @@ public class State implements Serializable {
 
     private Set<County> counties = new HashSet<County>();
     private Set<NationalPark> parks = new HashSet<NationalPark>();
+    private Set<Error> errors = new HashSet<Error>();
     // later districts...
 
     @Id
@@ -52,5 +53,14 @@ public class State implements Serializable {
 
     public void setParks(Set<NationalPark> parks) {
         this.parks = parks;
+    }
+
+    @Transient
+    public Set<Error> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Set<Error> errors) {
+        this.errors = errors;
     }
 }
