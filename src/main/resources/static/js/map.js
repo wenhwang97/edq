@@ -332,9 +332,9 @@ async function handleRedirect(
       google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
         counties[ID].getLayer().setStyle((feature) => {
           return {
-            fillColor: "#a8329e",
-            strokeColor: "#a8329e",
-            strokeWeight: 2,
+            fillColor: "rgba(255,255,255,0)",
+            strokeColor: "rgb(144,143,143)",
+            strokeWeight: 1,
             zIndex: 1,
           };
         });
