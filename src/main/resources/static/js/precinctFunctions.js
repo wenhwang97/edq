@@ -367,7 +367,7 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID) {
     }
     var url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID[0] + "/data/merge-donut/" + countyID + "/" + precinctID[1] + "/" + polygonID;
     console.log(url);
-    await fetch(url, {
+    let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
         // body: JSON.stringify({vertices}), // data can be `string` or {object}!
         headers: new Headers({
@@ -376,7 +376,7 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID) {
     }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
-    var mergeJson = await response.json()
+    let mergeJson = await response.json()
 
     console.log(mergeJson);
 }
