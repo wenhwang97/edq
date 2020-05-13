@@ -1,8 +1,8 @@
 const THREE_STATES = ["Virginia", "Texas", "Rhode Island"];
 var map;
 var dataLayers = {}; // all dataLayer (geojson)
-var r = document.getElementById("countyCheckBox");
-var precinctCheckBox=document.getElementById("PrecinctCheckBox");
+var r = document.getElementById("show-county");
+var precinctCheckBox=document.getElementById("show-precinct");
 var changeBoundaryButton = document.getElementById("changeBoundary");
 var addNeighbourButton = document.getElementById("addNeighbour");
 var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
