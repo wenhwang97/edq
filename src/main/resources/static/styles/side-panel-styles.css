@@ -3,6 +3,7 @@
 }
 
 .side-panel .side-panel-page {
+    display: none;
     width: 290px;
     position: absolute;
     left: 60px;
