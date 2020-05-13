@@ -12,6 +12,7 @@ public class ElectionData implements Serializable, Cloneable {
 
     private Integer id;
     private ElectionType type;
+    private int distNum;
 
     private int year;
     private int republicanVote;
@@ -37,6 +38,15 @@ public class ElectionData implements Serializable, Cloneable {
 
     public void setType(ElectionType type) {
         this.type = type;
+    }
+
+    @Column(name = "dist_num")
+    public int getDistNum() {
+        return distNum;
+    }
+
+    public void setDistNum(int distNum) {
+        this.distNum = distNum;
     }
 
     public int getYear() {
