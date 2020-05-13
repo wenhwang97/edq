@@ -461,7 +461,7 @@ html, body {
 .navbar{
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: 0;  
+  padding-left: 0;
   width: 100vw;
   background-color: #2199F2;
 }
@@ -471,10 +471,3 @@ html, body {
   background-color: #184490;
   color: #FFFFFF;
 }
-
-.nav-link{
-  color: white;
-  font-size: 1.3em;
-  /* margin-left: 1em; */
-}
-

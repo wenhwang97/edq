@@ -4,6 +4,7 @@
 
 .sidepane-data .sidepane-body {
     padding: 50px 0 0 30px;
+    margin-bottom: 15px;
 }
 
 .sidepane-data .sidepane-body .sidepane-nav-state, .sidepane-nav-county {
@@ -16,6 +17,10 @@
     font-weight: 500;
 }
 
-.sidepane-data .sidepane-content .sidepane-content-nav .nav-link {
-    color: #495057;
+.sidepane-data .sidepane-content {
+    padding: 10px;
+}
+
+.sidepane-data .sidepane-content .nav-link {
+    padding: 8px 78px;
 }

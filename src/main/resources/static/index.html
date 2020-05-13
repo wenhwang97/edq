@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="styles/sidepane-styles.css">
     <link rel="stylesheet" href="styles/sidepane-data-styles.css">
 
+    <script src="js/ui/sidepane.js"></script>
 </head>
 
 <body>
@@ -124,7 +125,36 @@
                         </ul>
                         <div class="tab-content py-3">
                             <div class="tab-pane active" id="tab1">
-                                <p>I'm in Section 1.</p>
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+                                                    Voting Data
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                Data here...
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
+                                                    Demographic Data
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                Data here...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab2">
                                 <p>I'm in Section 2.</p>
@@ -398,15 +428,16 @@
 
     <!-- Scripts -->
     <!-- <script src="../js/jquery-2.2.0.min.js"></script> -->
-    <script src="js/setting.js"></script>
+    <script src="js/ui/setting.js"></script>
     <script src="js/Precinct.js"></script>
     <script src="js/County.js"></script>
     <script src="js/State.js"></script>
     <script src="js/precinctFunctions.js"></script>
     <script src="js/map.js"></script>
     <script src="js/index.js"></script>
-    <script src="js/sidebar.js"></script>
+    <script src="js/ui/sidebar.js"></script>
     <script src="js/filterpane.js"></script>
+
     <!-- <script src="../js/mapControl.js"></script> -->
     <script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.0.2/jsts.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -414,7 +445,6 @@
     <script src="http://malsup.github.com/jquery.blockUI.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDmXQKCLMhm__Uu6PWSH3Cf-PgCzEG_4&callback=initMap"
         async defer></script>
-
 </body>
 
 </html>
