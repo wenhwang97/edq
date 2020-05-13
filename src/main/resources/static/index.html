@@ -69,6 +69,11 @@
                                     <span class="custom-control-description custom-control-label panel-content-font">Show Counties</span>
                                 </label><br>
                                 <label class="custom-control custom-checkbox panel-content-general">
+                                    <input type="checkbox" class="custom-control-input" id="show-district">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description custom-control-label panel-content-font">Show Districts</span>
+                                </label><br>
+                                <label class="custom-control custom-checkbox panel-content-general">
                                     <input type="checkbox" class="custom-control-input" id="show-precinct">
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description custom-control-label panel-content-font">Show Precincts</span>
@@ -125,33 +130,71 @@
                         </ul>
                         <div class="tab-content py-3">
                             <div class="tab-pane active" id="tab1">
-                                <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
-                                                    Voting Data
-                                                </a>
-                                            </h4>
+                                <div class="container">
+                                    <label class="table-title">Voting Data</label>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody id="myTable">
+                                                <tr>
+                                                    <td class="row-title">Democratic</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Republican</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Libertarian</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Green</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in">
-                                            <div class="panel-body">
-                                                Data here...
-                                            </div>
+                                        <div class="col-md-12 text-center">
+                                            <ul class="pagination pagination-lg pager" id="myPager"></ul>
                                         </div>
                                     </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
-                                                    Demographic Data
-                                                </a>
-                                            </h4>
+                                </div>
+                                <div class="container">
+                                    <label class="table-title">Demographic Data</label>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody id="myTable">
+                                                <tr>
+                                                    <td class="row-title">Total Population</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">White</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Black or African American</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Asian</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">American Indian or Alaska Native</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Native Hawaiian or Other Pacific Islander</td>
+                                                    <td class="row-content">Table cell</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div id="collapseTwo" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                Data here...
-                                            </div>
+                                        <div class="col-md-12 text-center">
+                                            <ul class="pagination pagination-lg pager" id="myPager"></ul>
                                         </div>
                                     </div>
                                 </div>

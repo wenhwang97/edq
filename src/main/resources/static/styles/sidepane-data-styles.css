@@ -26,35 +26,22 @@
 }
 
 /* Voting data and Demographic data  */
-.sidepane-content .tab-pane .panel {
-    margin-bottom: 20px;
-    background-color: white;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+.sidepane-content .tab-pane .table-title {
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.sidepane-content .tab-pane .panel-group .panel {
-    margin-bottom: 0;
-    border-radius: 4px;
-}
-
-.sidepane-content .tab-pane .panel-group .panel+.panel {
-    margin-top: 5px;
-}
-
-.sidepane-content .tab-pane .panel-group .panel-default {
-    border-color: #dddddd;
-}
-
-.sidepane-data .sidepane-content .panel-heading .accordion-toggle:after {
-    font-family: 'Glyphicons Halflings';
-    content: "\e114";
+.sidepane-content .tab-pane .table {
+    width: 95%;
     float: right;
-    color: grey;
 }
 
-.sidepane-data .sidepane-content .panel-heading .accordion-toggle.collapsed:after {
-    content: "\e080";
+.sidepane-content .tab-pane .table td, table th{
+    padding: .5rem;
+    vertical-align: middle;
 }
 
+.sidepane-content .tab-pane .row-title {
+    min-width: 150px;
+    max-width: 150px;
+}
