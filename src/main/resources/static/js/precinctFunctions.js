@@ -1,11 +1,11 @@
 var changeBoundaryConfirm = document.getElementById("changeBounayConfirm");
 var MergePrecinct = document.getElementById("mergePrecinct");
 var MergeConfirm = document.getElementById("mergePrecinctConfirm");
-var GhostMergePrecinct = document.getElementById("GhostPrecinct");
+var GhostPrecinct = document.getElementById("GhostPrecinct");
 changeBoundaryConfirm.disabled = true;
 MergePrecinct.disabled = true;
 MergeConfirm.disabled = true;
-GhostMergePrecinct.disabled = true;
+GhostPrecinct.disabled = true;
 async function precinctFetch(stateName, county) {
     var countyID =county.id;
 
@@ -22,27 +22,45 @@ async function precinctFetch(stateName, county) {
     var totalPrecinct = [];
     for (let i in precinctJson) {  //how many precincts
         var precinct = new Precinct(precinctJson[i].id);
-        var precinctCoords = [];
-        precinct.setDemographic("asianPop",precinctJson[i].objs[0].asianPop);
-        precinct.setDemographic("blackPop",precinctJson[i].objs[0].blackPop);
-        precinct.setDemographic("nativePop",precinctJson[i].objs[0].nativePop);
-        precinct.setDemographic("otherPop",precinctJson[i].objs[0].otherPop);
-        precinct.setDemographic("totalPop",precinctJson[i].objs[0].totalPop);
-        precinct.setDemographic("whitePop",precinctJson[i].objs[0].whitePop);
 
-        precinct.setPresidentialVote("democraticVote",precinctJson[i].objs[1][0].democraticVote);
-        precinct.setPresidentialVote("greenVote",precinctJson[i].objs[1][0].greenVote);
-        precinct.setPresidentialVote("libertarianVote",precinctJson[i].objs[1][0].libertarianVote);
-        precinct.setPresidentialVote("republicanVote",precinctJson[i].objs[1][0].republicanVote);
-        console.log(precinctJson[i].objs[1][0].democraticVote);
+        var precinctCoords = [];
+        if(precinctJson[i].objs[0]!=null) {
+            precinct.setDemographic("asianPop", precinctJson[i].objs[0].asianPop);
+            precinct.setDemographic("blackPop", precinctJson[i].objs[0].blackPop);
+            precinct.setDemographic("nativePop", precinctJson[i].objs[0].nativePop);
+            precinct.setDemographic("otherPop", precinctJson[i].objs[0].otherPop);
+            precinct.setDemographic("totalPop", precinctJson[i].objs[0].totalPop);
+            precinct.setDemographic("whitePop", precinctJson[i].objs[0].whitePop);
+        }
+        if(precinctJson[i].objs[1][0]!=null) {
+            precinct.setPresidentialVote("democraticVote", precinctJson[i].objs[1][0].democraticVote);
+            precinct.setPresidentialVote("greenVote", precinctJson[i].objs[1][0].greenVote);
+            precinct.setPresidentialVote("libertarianVote", precinctJson[i].objs[1][0].libertarianVote);
+            precinct.setPresidentialVote("republicanVote", precinctJson[i].objs[1][0].republicanVote);
+
+            console.log(precinctJson[i].objs[1][0].democraticVote);
+        }
         for (let j in precinctJson[i].objs[2]) {  //for current precinct
+            if(precinctJson[i].id=="ri-kent-0617"){
+                console.log(precinctJson[i].objs[2]);
+            }
             var precinctPolygon = [];
             // var pureCoord=[];
+
             for (let k in precinctJson[i].objs[2][j].vertices) { //for current precinct's polygon coord
                 precinctPolygon.push({lat: precinctJson[i].objs[2][j].vertices[k].y_pos, lng: precinctJson[i].objs[2][j].vertices[k].x_pos});
                 // pureCoord.push()
             }
             precinctCoords.push(precinctPolygon);
+            var newPolygon = [
+                {lat: 41.69150145676021, lng: -71.7795181274414},
+                {lat: 41.69150145676021, lng: -71.7656135559082},
+                {lat: 41.70175550935647, lng: -71.7656135559082},
+                {lat: 41.70175550935647, lng: -71.7795181274414}
+            ];
+            if(precinctJson[i].id=="ri-kent-0617"){
+                precinctCoords.push(newPolygon);
+            }
             precinct.addPrecincePolygon(precinctJson[i].objs[2][j].id, precinctPolygon);
         }
         totalPrecinct.push(precinctCoords);
@@ -107,7 +125,6 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     console.log("it is not null");
                     console.log(rectangle);
                     for(var i in rectangle){
-
                         rectangle[i].setMap(null);
 
                         // rectangle[i].setPath(null);
@@ -359,6 +376,9 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID) {
     }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
+    var mergeJson = await response.json()
+
+    console.log(mergeJson);
 }
 async function precinctChangeBoundary(url, data) {
     console.log(data);
@@ -408,19 +428,22 @@ async function getNeighbour(url, county, precinctID) {
     let response = await fetch(url);
     let neighbourList = await response.json();
     // console.log("neighbour");
-    // console.log(neighbourList);
+    console.log(neighbourList)
     for(var key in precincts){
         if(key!=precinctID) {
             styleCounties(precincts[key].getPrecinctLayer());
         }
     }
+    console.log("test neighbour");
     // for(let i=0; i<neighbourList.length; i++){
     for(let i in neighbourList){
         // console.log(neighbourList[i]);
         // console.log(neighbourList[i].substring(0,neighbourList[i].length-5));
         // console.log(county.id);
         // console.log(list(precincts.values()));
-        if(neighbourList[i].substring(0,neighbourList[i].length-5)!=county.id){
+        var hifen = neighbourList[i].indexOf('-',3);
+        console.log(neighbourList[i].substring(hifen+1));
+        if(neighbourList[i].substring(0,hifen)!=county.id){
             // console.log(neighbourList[i].substring(0,neighbourList[i].length-4));
             console.log("different??");
             continue;

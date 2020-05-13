@@ -283,7 +283,7 @@ async function handleRedirect(
     $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
     let response = await fetch(url);
     let myJson = await response.json();
-    document.body.style.cursor = "default";
+    // document.body.style.cursor = "default";
     $.unblockUI();
     console.log(myJson);
     var tottalCounties = [];
