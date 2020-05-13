@@ -52,16 +52,16 @@ async function precinctFetch(stateName, county) {
                 // pureCoord.push()
             }
             precinctCoords.push(precinctPolygon);
-            var newPolygon = [
-                {lat: 41.69150145676021, lng: -71.7795181274414},
-                {lat: 41.69150145676021, lng: -71.7656135559082},
-                {lat: 41.70175550935647, lng: -71.7656135559082},
-                {lat: 41.70175550935647, lng: -71.7795181274414},
-                {lat: 41.69150145676021, lng: -71.7795181274414}
-            ];
-            if(precinctJson[i].id=="ri-kent-0617"){
-                precinctCoords.push(newPolygon);
-            }
+            // var newPolygon = [
+            //     {lat: 41.69150145676021, lng: -71.7795181274414},
+            //     {lat: 41.69150145676021, lng: -71.7656135559082},
+            //     {lat: 41.70175550935647, lng: -71.7656135559082},
+            //     {lat: 41.70175550935647, lng: -71.7795181274414},
+            //     {lat: 41.69150145676021, lng: -71.7795181274414}
+            // ];
+            // if(precinctJson[i].id=="ri-kent-0617"){
+            //     precinctCoords.push(newPolygon);
+            // }
             precinct.addPrecincePolygon(precinctJson[i].objs[2][j].id, precinctPolygon);
         }
         totalPrecinct.push(precinctCoords);
