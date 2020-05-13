@@ -32,12 +32,14 @@ async function precinctFetch(stateName, county) {
             precinct.setDemographic("totalPop", precinctJson[i].objs[0].totalPop);
             precinct.setDemographic("whitePop", precinctJson[i].objs[0].whitePop);
         }
+        if(precinctJson[i].objs[1][0]!=null) {
+            precinct.setPresidentialVote("democraticVote", precinctJson[i].objs[1][0].democraticVote);
+            precinct.setPresidentialVote("greenVote", precinctJson[i].objs[1][0].greenVote);
+            precinct.setPresidentialVote("libertarianVote", precinctJson[i].objs[1][0].libertarianVote);
+            precinct.setPresidentialVote("republicanVote", precinctJson[i].objs[1][0].republicanVote);
 
-        precinct.setPresidentialVote("democraticVote",precinctJson[i].objs[1][0].democraticVote);
-        precinct.setPresidentialVote("greenVote",precinctJson[i].objs[1][0].greenVote);
-        precinct.setPresidentialVote("libertarianVote",precinctJson[i].objs[1][0].libertarianVote);
-        precinct.setPresidentialVote("republicanVote",precinctJson[i].objs[1][0].republicanVote);
-        console.log(precinctJson[i].objs[1][0].democraticVote);
+            console.log(precinctJson[i].objs[1][0].democraticVote);
+        }
         for (let j in precinctJson[i].objs[2]) {  //for current precinct
             if(precinctJson[i].id=="ri-kent-0617"){
                 console.log(precinctJson[i].objs[2]);
@@ -50,15 +52,15 @@ async function precinctFetch(stateName, county) {
                 // pureCoord.push()
             }
             precinctCoords.push(precinctPolygon);
-            // var newPolygon = [
-            //     {lat: 41.69150145676021, lng: -71.7795181274414},
-            //     {lat: 41.69150145676021, lng: -71.7656135559082},
-            //     {lat: 41.70175550935647, lng: -71.7656135559082},
-            //     {lat: 41.70175550935647, lng: -71.7795181274414}
-            // ];
-            // if(precinctJson[i].id=="ri-kent-0617"){
-            //     precinctCoords.push(newPolygon);
-            // }
+            var newPolygon = [
+                {lat: 41.69150145676021, lng: -71.7795181274414},
+                {lat: 41.69150145676021, lng: -71.7656135559082},
+                {lat: 41.70175550935647, lng: -71.7656135559082},
+                {lat: 41.70175550935647, lng: -71.7795181274414}
+            ];
+            if(precinctJson[i].id=="ri-kent-0617"){
+                precinctCoords.push(newPolygon);
+            }
             precinct.addPrecincePolygon(precinctJson[i].objs[2][j].id, precinctPolygon);
         }
         totalPrecinct.push(precinctCoords);
@@ -374,6 +376,9 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID) {
     }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
+    var mergeJson = await response.json()
+
+    console.log(mergeJson);
 }
 async function precinctChangeBoundary(url, data) {
     console.log(data);
