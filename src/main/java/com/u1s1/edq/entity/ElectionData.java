@@ -40,7 +40,9 @@ public class ElectionData implements Serializable, Cloneable {
         this.type = type;
     }
 
-    @Column(name = "dist_num")
+//    @Column(name = "dist_num")
+    @JsonIgnore
+    @Transient
     public int getDistNum() {
         return distNum;
     }

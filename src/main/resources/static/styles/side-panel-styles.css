@@ -19,7 +19,7 @@
 }
 
 .side-panel .panel-body {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .panel-body .side-panel-title {
@@ -43,15 +43,22 @@
 .panel-content-filters .panel-content-font {
     font-family: Helvetica;
     font-size: 14px;
+    float: left;
+    padding-top: 2px;
+}
+
+.panel-content-font:before {
+    position: absolute;
 }
 
 .panel-content-filters .panel-content-general {
     display: inline-block;
+    margin-bottom: 0;
 }
 
 .panel-content-filters .panel-content-select {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .side-panel .side-panel-buttons {

@@ -1,0 +1,21 @@
+.sidepane-data {
+    font-family: Helvetica;
+}
+
+.sidepane-data .sidepane-body {
+    padding: 50px 0 0 30px;
+}
+
+.sidepane-data .sidepane-body .sidepane-nav-state, .sidepane-nav-county {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 0;
+}
+
+.sidepane-data .sidepane-body .sidepane-nav-precinct {
+    font-weight: 500;
+}
+
+.sidepane-data .sidepane-content .sidepane-content-nav .nav-link {
+    color: #495057;
+}
