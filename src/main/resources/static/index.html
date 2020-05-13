@@ -50,11 +50,11 @@
     <div class="content" style="overflow: hidden; height: 100%; margin-top: -3.4%">
         <div class="content-left">
             <div class="side-panel">
-                <div class="side-panel-page">
+                <div class="side-panel-page" id="filter-page">
                     <div class="panel-body">
                         <div class="side-panel-title">Map Filters</div>
                         <div class="close-page" role="presentation">
-                            <span class="icon-close"></span>
+                            <span class="icon-close" id="close-filter-button"></span>
                         </div>
                     </div>
                     <div class="panel-content">
@@ -85,17 +85,17 @@
                     </div>
                 </div>
                 <div class="side-panel-buttons">
-                    <div class="map-filters">
+                    <div class="map-filters" id="map-filter-button">
                         <i role="presentation" class="icon-map-filer">
                             <div class="side-button-name">Map<br>Filters</div>
                         </i>
                     </div>
-                    <div class="errors-list">
+                    <div class="errors-list" id="errors-list-button">
                         <i role="presentation" class="icon-errors-list">
                             <div class="side-button-name">Errors<br>List</div>
                         </i>
                     </div>
-                    <div class="logs">
+                    <div class="logs" id="logs-button">
                         <i role="presentation" class="icon-logs">
                             <div class="side-button-name">Logs</div>
                         </i>
@@ -376,6 +376,7 @@
     <script src="js/map.js"></script>
     <script src="js/index.js"></script>
     <script src="js/sidebar.js"></script>
+    <script src="js/filterpane.js"></script>
     <!-- <script src="../js/mapControl.js"></script> -->
     <script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.0.2/jsts.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
