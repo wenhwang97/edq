@@ -134,7 +134,15 @@ public class PrecinctController {
 
         List<ResponseObject> response = new ArrayList<ResponseObject>();
         response.add(new ResponseObject(precinctCName, precinctService.getPrecinctFromMem(stateId, countyId, precinctCName).getBoundary()));
-        response.add(new ResponseObject(mergeePrecinctId, precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId).getBoundary()));
+
+        Precinct mergee = precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId);
+        if (mergee.getBoundary().size() == 0) {
+            precinctService.removePrecinct(mergeePrecinctId);
+            response.add(new ResponseObject(mergeePrecinctId , null));
+        }
+        else {
+            response.add(new ResponseObject(mergeePrecinctId, precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId).getBoundary()));
+        }
 
         return response;
     }

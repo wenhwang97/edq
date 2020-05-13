@@ -192,6 +192,7 @@ public class PrecinctService {
             for (GeoPolygon geoPolygon : merger.getBoundary()) {
                 if (geoPolygon.getId().equals(hole)) {
                     merger.removeFromBoundaries(geoPolygon);
+                    break;
                 }
             }
 
