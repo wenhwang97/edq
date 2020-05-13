@@ -7,8 +7,10 @@ let filterclosebtn = document.getElementById("close-filter-button")
 
 filterclosebtn.onclick = function(event) {
     filterpane.style.display = "none"
+    filter.style.opacity = "1"
 }
 
 filter.onclick = function (event) {
     filterpane.style.display = "block"
+    filter.style.opacity = ".5"
 }
