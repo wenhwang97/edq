@@ -19,8 +19,9 @@
     <!-- custom css -->
     <!-- <link rel="stylesheet" href="../styles/bootstrap.min.css"> -->
     <!-- <link rel="stylesheet" href="../js/bstable/css/bootstrap-table.css"/> -->
-    <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/rightStyle.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/rightStyle.css">
+    <link rel="stylesheet" href="styles/side-panel-styles.css">
 
 </head>
 
@@ -48,6 +49,60 @@
 
     <div class="content" style="overflow: hidden; height: 100%; margin-top: -3.4%">
         <div class="content-left">
+            <div class="side-panel">
+                <div class="side-panel-page">
+                    <div class="panel-body">
+                        <div class="side-panel-title">Map Filters</div>
+                        <div class="close-page" role="presentation">
+                            <span class="icon-close"></span>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="panel-content-filters">
+                            <div class="col-sm-12">
+                                <label class="custom-control custom-checkbox panel-content-general">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description custom-control-label panel-content-font">Show Counties</span>
+                                </label><br>
+                                <label class="custom-control custom-checkbox panel-content-general">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description custom-control-label panel-content-font">Show Precincts</span>
+                                </label><br>
+                                <label class="custom-control custom-checkbox panel-content-general">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description custom-control-label panel-content-font">Show National Parks</span>
+                                </label><br>
+                                <select class="custom-select panel-content-font panel-content-select">
+                                    <option value="1">2016 Presidential General</option>
+                                    <option value="2">2018 Congressional General</option>
+                                    <option value="3">2016 Congressional General</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="side-panel-buttons">
+                    <div class="map-filters">
+                        <i role="presentation" class="icon-map-filer">
+                            <div class="side-button-name">Map<br>Filters</div>
+                        </i>
+                    </div>
+                    <div class="errors-list">
+                        <i role="presentation" class="icon-errors-list">
+                            <div class="side-button-name">Errors<br>List</div>
+                        </i>
+                    </div>
+                    <div class="logs">
+                        <i role="presentation" class="icon-logs">
+                            <div class="side-button-name">Logs</div>
+                        </i>
+                    </div>
+                </div>
+            </div>
+
             <div class="map_box" id="map"></div>
             <div class="left-btn" onclick="leftBtn()">
                 <img src="../images/left.png">
@@ -313,14 +368,14 @@
 
     <!-- Scripts -->
     <!-- <script src="../js/jquery-2.2.0.min.js"></script> -->
-    <script src="../js/setting.js"></script>
-    <script src="../js/Precinct.js"></script>
-    <script src="../js/County.js"></script>
-    <script src="../js/State.js"></script>
-    <script src="../js/precinctFunctions.js"></script>
-    <script src="../js/map.js"></script>
-    <script src="../js/index.js"></script>
-    <script src="../js/sidebar.js"></script>
+    <script src="js/setting.js"></script>
+    <script src="js/Precinct.js"></script>
+    <script src="js/County.js"></script>
+    <script src="js/State.js"></script>
+    <script src="js/precinctFunctions.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/sidebar.js"></script>
     <!-- <script src="../js/mapControl.js"></script> -->
     <script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.0.2/jsts.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

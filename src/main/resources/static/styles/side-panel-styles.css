@@ -1,0 +1,120 @@
+.side-panel {
+    font-family: Helvetica;
+}
+
+.side-panel .side-panel-page {
+    width: 290px;
+    position: absolute;
+    left: 60px;
+    top: 20px;
+    background: white;
+    z-index: 3;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, .3);
+    border-radius: 0 2px 2px 2px;
+}
+
+.panel-body {
+    padding: 20px;
+}
+
+.side-panel .panel-body {
+    padding-bottom: 10px;
+}
+
+.panel-body .side-panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline;
+}
+
+.panel-body .close-page {
+    text-align: right;
+    float: right!important;
+}
+
+.panel-content-filters {
+    padding-right: 20px;
+    padding-left: 20px!important;
+    padding-bottom: 20px;
+}
+
+.panel-content-filters .panel-content-font {
+    font-family: Helvetica;
+    font-size: 14px;
+}
+
+.panel-content-filters .panel-content-general {
+    display: inline-block;
+}
+
+.panel-content-filters .panel-content-select {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.side-panel .side-panel-buttons {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    width: 60px;
+    background: white;
+    box-shadow: 0 2px 7px 0 rgba(0, 0, 0, .3);
+    padding-top: 10px;
+    border-radius: 0 2px 2px 0;
+    z-index: 2;
+}
+
+.side-panel .side-panel-buttons div {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.map-filters {
+    cursor: pointer;
+}
+
+.icon-map-filer:before {
+    content: url("../images/map-filter.png");
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.errors-list {
+    cursor: pointer;
+}
+
+.icon-errors-list:before {
+    content: url("../images/errors-list.png");
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.logs {
+    cursor: pointer;
+}
+
+.icon-logs:before {
+    content: url("../images/logs.png");
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.side-panel .side-panel-buttons .side-button-name {
+    color: black;
+    line-height: 12px;
+    font-style: normal;
+    font-size: 10px;
+    padding: 0 5px;
+}
+
+.icon-close {
+    content: url("../images/close.png");
+    cursor: pointer;
+}
