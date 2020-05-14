@@ -6,6 +6,7 @@ var precinctCheckBox=document.getElementById("show-precinct");
 var changeBoundaryButton = document.getElementById("changeBoundary");
 var addNeighbourButton = document.getElementById("addNeighbour");
 var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
+var countyandState = document.getElementById("sidepaneTitle");
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -420,6 +421,8 @@ async function handleRedirect(
         // });
         // markDrop(event);
         countyID = event.feature.o; //get the current county ID
+        countyandState.textContent=countyID+", "+stateName;
+        sidepanePrecinctName.textContent=null;
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
         console.log(selectedCounty.hasPrecincts());
         if(!isEmptyObject(rectangle)){  // change border

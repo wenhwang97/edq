@@ -2,6 +2,7 @@ var changeBoundaryConfirm = document.getElementById("changeBounayConfirm");
 var MergePrecinct = document.getElementById("mergePrecinct");
 var MergeConfirm = document.getElementById("mergePrecinctConfirm");
 var GhostPrecinct = document.getElementById("GhostPrecinct");
+var precinctName = document.getElementById("sidepanePrecinctName");
 changeBoundaryConfirm.disabled = true;
 MergePrecinct.disabled = true;
 MergeConfirm.disabled = true;
@@ -119,6 +120,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             // placeMarker(event.latLng);
             if(addNeigbourClicked==false&&mergeClicked==false){  //没点添加neighbor的时候,也没点击merge的时候
                 console.log("add neighbour is not clicked!");
+                sidepanePrecinctName.textContent = ID;
                 clickedPrecinct=ID;
                 addNeighbourButton.disabled = false;
                 MergePrecinct.disabled = false;
@@ -163,10 +165,10 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 // if(precincts[ID].hasData==true){//if have the voting data
                 console.log("qwe????");
                 console.log(precincts[ID].getPresidentialVote("republicanVote"));
-                    document.getElementById("RepublicanData").textContent = precincts[ID].getPresidentialVote("republicanVote");
-                    document.getElementById("GreenData").textContent = precincts[ID].getPresidentialVote("greenVote");
-                    document.getElementById("LibertarianData").textContent = precincts[ID].getPresidentialVote("libertarianVote");
-                    document.getElementById("DemocraticData").textContent = precincts[ID].getPresidentialVote("democraticVote");
+                document.getElementById("RepublicanVoting").textContent = precincts[ID].getPresidentialVote("republicanVote");
+                document.getElementById("GreenVoting").textContent = precincts[ID].getPresidentialVote("greenVote");
+                document.getElementById("LibertarianVoting").textContent = precincts[ID].getPresidentialVote("libertarianVote");
+                document.getElementById("DemocraticVoting").textContent = precincts[ID].getPresidentialVote("democraticVote");
                 document.getElementById("AsianData").textContent = precincts[ID].getDemographic("asianPop");
                 document.getElementById("BlackData").textContent = precincts[ID].getDemographic("blackPop");
                 document.getElementById("WhiteData").textContent = precincts[ID].getDemographic("whitePop");
