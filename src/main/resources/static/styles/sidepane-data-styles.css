@@ -3,6 +3,15 @@
     margin-bottom: 15px;
 }
 
+.sidepane-data .sidepane-body h3 {
+    display: inline;
+}
+
+.sidepane-data .sidepane-body .ghost-label {
+    font-style: italic;
+    color: #555555
+}
+
 .sidepane-data .sidepane-body .sidepane-nav-state, .sidepane-nav-county {
     font-size: 14px;
     color: #555555;

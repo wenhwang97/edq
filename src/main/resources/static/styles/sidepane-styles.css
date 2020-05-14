@@ -1,8 +1,5 @@
 .sidepane {
     font-family: Helvetica;
-}
-
-.sidepane {
     position: absolute;
     width: 408px;
     height: 100%;
