@@ -244,6 +244,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     // changeBoundaryButtonClicked(precincts, clickedPrecinct,rectangle);
     changeBoundaryButton.addEventListener("click", function(){  //click the change Boundary Button
         changeBoundaryConfirm.disabled = false;
+        changeBoundaryButton.disabled = true;
         console.log("start to change boundary");
         console.log(precincts[clickedPrecinct].getBoundary());
         console.log(precincts[clickedPrecinct].getPrecinctPolygons());
@@ -261,6 +262,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
     });
     // var modifiedPolygon = [];
     changeBoundaryConfirm.addEventListener('click', function(){
+        changeBoundaryButton.disabled = false;
         var modifiedPolygon = [];
         var totalPolygon = [];
         // console.log("start to put boundary");
@@ -378,8 +380,8 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID) {
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
     let mergeJson = await response.json()
-
     console.log(mergeJson);
+
 }
 async function precinctChangeBoundary(url, data) {
     console.log(data);
@@ -541,7 +543,5 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
     deletList.length = 0;
     List.length=0;
 }
-// MergePrecinct.addEventListener('click',function(){
-//     console.log("123qwe!");
-// });
+
 
