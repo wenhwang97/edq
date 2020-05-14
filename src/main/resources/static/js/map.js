@@ -55,7 +55,9 @@ function initMap() {
   addNeighbourConfirm.disabled = true;
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
+    console.log(event.feature.j.name);
     if (THREE_STATES.includes(event.feature.j.name)) {
+
       let response;
       switch (event.feature.j.name) {
 
@@ -121,6 +123,78 @@ function initMap() {
     }
   });
 }
+var stateChoose = document.getElementById("chooseStateBox");
+async function loadstates(stateName) {
+  if (THREE_STATES.includes(stateName)) {
+    let response;
+    switch (stateName) {
+
+      case THREE_STATES[0]:// fujiniya
+        stateChoose.textContent = "Virginia";
+        clickedState = "va";
+        r.disabled = false;
+        $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
+        response = await fetch("http://localhost:8080/state/va");
+        $.unblockUI();
+        if (response.status == 500) {
+          break;
+        }
+        // console.log(response);
+        vgBoderLayer = new google.maps.Data();
+        vgBoderLayer.loadGeoJson(VA_STATE);
+        vgBoderLayer.setMap(map);
+        styleState(vgBoderLayer);
+        var virginia = new State("va", "Virginia");
+        allStates["va"] = virginia;
+        await handleRedirect("Virginia State Level", 6, VA_CENTER, VA_STRICT_BOUND, virginia);
+        break;
+
+      case THREE_STATES[1]:// Texas
+        stateChoose.textContent = "Texas";
+        clickedState = "tx";
+        r.disabled = false;
+        $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
+        response = await fetch("http://localhost:8080/state/tx");
+        $.unblockUI();
+        if (response.status == 500) {
+          break;
+        }
+        // console.log(response);
+        txBoderLayer = new google.maps.Data();
+        txBoderLayer.loadGeoJson(TEXAS_BODER);
+        txBoderLayer.setMap(map);
+        styleState(txBoderLayer);
+        var Texas = new State("tx", "Texas");
+        allStates["tx"] = Texas;
+        await handleRedirect("Texas State Level", 6, TEXAS_CENTER, TEXAS_STRICT_BOUND, Texas);
+        break;
+
+      case THREE_STATES[2]:// Rhode Island
+        stateChoose.textContent = "Rhode Island";
+        clickedState = "ri";
+        console.log("RI");
+        r.disabled = false;
+        $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
+        response = await fetch("http://localhost:8080/state/ri");
+        $.unblockUI();
+        if (response.status == 500) {
+          break;
+        }
+        // console.log(response);
+        riBoderLayer = new google.maps.Data();
+        riBoderLayer.loadGeoJson(RI_STATE);
+        riBoderLayer.setMap(map);
+        styleState(riBoderLayer);
+        var rhode = new State("ri", "Rhode Island");
+        allStates["ri"] = rhode;
+        await handleRedirect("Rhode Island State Level", 9, RI_CENTER, RI_STRICT_BOUND, rhode);
+        // console.log(allStates["ri"].getAllCounties());
+        break;
+    }
+  }
+}
+
+
 // function clickOnNarv(State){
 //   switch (State) {
 //     case
@@ -257,6 +331,9 @@ async function handleRedirect(
   map.setRestriction({latLngBounds: borderRestriction});
   // load texas geographic data
   removeAllGeojson(); // clear map
+
+
+
   var stateName;
   switch (pageTitle) {
     case "Virginia State Level":
