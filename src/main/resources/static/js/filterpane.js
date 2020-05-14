@@ -11,6 +11,7 @@ filterclosebtn.onclick = function(event) {
 }
 
 filter.onclick = function (event) {
+    console.log("open?")
     filterpane.style.display = "block"
     filter.style.opacity = ".5"
 }
