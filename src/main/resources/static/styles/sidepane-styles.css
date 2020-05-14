@@ -1,4 +1,8 @@
 .sidepane {
+    font-family: Helvetica;
+}
+
+.sidepane {
     position: absolute;
     width: 408px;
     height: 100%;
@@ -8,4 +12,8 @@
     background: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, .3);
     opacity: .9;
+}
+
+.sidepane .sidepane-content {
+    padding: 10px;
 }
