@@ -9,8 +9,9 @@ class Precinct{
         this.neighbour=[];
         this.PrecinctPolygon={};
         this.PolygonCoord={};
-
+        this.Ghost = false;
     }
+
     setDemographic(type,value){
         this.Demographic[type]=value;
     }
