@@ -113,6 +113,15 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         var polyinprecinct;
         google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
             console.log("qwe!!");
+            if (isNotToggled) {
+                sidepane.classList.toggle("toggled")
+                isNotToggled = false
+            }
+            sidepaneData.style.display = "block"
+            sidepaneErrLog.style.display="none"
+            // sidepaneData.classList.remove("active")
+            sidepaneData.style.opacity = "1"
+            // errs.style.display = "none"
             console.log(event);
             // console.log(precinctLayer.geometry);
             console.log(event.latLng.lat());
@@ -160,7 +169,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     // precincts[lastPrecinct].getPrecinctLayer().revertStyle();
                     styleCounties(precincts[lastPrecinct].getPrecinctLayer());
                 }
-                inforChange(event.feature.o);  //change the title for
+                // inforChange(event.feature.o);  //change the title for
                 let precinctID=event.feature.o;
                 // if(precincts[ID].hasData==true){//if have the voting data
                 console.log("qwe????");
@@ -169,6 +178,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 document.getElementById("GreenVoting").textContent = precincts[ID].getPresidentialVote("greenVote");
                 document.getElementById("LibertarianVoting").textContent = precincts[ID].getPresidentialVote("libertarianVote");
                 document.getElementById("DemocraticVoting").textContent = precincts[ID].getPresidentialVote("democraticVote");
+
                 document.getElementById("AsianData").textContent = precincts[ID].getDemographic("asianPop");
                 document.getElementById("BlackData").textContent = precincts[ID].getDemographic("blackPop");
                 document.getElementById("WhiteData").textContent = precincts[ID].getDemographic("whitePop");
