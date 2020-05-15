@@ -8,7 +8,6 @@
 }
 
 .sidepane-data .sidepane-body .ghost-label {
-    font-style: italic;
     color: #555555
 }
 
@@ -40,9 +39,36 @@
 .sidepane-data .sidepane-content .tab-pane .table td, table th{
     padding: .5rem;
     vertical-align: middle;
+    min-width: 100px;
 }
 
 .sidepane-data .sidepane-content .tab-pane .row-title {
-    min-width: 150px;
     max-width: 150px;
+}
+
+.sidepane-data .modal-backdrop {
+    z-index: 10;
+}
+
+.edit-data-dialog .form-control {
+    width: 400px;
+}
+
+.edit-data-dialog .form-group {
+    margin-bottom: unset;
+}
+
+.edit-data-dialog .form-group .form-control-label {
+    max-width: unset;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    background-color: #2D5C93;
+    border-color: #204F77;
 }

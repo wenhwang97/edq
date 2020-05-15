@@ -144,7 +144,6 @@
                                                     <tr>
                                                         <td class="row-title">Democratic</td>
                                                         <td class="row-content" id = "DemocraticVoting"></td>
-                                                    </tr>
                                                     <tr>
                                                         <td class="row-title">Republican</td>
                                                         <td class="row-content"id = "RepublicanVoting"></td>
@@ -159,6 +158,9 @@
                                                     </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="table-control-pane">
+                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#vote-edit-dialog">Edit Data</button>
+                                                </div>
                                             </div>
                                             <div class="col-md-12 text-center">
                                                 <ul class="pagination pagination-lg pager" id="myPager"></ul>
@@ -197,6 +199,9 @@
                                                     </tr>
                                                     </tbody>
                                                 </table>
+                                                <div class="table-control-pane">
+                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#demo-edit-dialog">Edit Data</button>
+                                                </div>
                                             </div>
                                             <div class="col-md-12 text-center">
                                                 <ul class="pagination pagination-lg pager" id="myPager"></ul>
@@ -251,6 +256,117 @@
                         </div>
                     </div>
                 </nav>
+            </div>
+
+            <!-- Floating dialog-->
+            <div class="modal fade edit-data-dialog" id="vote-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Edit Voting Data</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Democratic
+                                        <input class="form-control" type="text" value="Put dem vote here" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Republican
+                                        <input class="form-control" type="text" value="Put rep vote here" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Libertarian
+                                        <input class="form-control" type="email" value="Put lib vote here" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Green
+                                        <input class="form-control" type="text" value="Put grn vote here" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Comment
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade edit-data-dialog" id="demo-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Edit Demographic Data</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Total Population
+                                        <input class="form-control" type="text" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">White
+                                        <input class="form-control" type="text" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Black or African American
+                                        <input class="form-control" type="email" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Asian
+                                        <input class="form-control" type="text" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">American Indian or Alaska Native
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Native Hawaiian or Other Pacific Islander
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="map_box" id="map"></div>
