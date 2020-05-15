@@ -52,7 +52,7 @@ public class StateController {
         Set<ResponseObject> response = new HashSet<ResponseObject>();
 
         for (County county : state.getCounties()) {
-            response.add(new ResponseObject(county.getId(), county.getBoundary()));
+            response.add(new ResponseObject(county.getId(), county.getName(), county.getBoundary()));
         }
 
         return response;

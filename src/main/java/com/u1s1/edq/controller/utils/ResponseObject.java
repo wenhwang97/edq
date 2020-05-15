@@ -3,9 +3,10 @@ package com.u1s1.edq.controller.utils;
 public class ResponseObject {
 
     private String id;
+    private String name;
     private Object obj;
 
-    public ResponseObject(String id, Object obj) {
+    public ResponseObject(String id, String name, Object obj) {
         this.id = id;
         this.obj = obj;
     }
@@ -26,11 +27,4 @@ public class ResponseObject {
         this.obj = obj;
     }
 
-    @Override
-    public String toString() {
-        return "ResponseObject{" +
-                "id='" + id + '\'' +
-                ", obj=" + obj +
-                '}';
-    }
 }

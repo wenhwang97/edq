@@ -6,10 +6,12 @@ import java.util.List;
 public class ResponseList {
 
     private String id;
+    private String name;
     private List<Object> objs;
 
-    public ResponseList(String id) {
+    public ResponseList(String id, String name) {
         this.id = id;
+        this.name = name;
         this.objs = new ArrayList<Object>();
     }
 
@@ -29,11 +31,4 @@ public class ResponseList {
         this.objs = objs;
     }
 
-    @Override
-    public String toString() {
-        return "ResponseList{" +
-                "id='" + id + '\'' +
-                ", objs=" + objs +
-                '}';
-    }
 }

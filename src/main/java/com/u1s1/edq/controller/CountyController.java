@@ -36,7 +36,7 @@ public class CountyController {
         Set<ResponseList> response = new HashSet<ResponseList>();
 
         for (Precinct precinct : county.getPrecincts()) {
-            ResponseList reslist = new ResponseList(precinct.getCanonicalName());
+            ResponseList reslist = new ResponseList(precinct.getCanonicalName(), precinct.getName());
             if (precinct.getType() == PrecinctType.GHOST) {
                 reslist.getObjs().add(null);
                 reslist.getObjs().add(null);
