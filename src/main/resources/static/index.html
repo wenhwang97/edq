@@ -259,58 +259,59 @@
             </div>
 
             <!-- Floating dialog-->
-            <div class="modal fade edit-data-dialog" id="vote-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 id="myModalLabel">Edit Voting Data</h3>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Democratic
-                                        <input class="form-control" type="text" value="Put dem vote here" />
-                                    </label>
+            <div class="edit-data-dialog">
+                <div class="modal fade" id="vote-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="myModalLabel">Edit Voting Data</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Democratic
+                                            <input class="form-control" type="text" value="Put dem vote here" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Republican
+                                            <input class="form-control" type="text" value="Put rep vote here" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Libertarian
+                                            <input class="form-control" type="email" value="Put lib vote here" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Green
+                                            <input class="form-control" type="text" value="Put grn vote here" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Comment
+                                            <input class="form-control" type="url" value="" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Republican
-                                        <input class="form-control" type="text" value="Put rep vote here" />
-                                    </label>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Libertarian
-                                        <input class="form-control" type="email" value="Put lib vote here" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Green
-                                        <input class="form-control" type="text" value="Put grn vote here" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Comment
-                                        <input class="form-control" type="url" value="" />
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade edit-data-dialog" id="demo-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                <div class="modal fade" id="demo-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -367,6 +368,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <div class="map_box" id="map"></div>
