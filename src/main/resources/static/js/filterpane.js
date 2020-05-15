@@ -1,3 +1,5 @@
+let sidepane = document.getElementById("wrapper")
+
 let sidepaneData = document.getElementById("sidepane-data")
 let sidepaneErrLog = document.getElementById("sidepane-errlog")
 let errTab = document.getElementById("err-tab")
@@ -29,6 +31,11 @@ errs.onmousedown = function () {
 }
 
 errs.onmouseup = function () {
+    if (isNotToggled) {
+        sidepane.classList.toggle("toggled")
+        isNotToggled = false
+    }
+
     errs.style.opacity = "1";
     sidepaneData.style.display = "none"
     sidepaneErrLog.style.display = "block"
@@ -43,6 +50,11 @@ logs.onmousedown = function () {
 }
 
 logs.onmouseup = function () {
+    if (isNotToggled) {
+        sidepane.classList.toggle("toggled")
+        isNotToggled = false
+    }
+
     logs.style.opacity = "1"
     sidepaneData.style.display = "none"
     sidepaneErrLog.style.display = "block"

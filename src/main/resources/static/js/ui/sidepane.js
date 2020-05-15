@@ -12,6 +12,8 @@ if (hash) {
 }
 
 // You decide delete or not - above
+var isNotToggled = true;
+
 
 $(document).ready(function () {
     var trigger = $('.hamburger'),
@@ -19,5 +21,6 @@ $(document).ready(function () {
 
     $('[data-toggle="offcanvas"]').unbind('click').on("click",function () {
         $('#wrapper').toggleClass('toggled');
+        isNotToggled = !isNotToggled;
     });
 });
