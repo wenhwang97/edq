@@ -19,6 +19,14 @@ public class ResponseObject {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Object getObj() {
         return obj;
     }
