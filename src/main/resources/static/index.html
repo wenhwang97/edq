@@ -45,6 +45,10 @@
                         </div>
                     </li>
                 </ul>
+
+                <div class="hamburger" data-toggle="offcanvas">
+                    <i class="menu-icon" role="presentation"></i>
+                </div>
             </nav>
         </div>
     </div>
@@ -111,147 +115,145 @@
                 </div>
             </div>
 
-            <div class="sidepane">
-                <!-- Sidepane data section -->
-                <div class="sidepane-data" id="sidepane-data">
-                    <div class="sidepane-body">
-                        <label class="sidepane-nav-county" id = "sidepaneTitle"></label><br>
-                        <h3 class="sidepane-nav-precinct" id="sidepanePrecinctName">No Precinct Selected</h3>
-                        <label class="ghost-label">Ghost Pct.</label>
-                    </div>
-                    <div class="container sidepane-content">
-                        <ul class="nav nav-tabs sidepane-content-nav">
-                            <li class="nav-item">
-                                <a href="#tab1" data-toggle="tab" class="nav-link active">Data</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#tab2" data-toggle="tab" class="nav-link">Tools</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content py-3">
-                            <div class="tab-pane active" id="tab1">
-                                <div class="container">
-                                    <label class="table-title">Voting Data</label>
-                                    <div class="row">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <tbody id="myTable">
-                                                <tr>
-                                                    <td class="row-title">Democratic</td>
-                                                    <td class="row-content" id = "DemocraticVoting"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">Republican</td>
-                                                    <td class="row-content"id = "RepublicanVoting"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">Libertarian</td>
-                                                    <td class="row-content" id = "LibertarianVoting"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">Green</td>
-                                                    <td class="row-content" id = "GreenVoting"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <ul class="pagination pagination-lg pager" id="myPager"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="container">
-                                    <label class="table-title">Demographic Data</label>
-                                    <div class="row">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <tbody id="myTable">
-                                                <tr>
-                                                    <td class="row-title">Total Population</td>
-                                                    <td class="row-content"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">White</td>
-                                                    <td class="row-content"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">Black or African American</td>
-                                                    <td class="row-content"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">Asian</td>
-                                                    <td class="row-content"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">American Indian or Alaska Native</td>
-                                                    <td class="row-content"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="row-title">Native Hawaiian or Other Pacific Islander</td>
-                                                    <td class="row-content"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <ul class="pagination pagination-lg pager" id="myPager"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tab2">
-                                <div class = "change_boundary">Change Boundary<br>
-                                    <button class="ChangeBoundary btn btn-primary" id="changeBoundary" type="button" >Change Boundary</button>
-                                    <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" >Comfirm</button>
-                                </div>
-                               <div class="Edit_Neighbour">Edit Neighbour<br>
-                                    <button class="AddNeighbour btn btn-primary" id="addNeighbour" type="button" >Add/Delete</button>
-                                    <button class="AddNeighbour btn btn-primary" id="addNeighbourConfirm" type="button" >Comfirm</button>
-                               </div>
-                               <div class="merge">Merge Precinct<br>
-                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinct" type="button" >Select Precinct</button>
-                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>
-                               </div>
-                               <div class="merge">Ghost Precinct<br>
-                                    <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>
-                               </div>
-                            </div>
+            <div id="wrapper">
+                <nav class="sidepane" role="navigation">
+                    <!-- Sidepane data section -->
+                    <div class="sidepane-data" id="sidepane-data">
+                        <div class="sidepane-body">
+                            <label class="sidepane-nav-county" id = "sidepaneTitle"></label><br>
+                            <h3 class="sidepane-nav-precinct" id="sidepanePrecinctName">No Precinct Selected</h3>
+                            <label class="ghost-label">Ghost Pct.</label>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Sidepane error/log section -->
-                <div class="sidepane-errlog" id="sidepane-errlog">
-                    <div class="container sidepane-content">
-                        <ul class="nav nav-tabs sidepane-content-nav">
-                            <li class="nav-item">
-                                <a href="#tab3" data-toggle="tab" id="err-tab" class="nav-link active">Errors</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#tab4" data-toggle="tab" id="log-tab" class="nav-link">Logs</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content py-3">
-                            <div class="tab-pane active" id="tab3">
-                                <div class="scroll">
-                                    Errors
+                        <div class="container sidepane-content">
+                            <ul class="nav nav-tabs sidepane-content-nav">
+                                <li class="nav-item">
+                                    <a href="#tab1" data-toggle="tab" class="nav-link active">Data</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tab2" data-toggle="tab" class="nav-link">Tools</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content py-3">
+                                <div class="tab-pane active" id="tab1">
+                                    <div class="container">
+                                        <label class="table-title">Voting Data</label>
+                                        <div class="row">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <tbody id="myTable">
+                                                    <tr>
+                                                        <td class="row-title">Democratic</td>
+                                                        <td class="row-content" id = "DemocraticVoting"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">Republican</td>
+                                                        <td class="row-content"id = "RepublicanVoting"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">Libertarian</td>
+                                                        <td class="row-content" id = "LibertarianVoting"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">Green</td>
+                                                        <td class="row-content" id = "GreenVoting"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <label class="table-title">Demographic Data</label>
+                                        <div class="row">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <tbody id="myTable">
+                                                    <tr>
+                                                        <td class="row-title">Total Population</td>
+                                                        <td class="row-content"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">White</td>
+                                                        <td class="row-content"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">Black or African American</td>
+                                                        <td class="row-content"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">Asian</td>
+                                                        <td class="row-content"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">American Indian or Alaska Native</td>
+                                                        <td class="row-content"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="row-title">Native Hawaiian or Other Pacific Islander</td>
+                                                        <td class="row-content"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane" id="tab4">
-                                <div class="scroll">
-                                    Logs
+                                <div class="tab-pane" id="tab2">
+                                    <div class = "change_boundary">Change Boundary<br>
+                                        <button class="ChangeBoundary btn btn-primary" id="changeBoundary" type="button" >Change Boundary</button>
+                                        <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" >Comfirm</button>
+                                    </div>
+                                    <div class="Edit_Neighbour">Edit Neighbour<br>
+                                        <button class="AddNeighbour btn btn-primary" id="addNeighbour" type="button" >Add/Delete</button>
+                                        <button class="AddNeighbour btn btn-primary" id="addNeighbourConfirm" type="button" >Comfirm</button>
+                                    </div>
+                                    <div class="merge">Merge Precinct<br>
+                                        <button class="MergePrecinct btn btn-primary" id="mergePrecinct" type="button" >Select Precinct</button>
+                                        <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>
+                                    </div>
+                                    <div class="merge">Ghost Precinct<br>
+                                        <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <!-- Sidepane error/log section -->
+                    <div class="sidepane-errlog" id="sidepane-errlog">
+                        <div class="container sidepane-content">
+                            <ul class="nav nav-tabs sidepane-content-nav">
+                                <li class="nav-item">
+                                    <a href="#tab3" data-toggle="tab" id="err-tab" class="nav-link active">Errors</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tab4" data-toggle="tab" id="log-tab" class="nav-link">Logs</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content py-3">
+                                <div class="tab-pane active" id="tab3">
+                                    <div class="scroll">
+                                        Errors
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab4">
+                                    <div class="scroll">
+                                        Logs
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
             </div>
 
             <div class="map_box" id="map"></div>
-            <div class="left-btn" onclick="leftBtn()">
-                <img src="../images/left.png">
-            </div>
         </div>
 
     </div>
@@ -266,9 +268,9 @@
     <script src="js/precinctFunctions.js"></script>
     <script src="js/map.js"></script>
     <script src="js/index.js"></script>
-    <script src="js/ui/sidebar.js"></script>
     <script src="js/filterpane.js"></script>
     <script src="js/fecthError.js"></script>
+    <script src="js/ui/sidepane.js"></script>
 
     <!-- <script src="../js/mapControl.js"></script> -->
     <script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.0.2/jsts.min.js"></script>

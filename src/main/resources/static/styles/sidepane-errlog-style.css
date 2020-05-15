@@ -1,3 +1,7 @@
+.sidepane-errlog {
+    display: none;
+}
+
 .sidepane-errlog .sidepane-content .nav-link {
     padding: 8px 76px;
 }

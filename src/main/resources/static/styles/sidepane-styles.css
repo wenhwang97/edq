@@ -1,6 +1,24 @@
-.sidepane {
+#wrapper .sidepane {
+    position: absolute;
+    margin-right: -408px;
+    width: 408px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    background: white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled .sidepane {
     font-family: Helvetica;
     position: absolute;
+    margin-right: 0;
     width: 408px;
     height: 100%;
     top: 0;
@@ -25,4 +43,42 @@
     bottom: 0;
     width: 100%;
     overflow-y: auto;
+}
+
+#wrapper {
+    z-index: 3;
+    width: 60px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+#sidebar-wrapper {
+    z-index: 2;
+    right: 0;
+    left: unset;
+    width: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 220px;
+}
+
+/*-------------------------------*/
+/*       temp menu icon          */
+/*-------------------------------*/
+.menu-icon {
+    top: 0;
+    right: 0;
+    content: url("../images/menu.png");
+    z-index: 4;
 }
