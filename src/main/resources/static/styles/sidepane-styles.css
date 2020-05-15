@@ -37,6 +37,10 @@
     position: relative;
 }
 
+.sidepane .sidepane-data .tab-content {
+    position: relative;
+}
+
 .sidepane .scroll {
     position: absolute;
     top: 0;
