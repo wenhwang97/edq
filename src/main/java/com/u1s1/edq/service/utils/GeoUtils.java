@@ -2,6 +2,7 @@ package com.u1s1.edq.service.utils;
 
 import com.u1s1.edq.entity.GeoPolygon;
 import com.u1s1.edq.entity.GeoVertex;
+import org.locationtech.jts.algorithm.locate.SimplePointInAreaLocator;
 import org.locationtech.jts.algorithm.match.HausdorffSimilarityMeasure;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -21,11 +22,15 @@ public class GeoUtils {
         this.hausdorffMeasure = new HausdorffSimilarityMeasure();
     }
 
-    public Polygon polygonBuilder(GeoPolygon geoPolygon) {
+    private Coordinate coordinateBuilder(double x_pos, double y_pos) {
+        return new Coordinate(x_pos, y_pos);
+    }
+
+    private Polygon polygonBuilder(GeoPolygon geoPolygon) {
         Coordinate[] coordinates = new Coordinate[geoPolygon.getVertices().size()];
         for (int i = 0; i < coordinates.length; i++) {
             GeoVertex vertex = geoPolygon.getVertices().get(i);
-            coordinates[i] = new Coordinate(vertex.getX_pos().doubleValue(), vertex.getY_pos().doubleValue());
+            coordinates[i] = coordinateBuilder(vertex.getX_pos().doubleValue(), vertex.getY_pos().doubleValue());
         }
 
         return geoFactory.createPolygon(coordinates);
@@ -36,6 +41,18 @@ public class GeoUtils {
         Polygon p1 = polygonBuilder(g1);
 
         return hausdorffMeasure.measure(p0, p1);
+    }
+
+    public GeoPolygon findPolygonByPoint(double x_pos, double y_pos, Set<GeoPolygon> geoPolygons) {
+        Coordinate point = coordinateBuilder(x_pos, y_pos);
+        for (GeoPolygon geoPolygon : geoPolygons) {
+            Polygon polygon = polygonBuilder(geoPolygon);
+            if (SimplePointInAreaLocator.containsPointInPolygon(point, polygon)) {
+                return geoPolygon;
+            }
+        }
+
+        return null;
     }
 
     public Integer detectSimilarGeoPolygon(GeoPolygon self, Set<GeoPolygon> comparers) {

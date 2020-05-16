@@ -29,7 +29,8 @@ public class PrecinctController {
     private final String LOG_DELETE_PRECINCT_DESC = "Delete Precinct '@0' from State '@1'";
 
     @Autowired
-    public PrecinctController(PrecinctService precinctService, CountyService countyService, GeoPolygonService geoPolygonService) {
+    public PrecinctController(PrecinctService precinctService, CountyService countyService,
+                              GeoPolygonService geoPolygonService) {
         this.precinctService = precinctService;
         this.countyService = countyService;
         this.geoPolygonService = geoPolygonService;
@@ -145,8 +146,10 @@ public class PrecinctController {
 
     @PutMapping(value = "/data/merge-donut/{mergeeCountyId}/{mergeePrecinctId}/{polygonId}")
     public List<ResponseObject> mergePrecinctPolygonDonut(@PathVariable String stateId, @PathVariable String countyId,
-                                                          @PathVariable String precinctCName, @PathVariable String mergeeCountyId,
-                                                          @PathVariable String mergeePrecinctId, @PathVariable Integer polygonId,
+                                                          @PathVariable String precinctCName,
+                                                          @PathVariable String mergeeCountyId,
+                                                          @PathVariable String mergeePrecinctId,
+                                                          @PathVariable Integer polygonId,
                                                           @RequestBody RequestComment comment) {
         Integer removedHole = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId, polygonId);
         if (removedHole != null) {
@@ -167,5 +170,21 @@ public class PrecinctController {
         }
 
         return response;
+    }
+
+    @PutMapping(value = "/data/merge-overlap/{mergeeCountyId}/{mergeePrecinctId}/{xPos}/{yPos}")
+    public ResponseObject mergePrecinctPolygonOverlap(@PathVariable String stateId, @PathVariable String countyId,
+                                                      @PathVariable String precinctCName,
+                                                      @PathVariable String mergeeCountyId,
+                                                      @PathVariable String mergeePrecinctId,
+                                                      @PathVariable double xPos,
+                                                      @PathVariable double yPos,
+                                                      @RequestBody RequestComment comment) {
+        Precinct merger = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
+        Precinct mergee = precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId);
+
+        precinctService.mergeGeoPolygonOverlap(stateId, mergeeCountyId, mergeePrecinctId, xPos, yPos);
+
+        return new ResponseObject(mergee.getCanonicalName(), mergee.getName(), mergee.getBoundary());
     }
 }

@@ -210,4 +210,12 @@ public class PrecinctService {
 
         return null;
     }
+
+    public void mergeGeoPolygonOverlap(String stateId, String countyId, String precinctId, double xPos, double yPos) {
+        Precinct mergee = cachedContainer.findPrecinct(stateId, countyId, precinctId);
+        GeoPolygon removedGeoPolygon = geoUtils.findPolygonByPoint(xPos, yPos, mergee.getBoundary());
+        mergee.removeFromBoundaries(removedGeoPolygon);
+
+        precinctRepo.save(mergee);
+    }
 }
