@@ -1,4 +1,6 @@
 var changeVoting = document.getElementById("SaveVoteChanges");
+// SaveDemoChanges
+var changeDemo = document.getElementById("SaveDemoChanges");
 var datatype = document.getElementById("Datatype");
 // votingComment
 var votingComment = document.getElementById("votingComment");
@@ -53,26 +55,55 @@ changeVoting.addEventListener('click', function(){
     var precinctID = precinctName.textContent.substring(indexofspace+1);
     var PrecinctId = countyID+"-"+precinctID;
     var comment = votingComment.value;
-    if(value == 4){ //Presidential General
+    var type;
+    var year;
+    // if(value == 4){ //Presidential General
         var url = 'http://localhost:8080/state/';
         var url2=StateId+'/county/';
         var url3=countyID+'/precinct/';
-        var url4 = PrecinctId+'/data/vote/presidential/2016';
-        console.log(url+url2+url3+url4);
+    if(value == 4) { //Presidential General
+        type = "PRESIDENTIAL";
+        year = 2016;
+        var url4 = PrecinctId + '/data/vote/presidential/2016';
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote("democraticVote", DData);
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote("greenVote", GData);
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote("libertarianVote", LData);
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote("republicanVote", RData);
+    }
+    if(value == 2) { //18 congressional
+
+        var disNumber = (allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).Congressional18Vote["distNum"]);
+        var url4 = PrecinctId + '/data/vote/congressional/'+disNumber+'/2018';
+        type = "CONGRESSIONAL";
+        year = 2018;
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional18Vote("democraticVote", DData,disNumber);
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional18Vote("greenVote", GData,disNumber);
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional18Vote("libertarianVote", LData,disNumber);
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional18Vote("republicanVote", RData, disNumber);
+        // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/vote/congressional/{dist}/{year}
+    }
+    if(value == 3) { //16 congressional
+
+        var disNumber = (allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).Congressional16Vote["distNum"]);
+        var url4 = PrecinctId + '/data/vote/congressional/'+disNumber+'/2016';
+        type = "CONGRESSIONAL";
+        year = 2016;
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional16Vote("democraticVote", DData,disNumber);
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional16Vote("greenVote", GData,disNumber);
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional16Vote("libertarianVote", LData,disNumber);
+        allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setCongressional16Vote("republicanVote", RData, disNumber);
+        // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/vote/congressional/{dist}/{year}
+    }
+        console.log(url+url2+url3+url4);
+
         document.getElementById("RepublicanVoting").textContent = RData;
         document.getElementById("GreenVoting").textContent = GData;
         document.getElementById("LibertarianVoting").textContent = LData;
         document.getElementById("DemocraticVoting").textContent = DData;
-
-
         var votingdata = {
             // "id" : PrecinctId,
-            "type" : "PRESIDENTIAL",
-            "year" : 2016,
+            "type" : type,
+            "year" : year,
             "republicanVote" : RData,
             "democraticVote" : DData,
             "libertarianVote" : LData,
@@ -93,7 +124,109 @@ changeVoting.addEventListener('click', function(){
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
-    }
+
     // var votingType=
+
+})
+changeDemo.addEventListener('click',function(){
+    var TotalPop=document.getElementById("TotalPop").value;    //输入框里面的
+    var WhiteNum=document.getElementById("WhiteNum").value;
+    var BlackNum=document.getElementById("BlackNum").value;
+    var AsianNum=document.getElementById("AsianNum").value;
+    var NativeNum=document.getElementById("NativeNum").value;
+    var OtherNum=document.getElementById("OtherNum").value;
+
+    var origionTT = document.getElementById("TotalData").textContent;    //原本的
+    var origionWD = document.getElementById("WhiteData").textContent;
+    var origionBD = document.getElementById("BlackData").textContent;
+    var origionAD = document.getElementById("AsianData").textContent;
+    var origionND = document.getElementById("NativeData").textContent;
+    var origionOD = document.getElementById("OtherData").textContent;
+    let TData;
+    let WData;
+    let BData;
+    let AData;
+    let NData;
+    let OData;
+
+    if(TotalPop==""||isNaN(TotalPop)){
+        console.log("it is null");
+        TData= parseInt(origionTT);
+    }else{
+        TData=parseInt(TotalPop);
+    }
+    if(WhiteNum==""||isNaN(WhiteNum)){
+        WData=parseInt(origionWD);
+    }else{
+        WData=parseInt(WhiteNum);
+    }
+    if(BlackNum==""||isNaN(BlackNum)){
+        BData= parseInt(origionBD);
+    }else{
+        BData= parseInt(BlackNum);
+    }
+    if(AsianNum==""||isNaN(AsianNum)){
+        AData = parseInt(origionAD);
+    }else{
+        AData = parseInt(AsianNum);
+    }
+    if(NativeNum==""||isNaN(NativeNum)){
+        NData = parseInt(origionND);
+    }else{
+        NData = parseInt(NativeNum);
+    }
+    if(OtherNum==""||isNaN(OtherNum)){
+        OData = parseInt(origionOD);
+    }else{
+        OData = parseInt(OtherNum);
+    }
+    var indexofComma = countyandState.textContent.indexOf(',');
+    var StateId =countyandState.textContent.substring(indexofComma+2);  //不变的
+    var countyID = StateId+"-"+countyandState.textContent.substring(0, indexofComma);
+    var indexofspace = precinctName.textContent.indexOf(' ');
+    var precinctID = precinctName.textContent.substring(indexofspace+1);
+    var PrecinctId = countyID+"-"+precinctID;
+    var comment = votingComment.value;
+    // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/demo
+    var url = 'http://localhost:8080/state/';
+    var url2=StateId+'/county/';
+    var url3=countyID+'/precinct/'+PrecinctId+'/data/demo';
+    allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setDemographic("asianPop", AData);
+    allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setDemographic("blackPop", BData);
+    allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setDemographic("nativePop", NData);
+    allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setDemographic("otherPop", OData);
+    allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setDemographic("totalPop", TData);
+    allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setDemographic("whitePop", WData);
+
+    document.getElementById("TotalData").textContent = TData;
+    document.getElementById("WhiteData").textContent = WData;
+    document.getElementById("AsianData").textContent = AData;
+    document.getElementById("NativeData").textContent = NData;
+    document.getElementById("BlackData").textContent = BData;
+    document.getElementById("OtherData").textContent = OData;
+
+    var data = {
+        // "id" : PrecinctId,
+        // "type" : "PRESIDENTIAL",
+        "totalPop" : TData,
+        "whitePop" : WData,
+        "blackPop" : BData,
+        "nativePop": NData,
+        "asianPop" : AData,
+        "otherPop" : OData
+    };
+    var data ={
+        "data":data,
+        "comment":comment
+    }
+    fetch(url+url2+url3, {
+        method: 'PUT', // or 'PUT'
+        body:JSON.stringify(data), // data can be `string` or {object}!
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
 
 })

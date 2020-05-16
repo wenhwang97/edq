@@ -57,18 +57,18 @@ async function precinctFetch(stateName, county) {
             // console.log(precinctJson[i].objs[1][0].democraticVote);
         }
         if(precinctJson[i].objs[1][1]!=null) {  //2016
-            precinct.setCongressional16Vote("democraticVote", precinctJson[i].objs[1][1].democraticVote);
-            precinct.setCongressional16Vote("greenVote", precinctJson[i].objs[1][1].greenVote);
-            precinct.setCongressional16Vote("libertarianVote", precinctJson[i].objs[1][1].libertarianVote);
-            precinct.setCongressional16Vote("republicanVote", precinctJson[i].objs[1][1].republicanVote);
+            precinct.setCongressional16Vote("democraticVote", precinctJson[i].objs[1][1].democraticVote,precinctJson[i].objs[1][1].distNum);
+            precinct.setCongressional16Vote("greenVote", precinctJson[i].objs[1][1].greenVote,precinctJson[i].objs[1][1].distNum);
+            precinct.setCongressional16Vote("libertarianVote", precinctJson[i].objs[1][1].libertarianVote, precinctJson[i].objs[1][1].distNum);
+            precinct.setCongressional16Vote("republicanVote", precinctJson[i].objs[1][1].republicanVote, precinctJson[i].objs[1][1].distNum);
 
             // console.log(precinctJson[i].objs[1][0].democraticVote);
         }
         if(precinctJson[i].objs[1][2]!=null) {  //2018
-            precinct.setCongressional18Vote("democraticVote", precinctJson[i].objs[1][2].democraticVote);
-            precinct.setCongressional18Vote("greenVote", precinctJson[i].objs[1][2].greenVote);
-            precinct.setCongressional18Vote("libertarianVote", precinctJson[i].objs[1][2].libertarianVote);
-            precinct.setCongressional18Vote("republicanVote", precinctJson[i].objs[1][2].republicanVote);
+            precinct.setCongressional18Vote("democraticVote", precinctJson[i].objs[1][2].democraticVote, precinctJson[i].objs[1][2].distNum);
+            precinct.setCongressional18Vote("greenVote", precinctJson[i].objs[1][2].greenVote,precinctJson[i].objs[1][2].distNum);
+            precinct.setCongressional18Vote("libertarianVote", precinctJson[i].objs[1][2].libertarianVote, precinctJson[i].objs[1][2].distNum);
+            precinct.setCongressional18Vote("republicanVote", precinctJson[i].objs[1][2].republicanVote, precinctJson[i].objs[1][2].distNum);
 
             // console.log(precinctJson[i].objs[1][0].democraticVote);
         }
