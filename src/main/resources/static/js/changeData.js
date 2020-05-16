@@ -49,7 +49,9 @@ changeVoting.addEventListener('click', function(){
     var indexofComma = countyandState.textContent.indexOf(',');
     var StateId =countyandState.textContent.substring(indexofComma+2);  //不变的
     var countyID = StateId+"-"+countyandState.textContent.substring(0, indexofComma);
-    var PrecinctId = countyID+"-"+precinctName.textContent;
+    var indexofspace = precinctName.textContent.indexOf(' ');
+    var precinctID = precinctName.textContent.substring(indexofspace+1);
+    var PrecinctId = countyID+"-"+precinctID;
     var comment = votingComment.value;
     if(value == 4){ //Presidential General
         var url = 'http://localhost:8080/state/';

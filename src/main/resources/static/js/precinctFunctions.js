@@ -35,7 +35,7 @@ async function precinctFetch(stateName, county) {
     for (let i in precinctJson) {  //how many precincts
         // console.log(precinctJson[i].id);
         var precinct = new Precinct(precinctJson[i].id);
-
+        precinct.name =precinctJson[i].name;
         var precinctCoords = [];
         if(precinctJson[i].objs[0]!=null) {
             precinct.Ghost=false;
@@ -135,6 +135,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         var polyinprecinct;
         var value = datatype.value;
         google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
+            value = datatype.value
             console.log("qwe!!");
             if (isNotToggled) {
                 sidepane.classList.toggle("toggled")
@@ -154,11 +155,17 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 console.log("add neighbour is not clicked!");
                 var second = ID.indexOf('-',3);
                 var precinctName = ID.substring(second+1);
-                sidepanePrecinctName.textContent = precinctName;
+                sidepanePrecinctName.textContent = precincts[event.feature.o].name;
                 clickedPrecinct=ID;
                 addNeighbourButton.disabled = false;
                 MergePrecinct.disabled = false;
                 GhostPrecinct.disabled = false;
+                if(polyinprecinct.Ghost==false){
+                    ghostPct.textContent="";
+                }
+                if(polyinprecinct.Ghost==true){
+                    ghostPct.textContent="Ghost Pct.";
+                }
                 if(!isEmptyObject(rectangle)){  // change border
                     console.log("it is not null");
                     console.log(rectangle);
@@ -172,12 +179,12 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     // rectangle.setMap(null);
                     // rectangle.setPaths(null);
                 }
-                GhostCommentChanges.addEventListener('click',function(){
-                    precincts[ID].Ghost=true;
-                    ghostPct.textContent="Ghost Pct.";
-                    var comment = GhostComment.value;
-                    sendGhost(stateName,countyID, ID, precincts[ID],comment);
-                });
+                // GhostCommentChanges.addEventListener('click',function(){
+                //     precincts[ID].Ghost=true;
+                //     ghostPct.textContent="Ghost Pct.";
+                //     var comment = GhostComment.value;
+                //     sendGhost(stateName,countyID, ID, precincts[ID],comment);
+                // });
                 addNeighbourButton.disabled = false;
                 addNeighbourButton.addEventListener('click',function(){
                     addNeighbourConfirm.disabled=false;
@@ -210,30 +217,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 // datatype.addEventListener('onchange',function(){
                 //     console.log(datatype.value);
                 // })
-                dataType.onchange = function(){
-                    // console.log("12333333333!!!");
-                    console.log(dataType.value);
-                    if(dataType.value == 4) { //Presidential General
-                        document.getElementById("RepublicanVoting").textContent = precincts[ID].getPresidentialVote("republicanVote");
-                        document.getElementById("GreenVoting").textContent = precincts[ID].getPresidentialVote("greenVote");
-                        document.getElementById("LibertarianVoting").textContent = precincts[ID].getPresidentialVote("libertarianVote");
-                        document.getElementById("DemocraticVoting").textContent = precincts[ID].getPresidentialVote("democraticVote");
-                    }
-                    if(dataType.value == 2){ //18 congressional
-                        console.log("18 de congressional");
-                        document.getElementById("RepublicanVoting").textContent = precincts[ID].getCongressional18Vote("republicanVote");
-                        document.getElementById("GreenVoting").textContent = precincts[ID].getCongressional18Vote("greenVote");
-                        document.getElementById("LibertarianVoting").textContent = precincts[ID].getCongressional18Vote("libertarianVote");
-                        document.getElementById("DemocraticVoting").textContent = precincts[ID].getCongressional18Vote("democraticVote");
-                    }
-                    if(dataType.value == 3){ //16 congressional
-                        console.log("18 de congressional");
-                        document.getElementById("RepublicanVoting").textContent = precincts[ID].getCongressional16Vote("republicanVote");
-                        document.getElementById("GreenVoting").textContent = precincts[ID].getCongressional16Vote("greenVote");
-                        document.getElementById("LibertarianVoting").textContent = precincts[ID].getCongressional16Vote("libertarianVote");
-                        document.getElementById("DemocraticVoting").textContent = precincts[ID].getCongressional16Vote("democraticVote");
-                    }
-                }
+
                 if(value == 4) { //Presidential General
                     document.getElementById("RepublicanVoting").textContent = precincts[ID].getPresidentialVote("republicanVote");
                     document.getElementById("GreenVoting").textContent = precincts[ID].getPresidentialVote("greenVote");
@@ -260,6 +244,31 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 document.getElementById("NativeData").textContent = precincts[ID].getDemographic("nativePop");
                 document.getElementById("OtherData").textContent = precincts[ID].getDemographic("otherPop");
                 document.getElementById("TotalData").textContent = precincts[ID].getDemographic("totalPop");
+
+                // dataType.onchange = function(){
+                //     // console.log("12333333333!!!");
+                //     console.log(dataType.value);
+                //     if(dataType.value == 4) { //Presidential General
+                //         document.getElementById("RepublicanVoting").textContent = precincts[ID].getPresidentialVote("republicanVote");
+                //         document.getElementById("GreenVoting").textContent = precincts[ID].getPresidentialVote("greenVote");
+                //         document.getElementById("LibertarianVoting").textContent = precincts[ID].getPresidentialVote("libertarianVote");
+                //         document.getElementById("DemocraticVoting").textContent = precincts[ID].getPresidentialVote("democraticVote");
+                //     }
+                //     if(dataType.value == 2){ //18 congressional
+                //         console.log("18 de congressional");
+                //         document.getElementById("RepublicanVoting").textContent = precincts[ID].getCongressional18Vote("republicanVote");
+                //         document.getElementById("GreenVoting").textContent = precincts[ID].getCongressional18Vote("greenVote");
+                //         document.getElementById("LibertarianVoting").textContent = precincts[ID].getCongressional18Vote("libertarianVote");
+                //         document.getElementById("DemocraticVoting").textContent = precincts[ID].getCongressional18Vote("democraticVote");
+                //     }
+                //     if(dataType.value == 3){ //16 congressional
+                //         console.log("18 de congressional");
+                //         document.getElementById("RepublicanVoting").textContent = precincts[ID].getCongressional16Vote("republicanVote");
+                //         document.getElementById("GreenVoting").textContent = precincts[ID].getCongressional16Vote("greenVote");
+                //         document.getElementById("LibertarianVoting").textContent = precincts[ID].getCongressional16Vote("libertarianVote");
+                //         document.getElementById("DemocraticVoting").textContent = precincts[ID].getCongressional16Vote("democraticVote");
+                //     }
+                // }
 
                 // AsianData
                 // }else { //no voting data
@@ -314,7 +323,36 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
 
         });
     }
-
+    dataType.onchange = function(){
+        // console.log("12333333333!!!");
+        console.log(dataType.value);
+        if(dataType.value == 4) { //Presidential General
+            document.getElementById("RepublicanVoting").textContent = precincts[clickedPrecinct].getPresidentialVote("republicanVote");
+            document.getElementById("GreenVoting").textContent = precincts[clickedPrecinct].getPresidentialVote("greenVote");
+            document.getElementById("LibertarianVoting").textContent = precincts[clickedPrecinct].getPresidentialVote("libertarianVote");
+            document.getElementById("DemocraticVoting").textContent = precincts[clickedPrecinct].getPresidentialVote("democraticVote");
+        }
+        if(dataType.value == 2){ //18 congressional
+            console.log("18 de congressional");
+            document.getElementById("RepublicanVoting").textContent = precincts[clickedPrecinct].getCongressional18Vote("republicanVote");
+            document.getElementById("GreenVoting").textContent = precincts[clickedPrecinct].getCongressional18Vote("greenVote");
+            document.getElementById("LibertarianVoting").textContent = precincts[clickedPrecinct].getCongressional18Vote("libertarianVote");
+            document.getElementById("DemocraticVoting").textContent = precincts[clickedPrecinct].getCongressional18Vote("democraticVote");
+        }
+        if(dataType.value == 3){ //16 congressional
+            console.log("18 de congressional");
+            document.getElementById("RepublicanVoting").textContent = precincts[clickedPrecinct].getCongressional16Vote("republicanVote");
+            document.getElementById("GreenVoting").textContent = precincts[clickedPrecinct].getCongressional16Vote("greenVote");
+            document.getElementById("LibertarianVoting").textContent = precincts[clickedPrecinct].getCongressional16Vote("libertarianVote");
+            document.getElementById("DemocraticVoting").textContent = precincts[clickedPrecinct].getCongressional16Vote("democraticVote");
+        }
+    }
+    GhostCommentChanges.addEventListener('click',function(){
+        precincts[clickedPrecinct].Ghost=true;
+        ghostPct.textContent="Ghost Pct.";
+        var comment = GhostComment.value;
+        sendGhost(stateName,countyID, clickedPrecinct, precincts[clickedPrecinct],comment);
+    });
     mergeCommentConfirm.addEventListener('click',function(){
         console.log(mergePrecinctList);
         mergeClicked=false;
