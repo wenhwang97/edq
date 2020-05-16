@@ -82,4 +82,16 @@ public class DemoData implements Serializable, Cloneable {
     public void setOtherPop(int otherPop) {
         this.otherPop = otherPop;
     }
+
+    @Override
+    public DemoData clone() throws CloneNotSupportedException {
+        DemoData data = new DemoData();
+        data.setTotalPop(totalPop);
+        data.setWhitePop(whitePop);
+        data.setBlackPop(blackPop);
+        data.setNativePop(nativePop);
+        data.setAsianPop(asianPop);
+        data.setOtherPop(otherPop);
+        return data;
+    }
 }

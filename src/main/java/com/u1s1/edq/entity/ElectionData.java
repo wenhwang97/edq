@@ -12,7 +12,7 @@ public class ElectionData implements Serializable, Cloneable {
 
     private Integer id;
     private ElectionType type;
-    private int distNum;
+    private Integer distNum;
 
     private int year;
     private int republicanVote;
@@ -41,8 +41,6 @@ public class ElectionData implements Serializable, Cloneable {
     }
 
     @Column(name = "dist_num", nullable = true)
-    @JsonIgnore
-    @Transient
     public int getDistNum() {
         return distNum;
     }
@@ -98,7 +96,8 @@ public class ElectionData implements Serializable, Cloneable {
     @Override
     public ElectionData clone() throws CloneNotSupportedException {
         ElectionData data = new ElectionData();
-        data.setId(id);
+        data.setType(type);
+        data.setDistNum(new Integer(distNum.intValue()));
         data.setYear(year);
         data.setRepublicanVote(republicanVote);
         data.setDemocraticVote(democraticVote);

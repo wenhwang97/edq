@@ -47,9 +47,8 @@ public class GeoVertex implements Serializable, Cloneable {
     @Override
     public GeoVertex clone() throws CloneNotSupportedException {
         GeoVertex vertex = new GeoVertex();
-        vertex.setId(id);
-        vertex.setX_pos(x_pos);
-        vertex.setY_pos(y_pos);
+        vertex.setX_pos(new BigDecimal(x_pos.doubleValue()));
+        vertex.setY_pos(new BigDecimal(y_pos.doubleValue()));
         return vertex;
     }
 }

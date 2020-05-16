@@ -1,6 +1,6 @@
 package com.u1s1.edq.controller;
 
-import com.u1s1.edq.controller.utils.ResponseObject;
+import com.u1s1.edq.controller.utils.*;
 import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
 import com.u1s1.edq.entity.GeoPolygon;
@@ -35,7 +35,7 @@ public class PrecinctController {
 
     @DeleteMapping(value = "")
     public void removePrecinct(@PathVariable String stateId, @PathVariable String countyId,
-                               @PathVariable String precinctCName) {
+                               @PathVariable String precinctCName, @RequestBody RequestComment comment) {
         countyService.removePrecinctFromCounty(stateId, countyId, precinctCName);
         precinctService.removePrecinct(precinctCName);
     }
@@ -48,8 +48,8 @@ public class PrecinctController {
 
     @PutMapping(value = "/data/demo")
     public void receivePrecinctDemoData(@PathVariable String stateId, @PathVariable String countyId,
-                                        @PathVariable String precinctCName, @RequestBody DemoData data) {
-        precinctService.updatePrecinctDemoData(stateId, countyId, precinctCName, data);
+                                        @PathVariable String precinctCName, @RequestBody RequestDemo data) {
+        precinctService.updatePrecinctDemoData(stateId, countyId, precinctCName, data.getDemoData());
     }
 
     @GetMapping(value = "/data/type")
@@ -60,13 +60,13 @@ public class PrecinctController {
 
     @PutMapping(value = "/data/define-ghost")
     public void definePrecinctAsGhost(@PathVariable String stateId, @PathVariable String countyId,
-                                      @PathVariable String precinctCName) {
+                                      @PathVariable String precinctCName, @RequestBody RequestComment comment) {
         precinctService.updatePrecinctType(stateId, countyId, precinctCName, PrecinctType.GHOST);
     }
 
     @PutMapping(value = "/data/undefine-ghost")
     public void undefinePrecinctFromGhost(@PathVariable String stateId, @PathVariable String countyId,
-                                          @PathVariable String precinctCName) {
+                                          @PathVariable String precinctCName, @RequestBody RequestComment comment) {
         precinctService.updatePrecinctType(stateId, countyId, precinctCName, PrecinctType.NORMAL);
     }
 
@@ -79,8 +79,8 @@ public class PrecinctController {
     @PutMapping(value = "/data/vote/presidential/{year}")
     public void receivePrecinctPresVoteData(@PathVariable String stateId, @PathVariable String countyId,
                                             @PathVariable String precinctCName, @PathVariable int year,
-                                            @RequestBody ElectionData data) {
-        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.PRESIDENTIAL, -1, year, data);
+                                            @RequestBody RequestVote data) {
+        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.PRESIDENTIAL, -1, year, data.getData());
     }
 
     @GetMapping(value = "/data/vote/congressional/{dist}/{year}")
@@ -93,8 +93,8 @@ public class PrecinctController {
     @PutMapping(value = "/data/vote/congressional/{dist}/{year}")
     public void receivePrecinctCongVoteData(@PathVariable String stateId, @PathVariable String countyId,
                                             @PathVariable String precinctCName, @PathVariable int dist,
-                                            @PathVariable int year, @RequestBody ElectionData data) {
-        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.CONGRESSIONAL, dist, year, data);
+                                            @PathVariable int year, @RequestBody RequestVote data) {
+        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.CONGRESSIONAL, dist, year, data.getData());
     }
 
     @GetMapping(value = "/data/neighbors")
@@ -112,35 +112,36 @@ public class PrecinctController {
 
     @PostMapping(value = "/data/neighbors")
     public void receivePrecinctAddedNeighbors(@PathVariable String stateId, @PathVariable String countyId,
-                                         @PathVariable String precinctCName, @RequestBody Set<String> neighbors) {
-        precinctService.addPrecinctNeighbors(stateId, countyId, precinctCName, neighbors);
+                                         @PathVariable String precinctCName, @RequestBody RequestNeighbors neighbors) {
+        precinctService.addPrecinctNeighbors(stateId, countyId, precinctCName, neighbors.getNeighbors());
     }
 
     @DeleteMapping(value = "/data/neighbors")
     public void receivePrecinctDeletedNeighbors(@PathVariable String stateId, @PathVariable String countyId,
-                                                @PathVariable String precinctCName, @RequestBody Set<String> neighbors) {
-        precinctService.removePrecinctNeighbors(stateId, countyId, precinctCName, neighbors);
+                                                @PathVariable String precinctCName, @RequestBody RequestNeighbors neighbors) {
+        precinctService.removePrecinctNeighbors(stateId, countyId, precinctCName, neighbors.getNeighbors());
     }
 
     @PutMapping(value = "/data/boundaries/{geoPolygonId}")
     public void receivePrecinctNewBoundary(@PathVariable String stateId, @PathVariable String countyId,
                                            @PathVariable String precinctCName, @PathVariable Integer geoPolygonId,
-                                           @RequestBody GeoPolygon geoPolygon) {
-        precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, geoPolygonId, geoPolygon);
+                                           @RequestBody RequestPoly geoPolygon) {
+        precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, geoPolygonId, geoPolygon.getPolygon());
         geoPolygonService.removePolygon(geoPolygonId);
     }
 
     @PutMapping(value = "/data/merge-data/{mergeeCountyId}/{mergeePrecinctId}")
     public void mergePrecinctData(@PathVariable String stateId, @PathVariable String countyId,
                                   @PathVariable String precinctCName, @PathVariable String mergeeCountyId,
-                                  @PathVariable String mergeePrecinctId) {
+                                  @PathVariable String mergeePrecinctId, @RequestBody RequestComment comment) {
         precinctService.mergePrecinctData(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId);
     }
 
     @PutMapping(value = "/data/merge-donut/{mergeeCountyId}/{mergeePrecinctId}/{polygonId}")
     public List<ResponseObject> mergePrecinctPolygonDonut(@PathVariable String stateId, @PathVariable String countyId,
                                                           @PathVariable String precinctCName, @PathVariable String mergeeCountyId,
-                                                          @PathVariable String mergeePrecinctId, @PathVariable Integer polygonId) {
+                                                          @PathVariable String mergeePrecinctId, @PathVariable Integer polygonId,
+                                                          @RequestBody RequestComment comment) {
         Integer removedHole = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId, polygonId);
         if (removedHole != null) {
             geoPolygonService.removePolygon(polygonId);

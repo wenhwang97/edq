@@ -36,7 +36,6 @@ public class GeoPolygon implements Serializable, Cloneable {
     @Override
     public GeoPolygon clone() throws CloneNotSupportedException {
         GeoPolygon geoPolygon = new GeoPolygon();
-        geoPolygon.setId(id);
         for (GeoVertex vertex : vertices) {
             geoPolygon.getVertices().add(vertex.clone());
         }
