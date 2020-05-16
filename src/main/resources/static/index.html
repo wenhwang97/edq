@@ -213,7 +213,8 @@
                             <div class="tab-pane" id="tab2">
                                 <div class = "change_boundary">Change Boundary<br>
                                     <button class="ChangeBoundary btn btn-primary" id="changeBoundary" type="button" >Change Boundary</button>
-                                    <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" >Comfirm</button>
+                                    <button class="AddNeighbour btn btn-primary" data-toggle="modal" id="changeBounayConfirm"data-target="#coundary-comment-dialog">Confirm</button>
+<!--                                    <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" data-target="coundary-comment-dialog>Comfirm"</button>-->
                                 </div>
                                 <div class="Edit_Neighbour">Edit Neighbour<br>
                                     <button class="AddNeighbour btn btn-primary" id="addNeighbour" type="button" >Add/Delete</button>
@@ -221,7 +222,9 @@
                                 </div>
                                 <div class="merge">Merge Precinct<br>
                                     <button class="MergePrecinct btn btn-primary" id="mergePrecinct" type="button" >Select Precinct</button>
-                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>
+                                    <button class="btn btn-primary" data-toggle="modal" id="mergePrecinctConfirm"data-target="#comment-dialog">Confirm</button>
+<!--                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>-->
+<!--                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>-->
                                 </div>
                                 <div class="merge">Ghost Precinct<br>
                                     <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>
@@ -242,158 +245,146 @@
                                 <a href="#tab4" data-toggle="tab" id="log-tab" class="nav-link">Logs</a>
                             </li>
                         </ul>
-                        <div class="tab-content py-3">
-                            <div class="tab-pane active" id="tab3">
-                                <div class="container py-3">
-                                    <div class="row">
-                                        <div class="col-10 mx-auto">
-                                            <div class="accordion" id="faqExample">
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingOne">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="Error Type">
-                                                                Voting Data not equal to population
-                                                            </button><span class="badge pull-right" id="VoteDemoError"></span>
-                                                        </h5>
-                                                    </div>
-
-                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="VoteDemoErrorTable">
-                                                                <button class="btn btn-link" type="button">
-                                                                    Q: How does this work1?
-                                                                </button>
-                                                                </tbody>
-                                                            </table>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingTwo">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                                No Voting Error
-                                                            </button><span class="badge pull-right" id="NoVoteError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="NotVoteErrorTable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingThree">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                                No Demographic Error
-                                                            </button><span class="badge pull-right"id="NoDemoError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="NotDemoErrorTable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingFour">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                                Multipolygon Error
-                                                            </button><span class="badge pull-right"id="MultipolyError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="MutipolyTable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingFive">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                                                Overlap Error
-                                                            </button><span class="badge pull-right"id="OverLapError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="OverLapTable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingSix">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                                                Gap Error
-                                                            </button><span class="badge pull-right"id="GapError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="GapTable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingSeven">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                                                Enclose Error
-                                                            </button><span class="badge pull-right"id="EncloseError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="EncloseTable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header p-2" id="headingEight">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                                                Slef-intersect
-                                                            </button><span class="badge pull-right"id="SELFIError"></span>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#faqExample">
-                                                        <div class="card-body">
-                                                            <table class="table table-hover">
-                                                                <tbody id="SELFITable"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                        <div class="container py-3">
+                            <div class="row">
+                                <div class="col-10 mx-auto">
+                                    <div class="accordion" id="faqExample">
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="Error Type">
+                                                        Voting Data not equal to population
+                                                    </button><span class="badge pull-right" id="VoteDemoError"></span>
+                                                </h5>
                                             </div>
 
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="VoteDemoErrorTable">
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingTwo">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        No Voting Error
+                                                    </button><span class="badge pull-right" id="NoVoteError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="NotVoteErrorTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        No Demographic Error
+                                                    </button><span class="badge pull-right"id="NoDemoError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="NotDemoErrorTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingFour">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                        Multipolygon Error
+                                                    </button><span class="badge pull-right"id="MultipolyError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="MutipolyTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingFive">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                        Overlap Error
+                                                    </button><span class="badge pull-right"id="OverLapError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="OverLapTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingSix">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                        Gap Error
+                                                    </button><span class="badge pull-right"id="GapError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="GapTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingSeven">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                                        Enclose Error
+                                                    </button><span class="badge pull-right"id="EncloseError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="EncloseTable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header p-2" id="headingEight">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                                        Slef-intersect
+                                                    </button><span class="badge pull-right"id="SELFIError"></span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#faqExample">
+                                                <div class="card-body">
+                                                    <table class="table table-hover">
+                                                        <tbody id="SELFITable"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!--/row-->
+
                                 </div>
                             </div>
-                            <div class="tab-pane" id="tab4">
-                                <div class="scroll">
-                                    Logs
-                                </div>
-                            </div>
+                            <!--/row-->
                         </div>
                     </div>
                 </div>
@@ -509,6 +500,52 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" id="SaveDemoChanges">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="comment-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Add comment</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Comment
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id ="SaveCommentChanges">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="coundary-comment-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Add comment</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label" >Comment
+                                        <input class="form-control" type="url" value="" id="boundaryComment"/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id ="BoundaryCommentChanges">Save changes</button>
                         </div>
                     </div>
                 </div>
