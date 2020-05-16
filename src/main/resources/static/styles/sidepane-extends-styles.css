@@ -1,0 +1,30 @@
+#wrapper .sidepane-extends {
+    z-index: 3;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled .sidepane-extends {
+    margin-right: 408px;
+}
+
+#wrapper .sidepane-extends .btn-sidepane-toggle {
+    margin-top: 10px;
+    border: 0;
+    width: 23px;
+    height: 48px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .9) url("../images/expand.png") 7px center/7px 12px no-repeat;
+    border-right: 1px solid #d4d4d4;
+    outline: none;
+    box-shadow: none;
+}
+
+#wrapper.toggled .sidepane-extends .btn-sidepane-toggle {
+    background: rgba(255, 255, 255, .9) url("../images/collapse.png") 7px center/7px 12px no-repeat;
+}

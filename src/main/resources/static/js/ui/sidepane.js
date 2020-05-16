@@ -37,7 +37,7 @@ $('#btnYes').click(function() {
 var isNotToggled = true;
 
 $(document).ready(function () {
-    var trigger = $('.hamburger'),
+    var trigger = $('.btn-sidepane-toggle'),
         isClosed = false;
 
     $('[data-toggle="offcanvas"]').unbind('click').on("click",function () {

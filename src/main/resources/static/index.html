@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="styles/sidepane-data-styles.css">
     <link rel="stylesheet" href="styles/sidepane-errlog-style.css">
     <link rel="stylesheet" href="styles/navbar-styles.css">
+    <link rel="stylesheet" href="styles/sidepane-extends-styles.css">
 
     <script src="js/ui/sidepane.js"></script>
 </head>
@@ -45,7 +46,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
+<!--    <div class="container-fluid">-->
 <!--        <div class="row">-->
 <!--            <nav class="navbar navbar-expand-lg">-->
 <!--                <a class="navbar-brand" href="javascript:location.reload();" style="color: #FFFFFF">Election Quality</a>-->
@@ -67,7 +68,7 @@
 <!--                </div>-->
 <!--            </nav>-->
 <!--        </div>-->
-    </div>
+<!--    </div>-->
 
     <div class="content" style="overflow: hidden; height: 100%">
         <div class="content-left">
@@ -362,6 +363,9 @@
                         </div>
                     </div>
                 </nav>
+                <div class="sidepane-extends">
+                    <button class="btn-sidepane-toggle" data-toggle="offcanvas"></button>
+                </div>
             </div>
 
             <!-- Floating dialog-->
@@ -417,64 +421,63 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="demo-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 id="myModalLabel">Edit Demographic Data</h3>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Total Population
-                                        <input class="form-control" type="text" value="" />
-                                    </label>
+                <div class="modal fade" id="demo-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="myModalLabel">Edit Demographic Data</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Total Population
+                                            <input class="form-control" type="text" value="" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">White
+                                            <input class="form-control" type="text" value="" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Black or African American
+                                            <input class="form-control" type="email" value="" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Asian
+                                            <input class="form-control" type="text" value="" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">American Indian or Alaska Native
+                                            <input class="form-control" type="url" value="" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Native Hawaiian or Other Pacific Islander
+                                            <input class="form-control" type="url" value="" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">White
-                                        <input class="form-control" type="text" value="" />
-                                    </label>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="SaveDemoChanges">Save changes</button>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Black or African American
-                                        <input class="form-control" type="email" value="" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Asian
-                                        <input class="form-control" type="text" value="" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">American Indian or Alaska Native
-                                        <input class="form-control" type="url" value="" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-9">
-                                    <label class="col-lg-3 col-form-label form-control-label">Native Hawaiian or Other Pacific Islander
-                                        <input class="form-control" type="url" value="" />
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="SaveDemoChanges">Save changes</button>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
 
             <div class="map_box" id="map"></div>
