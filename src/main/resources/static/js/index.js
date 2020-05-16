@@ -56,6 +56,30 @@ var prefix = "tab_";
 if (hash) {
     $('.nav-tabs a[href="'+hash.replace(prefix,"")+'"]').tab('show');
 }
-function creatLog(Changetype, old, newValue){
-
+function creatLog(Changetype, comments){
+    var date = document.createElement("td");
+    var time = document.createElement("td");
+    var description = document.createElement("td");
+    var comment = document.createElement("td");
+    var scripttime = new Date();
+    var year = scripttime.getFullYear();
+    var month = scripttime.getMonth();
+    var day = scripttime.getDay();
+    var when = year+"-"+month+"-"+day;
+    date.textContent = year+"-"+month+"-"+day;
+    var clock = scripttime.getTime();
+    time.textContent= scripttime.getTime();
+    description.textContent=Changetype;
+    comment.textContent=comments;
+    // history.append()(date);
+    // history.append()(time);
+    // history.append()(description);
+    // history.append()(comment);
+    // history.appendChild(date);
+    $("#history").append("<tr>" +
+        "<td>"+when+"</td>" +
+        "<td>"+clock+"</td>"+
+        "<td>"+Changetype+"</td>"+
+        "<td>"+comments+"</td>"+
+        "</tr>")
 }

@@ -332,6 +332,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         addNeighbourConfirm.disabled=true;
         console.log(clickedPrecinct);
         var comment =NeighbourComment.value;
+
         if(addneighbourlist.lenghth!=0) {
             sendNeighbour(precincts[clickedPrecinct], addneighbourlist, stateName, countyID, comment);  //send the list of neighbour to server
         }
@@ -646,6 +647,7 @@ async function sendNeighbour(precinct, List, stateName, countyID,comment) {
         console.log(JSON.stringify(data));
         $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
         console.log("add neighbor?");
+        creatLog("Add neighbour",comment);
         await fetch(urlpart1, {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
@@ -674,6 +676,7 @@ async function sendNeighbour(precinct, List, stateName, countyID,comment) {
         var data = {"neighbors":deletList,
             "comment":comment
         }
+        creatLog("Delete neighbour",comment);
         await fetch(urlpart1, {
             method: 'DELETE', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
