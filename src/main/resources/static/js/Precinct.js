@@ -12,6 +12,7 @@ class Precinct{
         this.Ghost = false;
         this.Congressional16Vote={};
         this.Congressional18Vote={};
+
     }
     setCongressional16Vote(type,value) {
         this.Congressional16Vote[type] = value;

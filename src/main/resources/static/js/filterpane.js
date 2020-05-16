@@ -154,8 +154,9 @@ async function printText(message) {
     var StateId = message.substring(0, 2);
     console.log(StateId);
     console.log(countyID);
-    await countyClick(countyID, StateId);
-    // if(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message)!=null){  //你必须得
+    // await countyClick(countyID, StateId);
+    if(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message)!=null){  //你必须得有
+        console.log("have???????");
     console.log(allStates[StateId]);
     console.log(allStates[StateId].getCountyByID(countyID));
     console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message));
@@ -175,7 +176,7 @@ async function printText(message) {
         map: map,
         title: 'Demo data and Voting data are not compatible'
     });
-    // }
+    }
 
 }
 
