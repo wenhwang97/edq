@@ -22,7 +22,7 @@
 }
 
 .sidepane-data .sidepane-content .nav-link {
-    padding: 8px 78px;
+    padding: 8px 77px;
 }
 
 /* Voting data and Demographic data  */
@@ -50,6 +50,14 @@
     z-index: 10;
 }
 
+.sidepane-data .table-control-pane a {
+    font-style: italic;
+}
+
+.sidepane-data .table-control-pane a:hover {
+    text-decoration: underline;
+}
+
 .edit-data-dialog .form-control {
     width: 400px;
 }
@@ -62,13 +70,23 @@
     max-width: unset;
 }
 
-.btn-primary {
+.sidepane-data .sidepane-content .table-control-pane {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.sidepane-data .sidepane-content .table-control-pane label {
+    padding-top: 10px;
+}
+
+.sidepane-data .sidepane-content .table-control-pane .btn-primary {
+    float: right;
     color: white;
     background-color: #337ab7;
     border-color: #2e6da4;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+.sidepane-data .sidepane-content .table-control-pane .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
     background-color: #2D5C93;
     border-color: #204F77;
 }
