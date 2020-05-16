@@ -14,7 +14,7 @@ public class CorrectionLog implements Serializable {
 
     private Precinct precinct;
     private LocalDateTime ModifyTime = LocalDateTime.now();
-    private String Loginfo;
+    private String comment;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -42,11 +42,11 @@ public class CorrectionLog implements Serializable {
 
     public void setModifyTime(LocalDateTime time){this.ModifyTime=time;}
 
-    @Column(name = "description")
-    public String getLoginfo(){return Loginfo;}
-
-    public void setLoginfo(String loginfo) {
-        Loginfo = loginfo;
+    public String getComment() {
+        return comment;
     }
 
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

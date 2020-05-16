@@ -1,10 +1,11 @@
 .header-navbar {
-    z-index: 4;
+    z-index: 3;
     display: flex;
     position: relative;
     height: 40px;
     background-color: #2e6da4;
     color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .3);
 }
 
 .header-navbar .header-title {

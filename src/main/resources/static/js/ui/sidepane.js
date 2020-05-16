@@ -33,11 +33,16 @@ $('#btnYes').click(function() {
     $('#vote-data-dialog').modal('hide');
 });
 
+$('.scroll').css('height', ($(window).height()-215)+"px");
+$(window).bind('resize', function() {
+    $('.scroll').css('height', ($(window).height()-215)+"px");
+})
+
 // Toggle for sidepane
 var isNotToggled = true;
 
 $(document).ready(function () {
-    var trigger = $('.hamburger'),
+    var trigger = $('.btn-sidepane-toggle'),
         isClosed = false;
 
     $('[data-toggle="offcanvas"]').unbind('click').on("click",function () {
