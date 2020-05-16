@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRS</title>
+
+    <!-- Boostrap CDNs -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/rightStyle.css">
+    <link rel="stylesheet" href="styles/side-panel-styles.css">
+    <link rel="stylesheet" href="styles/sidepane-styles.css">
+    <link rel="stylesheet" href="styles/sidepane-data-styles.css">
+    <link rel="stylesheet" href="styles/sidepane-errlog-style.css">
+    <link rel="stylesheet" href="styles/navbar-styles.css">
+    <link rel="stylesheet" href="styles/sidepane-extends-styles.css">
+
+    <script src="js/ui/sidepane.js"></script>
+</head>
+
+<body>
+<!-- Navbar -->
+<header>
+    <nav class="header-navbar">
+        <a class="header-title">
+            <span>Election Quality Data</span>
+        </a>
+        <div class="btn-group">
+            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Select a State<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Rhode Island</a></li>
+                <li><a href="#">Texas</a></li>
+                <li><a href="#">Virginia</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <nav class="navbar navbar-expand-lg">-->
+<!--                <a class="navbar-brand" href="javascript:location.reload();" style="color: #FFFFFF">Election Quality</a>-->
+<!--                &lt;!&ndash; Dropdown for states &ndash;&gt;-->
+<!--                <ul class="nav nav-pills">-->
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" id = "chooseStateBox" data-toggle="dropdown" href="#" role="button"-->
+<!--                            aria-haspopup="true" aria-expanded="false">States</a>-->
+<!--                        <div class="dropdown-menu">-->
+<!--                            <a class="dropdown-item" href="javascript:loadstates('Virginia')">Virginia</a>-->
+<!--                            <a class="dropdown-item" href="javascript:loadstates('Texas')">Texas</a>-->
+<!--                            <a class="dropdown-item" href="javascript:loadstates('Rhode Island')">Rhode Island</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </ul>-->
+
+<!--                <div class="hamburger" data-toggle="offcanvas">-->
+<!--                    <i class="menu-icon" role="presentation"></i>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<div class="content" style="overflow: hidden; height: 100%">
+    <div class="content-left">
+        <div class="side-panel">
+            <div class="side-panel-page" id="filter-page">
+                <div class="panel-body">
+                    <div class="side-panel-title">Map Filters</div>
+                    <div class="close-page" role="presentation">
+                        <span class="icon-close" id="close-filter-button"></span>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="panel-content-filters">
+                        <div class="col-sm-12">
+                            <label class="custom-control custom-checkbox panel-content-general">
+                                <input type="checkbox" class="custom-control-input" id="show-county">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description custom-control-label panel-content-font">Show Counties</span>
+                            </label><br>
+                            <label class="custom-control custom-checkbox panel-content-general">
+                                <input type="checkbox" class="custom-control-input" id="show-district">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description custom-control-label panel-content-font">Show Districts</span>
+                            </label><br>
+                            <label class="custom-control custom-checkbox panel-content-general">
+                                <input type="checkbox" class="custom-control-input" id="show-precinct">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description custom-control-label panel-content-font">Show Precincts</span>
+                            </label><br>
+                            <label class="custom-control custom-checkbox panel-content-general">
+                                <input type="checkbox" class="custom-control-input" id="national-parks">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description custom-control-label panel-content-font">Show National Parks</span>
+                            </label><br>
+                            <select class="custom-select panel-content-font panel-content-select"id="Datatype">
+                                <option value="1">Demographics</option>
+                                <option value="2">2018 Congressional General</option>
+                                <option value="3">2016 Congressional General</option>
+                                <option value="4">2016 Presidential General</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="side-panel-buttons">
+                <div class="map-filters" id="map-filter-button">
+                    <i role="presentation" class="icon-map-filer">
+                        <div class="side-button-name">Map<br>Filters</div>
+                    </i>
+                </div>
+                <div class="errors-list" id="errors-list-button">
+                    <i role="presentation" class="icon-errors-list">
+                        <div class="side-button-name">Errors<br>List</div>
+                    </i>
+                </div>
+                <div class="logs" id="logs-button">
+                    <i role="presentation" class="icon-logs">
+                        <div class="side-button-name">Logs</div>
+                    </i>
+                </div>
+            </div>
+        </div>
+
+        <div id="wrapper">
+            <nav class="sidepane" role="navigation">
+                <!-- Sidepane data section -->
+                <div class="sidepane-data" id="sidepane-data">
+                    <div class="sidepane-body">
+                        <label class="sidepane-nav-county" id = "sidepaneTitle"></label><br>
+                        <h3 class="sidepane-nav-precinct" id="sidepanePrecinctName">No Precinct Selected</h3>
+                        <label class="ghost-label">Ghost Pct.</label>
+                    </div>
+                    <div class="container sidepane-content">
+                        <ul class="nav nav-tabs sidepane-content-nav">
+                            <li class="nav-item">
+                                <a href="#tab1" data-toggle="tab" class="nav-link active">Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#tab2" data-toggle="tab" class="nav-link">Tools</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content py-3">
+                            <div class="tab-pane scroll active" id="tab1">
+                                <div class="container">
+                                    <label class="table-title">Voting Data</label>
+                                    <select class="custom-select panel-content-font panel-content-select dist-selector">
+                                        <option>District #1</option>
+                                    </select>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody id="myTable">
+                                                <tr>
+                                                    <td class="row-title">Democratic</td>
+                                                    <td class="row-content" id = "DemocraticVoting"></td>
+                                                <tr>
+                                                    <td class="row-title">Republican</td>
+                                                    <td class="row-content"id = "RepublicanVoting"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Libertarian</td>
+                                                    <td class="row-content" id = "LibertarianVoting"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Green</td>
+                                                    <td class="row-content" id = "GreenVoting"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="table-control-pane">
+                                                <label>Data Source: </label>
+                                                <a href="" target="_blank">src</a>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#vote-edit-dialog">Edit Data</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <label class="table-title">Demographic Data</label>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody id="myTable">
+                                                <tr>
+                                                    <td class="row-title">Total Population</td>
+                                                    <td class="row-content" id ="TotalData"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">White</td>
+                                                    <td class="row-content" id ="WhiteData"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Black or African American</td>
+                                                    <td class="row-content" id ="BlackData"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Asian</td>
+                                                    <td class="row-content" id ="AsianData"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">American Indian or Alaska Native</td>
+                                                    <td class="row-content" id ="NativeData"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row-title">Native Hawaiian or Other Pacific Islander</td>
+                                                    <td class="row-content"  id ="OtherData"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="table-control-pane">
+                                                <label>Data Source: </label>
+                                                <a href="" target="_blank">src</a>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#demo-edit-dialog">Edit Data</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                <div class = "change_boundary">Change Boundary<br>
+                                    <button class="ChangeBoundary btn btn-primary" id="changeBoundary" type="button" >Change Boundary</button>
+                                    <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" >Comfirm</button>
+                                </div>
+                                <div class="Edit_Neighbour">Edit Neighbour<br>
+                                    <button class="AddNeighbour btn btn-primary" id="addNeighbour" type="button" >Add/Delete</button>
+                                    <button class="AddNeighbour btn btn-primary" id="addNeighbourConfirm" type="button" >Comfirm</button>
+                                </div>
+                                <div class="merge">Merge Precinct<br>
+                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinct" type="button" >Select Precinct</button>
+                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>
+                                </div>
+                                <div class="merge">Ghost Precinct<br>
+                                    <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidepane error/log section -->
+                <div class="sidepane-errlog" id="sidepane-errlog">
+                    <div class="container sidepane-content">
+                        <ul class="nav nav-tabs sidepane-content-nav">
+                            <li class="nav-item">
+                                <a href="#tab3" data-toggle="tab" id="err-tab" class="nav-link active">Errors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#tab4" data-toggle="tab" id="log-tab" class="nav-link">Logs</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content py-3">
+                            <div class="tab-pane active" id="tab3">
+                                <div class="container py-3">
+                                    <div class="row">
+                                        <div class="col-10 mx-auto">
+                                            <div class="accordion" id="faqExample">
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingOne">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="Error Type">
+                                                                Voting Data not equal to population
+                                                            </button><span class="badge pull-right" id="VoteDemoError"></span>
+                                                        </h5>
+                                                    </div>
+
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="VoteDemoErrorTable">
+                                                                <button class="btn btn-link" type="button">
+                                                                    Q: How does this work1?
+                                                                </button>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingTwo">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                No Voting Error
+                                                            </button><span class="badge pull-right" id="NoVoteError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="NotVoteErrorTable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingThree">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                No Demographic Error
+                                                            </button><span class="badge pull-right"id="NoDemoError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="NotDemoErrorTable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingFour">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                Multipolygon Error
+                                                            </button><span class="badge pull-right"id="MultipolyError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="MutipolyTable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingFive">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                                                Overlap Error
+                                                            </button><span class="badge pull-right"id="OverLapError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="OverLapTable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingSix">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                                                Gap Error
+                                                            </button><span class="badge pull-right"id="GapError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="GapTable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingSeven">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                                                Enclose Error
+                                                            </button><span class="badge pull-right"id="EncloseError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="EncloseTable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header p-2" id="headingEight">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                                                Slef-intersect
+                                                            </button><span class="badge pull-right"id="SELFIError"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#faqExample">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover">
+                                                                <tbody id="SELFITable"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab4">
+                                <div class="scroll">
+                                    Logs
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="sidepane-extends">
+                <button class="btn-sidepane-toggle" data-toggle="offcanvas"></button>
+            </div>
+        </div>
+
+        <!-- Floating dialog-->
+        <div class="edit-data-dialog">
+            <div class="modal fade" id="vote-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Edit Voting Data</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Democratic
+                                        <input class="form-control" type="text" value="Put dem vote here" id="dmChanges"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Republican
+                                        <input class="form-control" type="text" value="Put rep vote here" id="rpChanges"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Libertarian
+                                        <input class="form-control" type="email" value="Put lib vote here" id="lbChanges"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Green
+                                        <input class="form-control" type="text" value="Put grn vote here" id="grChanges"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Comment
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id ="SaveVoteChanges">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="demo-edit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Edit Demographic Data</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Total Population
+                                        <input class="form-control" type="text" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">White
+                                        <input class="form-control" type="text" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Black or African American
+                                        <input class="form-control" type="email" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Asian
+                                        <input class="form-control" type="text" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">American Indian or Alaska Native
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label">Native Hawaiian or Other Pacific Islander
+                                        <input class="form-control" type="url" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="SaveDemoChanges">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map_box" id="map"></div>
+    </div>
+
+</div>
+
+
+<!-- Scripts -->
+<script src="js/ui/setting.js"></script>
+<script src="js/Precinct.js"></script>
+<script src="js/County.js"></script>
+<script src="js/State.js"></script>
+<script src="js/precinctFunctions.js"></script>
+<script src="js/map.js"></script>
+<script src="js/index.js"></script>
+<script src="js/filterpane.js"></script>
+<script src="js/fecthError.js"></script>
+<script src="js/changeData.js"></script>
+<script src="js/ui/sidepane.js"></script>
+<script src="js/ui/navbar.js"></script>
+
+<!-- <script src="../js/mapControl.js"></script> -->
+<script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.0.2/jsts.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script src="http://malsup.github.com/jquery.blockUI.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDmXQKCLMhm__Uu6PWSH3Cf-PgCzEG_4&callback=initMap"
+        async defer></script>
+</body>
+
+</html>
