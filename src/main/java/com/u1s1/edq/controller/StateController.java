@@ -26,7 +26,7 @@ public class StateController {
     }
 
     @GetMapping(value = "")
-    public ResponseEntity<String> selectState(@PathVariable String stateId) {
+    public String selectState(@PathVariable String stateId) {
         if (stateService.getStateFromDB(stateId)) {
             State state = stateService.getStateFromMem(stateId);
 
@@ -40,10 +40,10 @@ public class StateController {
                 stateService.initCounties(state);
             }
 
-            return ResponseEntity.ok().body("");
+            return state.getName();
         }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to cache state");
+        return null;
     }
 
     @GetMapping(value = "/show-counties")

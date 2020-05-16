@@ -26,6 +26,8 @@ public class PrecinctController {
     private CountyService countyService;
     private GeoPolygonService geoPolygonService;
 
+    private final String LOG_DELETE_PRECINCT_DESC = "Delete Precinct '@0' from State '@1'";
+
     @Autowired
     public PrecinctController(PrecinctService precinctService, CountyService countyService, GeoPolygonService geoPolygonService) {
         this.precinctService = precinctService;
@@ -36,6 +38,10 @@ public class PrecinctController {
     @DeleteMapping(value = "")
     public void removePrecinct(@PathVariable String stateId, @PathVariable String countyId,
                                @PathVariable String precinctCName, @RequestBody RequestComment comment) {
+        Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
+        String desc = LOG_DELETE_PRECINCT_DESC;
+        desc.replace("@0", precinct.getName());
+        desc.replace("@1", precinct.getCounty().getState().getName());
         countyService.removePrecinctFromCounty(stateId, countyId, precinctCName);
         precinctService.removePrecinct(precinctCName);
     }

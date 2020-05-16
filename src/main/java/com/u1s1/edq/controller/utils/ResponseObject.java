@@ -8,6 +8,7 @@ public class ResponseObject {
 
     public ResponseObject(String id, String name, Object obj) {
         this.id = id;
+        this.name = name;
         this.obj = obj;
     }
 
