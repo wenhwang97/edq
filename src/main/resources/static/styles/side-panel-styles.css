@@ -1,5 +1,7 @@
 .side-panel {
     font-family: Helvetica;
+    position: absolute;
+    top: 40px;
 }
 
 .side-panel .side-panel-page {

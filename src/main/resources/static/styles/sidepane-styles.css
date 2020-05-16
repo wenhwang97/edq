@@ -3,7 +3,7 @@
     margin-right: -408px;
     width: 408px;
     height: 100%;
-    top: 0;
+    top: 40px;
     right: 0;
     z-index: 3;
     background: white;
@@ -21,12 +21,12 @@
     margin-right: 0;
     width: 408px;
     height: 100%;
-    top: 0;
+    top: 40px;
     right: 0;
     z-index: 3;
     background: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, .3);
-    opacity: .9;
+    opacity: .95;
 }
 
 .sidepane .sidepane-content {

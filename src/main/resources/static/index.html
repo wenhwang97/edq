@@ -23,37 +23,53 @@
     <link rel="stylesheet" href="styles/sidepane-styles.css">
     <link rel="stylesheet" href="styles/sidepane-data-styles.css">
     <link rel="stylesheet" href="styles/sidepane-errlog-style.css">
+    <link rel="stylesheet" href="styles/navbar-styles.css">
 
     <script src="js/ui/sidepane.js"></script>
 </head>
 
 <body>
     <!-- Navbar -->
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="javascript:location.reload();" style="color: #FFFFFF">Election Quality</a>
-                <!-- Dropdown for states -->
-                <ul class="nav nav-pills">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id = "chooseStateBox" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">States</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:loadstates('Virginia')">Virginia</a>
-                            <a class="dropdown-item" href="javascript:loadstates('Texas')">Texas</a>
-                            <a class="dropdown-item" href="javascript:loadstates('Rhode Island')">Rhode Island</a>
-                        </div>
-                    </li>
+    <header>
+        <nav class="header-navbar">
+            <a class="header-title">
+                <span>Election Quality Data</span>
+            </a>
+            <div class="btn-group">
+                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Select a State<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Rhode Island</a></li>
+                    <li><a href="#">Texas</a></li>
+                    <li><a href="#">Virginia</a></li>
                 </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+<!--        <div class="row">-->
+<!--            <nav class="navbar navbar-expand-lg">-->
+<!--                <a class="navbar-brand" href="javascript:location.reload();" style="color: #FFFFFF">Election Quality</a>-->
+<!--                &lt;!&ndash; Dropdown for states &ndash;&gt;-->
+<!--                <ul class="nav nav-pills">-->
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" id = "chooseStateBox" data-toggle="dropdown" href="#" role="button"-->
+<!--                            aria-haspopup="true" aria-expanded="false">States</a>-->
+<!--                        <div class="dropdown-menu">-->
+<!--                            <a class="dropdown-item" href="javascript:loadstates('Virginia')">Virginia</a>-->
+<!--                            <a class="dropdown-item" href="javascript:loadstates('Texas')">Texas</a>-->
+<!--                            <a class="dropdown-item" href="javascript:loadstates('Rhode Island')">Rhode Island</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-                <div class="hamburger" data-toggle="offcanvas">
-                    <i class="menu-icon" role="presentation"></i>
-                </div>
-            </nav>
-        </div>
+<!--                <div class="hamburger" data-toggle="offcanvas">-->
+<!--                    <i class="menu-icon" role="presentation"></i>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--        </div>-->
     </div>
 
-    <div class="content" style="overflow: hidden; height: 100%; margin-top: -3.4%">
+    <div class="content" style="overflow: hidden; height: 100%">
         <div class="content-left">
             <div class="side-panel">
                 <div class="side-panel-page" id="filter-page">
@@ -270,7 +286,7 @@
                                                                                 Q: How does this work1?
                                                                               </button>
                                                                         </td>
-                                                                        
+
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="row-title">
@@ -480,6 +496,7 @@
     <script src="js/fecthError.js"></script>
     <script src="js/changeData.js"></script>
     <script src="js/ui/sidepane.js"></script>
+    <script src="js/ui/navbar.js"></script>
 
     <!-- <script src="../js/mapControl.js"></script> -->
     <script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.0.2/jsts.min.js"></script>
