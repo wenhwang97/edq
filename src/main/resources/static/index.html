@@ -103,10 +103,10 @@
                                     <span class="custom-control-description custom-control-label panel-content-font">Show National Parks</span>
                                 </label><br>
                                 <select class="custom-select panel-content-font panel-content-select"id="Datatype">
-                                    <option value="1">Demographics</option>
-                                    <option value="2">2018 Congressional General</option>
-                                    <option value="3">2016 Congressional General</option>
-                                    <option value="4">2016 Presidential General</option>
+                                    <option value="1" id="DemographicsOption">Demographics</option>
+                                    <option value="2"id="18ConOption">2018 Congressional General</option>
+                                    <option value="3" id="16ConOption">2016 Congressional General</option>
+                                    <option value="4" id="PreOption">2016 Presidential General</option>
                                 </select>
                             </div>
                         </div>
@@ -232,6 +232,7 @@
                                 <div class="tab-pane" id="tab2">
                                     <div class = "change_boundary">Change Boundary<br>
                                         <button class="ChangeBoundary btn btn-primary" id="changeBoundary" type="button" >Change Boundary</button>
+<!--                                        <button class="btn btn-primary" data-toggle="modal" id="changeBounayConfirm" data-target="#comment-dialog">Comfirm</button>-->
                                         <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" >Comfirm</button>
                                     </div>
                                     <div class="Edit_Neighbour">Edit Neighbour<br>
@@ -240,7 +241,8 @@
                                     </div>
                                     <div class="merge">Merge Precinct<br>
                                         <button class="MergePrecinct btn btn-primary" id="mergePrecinct" type="button" >Select Precinct</button>
-                                        <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>
+                                        <button class="btn btn-primary" data-toggle="modal" id="mergePrecinctConfirm" data-target="#comment-dialog">Comfirm</button>
+<!--                                        <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>-->
                                     </div>
                                     <div class="merge">Ghost Precinct<br>
                                         <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>
@@ -280,9 +282,6 @@
                                                             <div class="card-body">
                                                                 <table class="table table-hover">
                                                                     <tbody id="VoteDemoErrorTable">
-                                                                    <button class="btn btn-link" type="button">
-                                                                        Q: How does this work1?
-                                                                    </button>
                                                                     </tbody>
                                                                 </table>
 
@@ -530,6 +529,30 @@
                     </div>
                 </div>
             </div>
+                <div class="modal fade" id="comment-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="myModalLabel">Add comment</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-lg-9">
+                                        <label class="col-lg-3 col-form-label form-control-label">Comment
+                                            <input class="form-control" type="url" value="" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id ="SaveCommentChanges">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="map_box" id="map"></div>

@@ -10,6 +10,20 @@ class Precinct{
         this.PrecinctPolygon={};
         this.PolygonCoord={};
         this.Ghost = false;
+        this.Congressional16Vote={};
+        this.Congressional18Vote={};
+    }
+    setCongressional16Vote(type,value) {
+        this.Congressional16Vote[type] = value;
+    }
+    getCongressional16Vote(type) {
+        return this.Congressional16Vote[type];
+    }
+    setCongressional18Vote(type,value) {
+        this.Congressional18Vote[type] = value;
+    }
+    getCongressional18Vote(type) {
+        return this.Congressional18Vote[type];
     }
 
     setDemographic(type,value){
@@ -72,7 +86,7 @@ class Precinct{
     setBoundary(Coord){
         this.boundary=Coord;
     }
-    getBoundary(Coord){
+    getBoundary(){
         return this.boundary;
     }
     getPrecinctLayer(){
