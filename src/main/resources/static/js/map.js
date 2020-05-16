@@ -2,6 +2,7 @@ const THREE_STATES = ["Virginia", "Texas", "Rhode Island"];
 var map;
 var dataLayers = {}; // all dataLayer (geojson)
 var r = document.getElementById("show-county");
+var parkcheck = document.getElementById("national-parks");
 var precinctCheckBox=document.getElementById("show-precinct");
 var changeBoundaryButton = document.getElementById("changeBoundary");
 var addNeighbourButton = document.getElementById("addNeighbour");
@@ -260,6 +261,18 @@ function styleCounty(dataLayer) {
     };
   });
 }
+function stylePark(dataLayer) {
+  console.log("parks layer");
+  console.log(dataLayer);
+  dataLayer.setStyle((feature) => {
+    // #101778 = light blue
+    return {
+      strokeColor: "rgba(81,168,50,0.73)",
+      strokeWeight: 1,
+      zIndex: 1,
+    };
+  });
+}
 function stylePrecincts(dataLayer) {
   dataLayer.setStyle((feature) => {
     return {
@@ -278,6 +291,14 @@ function getState(ID){
     // if we dont have the state yet, make it
     allStates[ID] = new State(ID);
     return allStates[ID];
+  }
+}
+function addParksToMap(parks){
+  for (var id in parks){
+    console.log("parksaaaaaaa");
+    parkLayer = parks[id].getParkLayer();
+    parkLayer.setMap(map);
+    stylePark(parkLayer);
   }
 }
 function addCountiesToMap(counties){
@@ -360,13 +381,18 @@ async function handleRedirect(
     addCountiesToMap(counties);
   } else {  //fetch the data
     var url = 'http://localhost:8080/state/'+stateName+'/show-counties';
+    // /state/{stateId}/show-parks
+    var parkurl = 'http://localhost:8080/state/'+stateName+'/show-parks';
     console.log(url);
     // document.body.style.cursor="not-allowed";
     $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
     let response = await fetch(url);
     let myJson = await response.json();
+    let parkresponse = await fetch(parkurl);
+    let parkJson = await parkresponse.json();
     // document.body.style.cursor = "default";
     $.unblockUI();
+    console.log(parkJson);
     console.log(myJson);
     var tottalCounties = [];
     console.log(myJson);
@@ -389,6 +415,29 @@ async function handleRedirect(
       console.log(county.id);
       // localStorage.setItem(rhode);
     }
+    for (i = 0; i < parkJson.length; i++) {  //how many parks
+      var parkCoords = [];
+      var park = new Park(parkJson[i].id);
+      for (j = 0; j < parkJson[i].boundary.length; j++) {  //for current parks
+        var parkPolygon = [];
+        for (k = 0; k < parkJson[i].boundary[j].vertices.length; k++) { //for current park's polygon
+          parkPolygon.push({lat: parkJson[i].boundary[j].vertices[k].y_pos, lng: parkJson[i].boundary[j].vertices[k].x_pos});
+        }
+        parkCoords.push(parkPolygon);
+      }
+      // tottalCounties.push(parkCoords);
+      Parkdata = new google.maps.Data();
+      console.log(parkCoords);
+      geometry = new google.maps.Data.Polygon(parkCoords);
+      park.coord=parkCoords;
+      Parkdata.add({geometry: geometry, id: parkJson[i].id});
+      park.setParkLayer(Parkdata);
+      state.addPark(park.id, park);
+      console.log(park.id);
+      // localStorage.setItem(rhode);
+    }
+
+
     r.addEventListener('change', function () {  //county's check boxes
       if (this.checked) {
         addCountiesToMap(state.getAllCounties());
@@ -397,6 +446,28 @@ async function handleRedirect(
         for (let ID in counties) {
           countyLayer = counties[ID].getLayer();
           countyLayer.setMap(null);
+        }
+      }
+    });
+    var marker
+    parkcheck.addEventListener('change', function () {  //county's check boxes
+      if (this.checked) {
+        console.log(state.getAllParks());
+        addParksToMap(state.getAllParks());
+        console.log(park.coord[0][0]);
+        // marker = new google.maps.Marker({
+        //   position: park.coord[0][0],
+        //   map: map,
+        //   title: 'Hello World!'
+        // });
+      } else {
+        parks = state.getAllParks();
+        console.log(parks);
+        for (let ID in parks) {
+          parkLayer = parks[ID].getParkLayer();
+          console.log(parkLayer);
+          parkLayer.setMap(null);
+          // marker.setMap(null);
         }
       }
     });

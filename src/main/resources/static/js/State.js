@@ -3,11 +3,14 @@ class State{
         this.id = id;
         this.name=name;
         this.counties = {};
+        this.parks = {};
+    }
+    addPark(parkID, parkObj){
+        this.parks[parkID] = parkObj;
     }
     addCounty(countyID, countyObj){
         this.counties[countyID] = countyObj;
     }
-
     removeCounty(countyID){
         if (countyID in this.counties){
             delete this.counties[countyID];
@@ -33,5 +36,8 @@ class State{
 
     getAllCounties(){
         return this.counties;
+    }
+    getAllParks(){
+        return this.parks;
     }
 }
