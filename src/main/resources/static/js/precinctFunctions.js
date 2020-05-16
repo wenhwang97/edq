@@ -5,9 +5,15 @@ var boundaryComment = document.getElementById("boundaryComment");
 var MergePrecinct = document.getElementById("mergePrecinct");
 var MergeConfirm = document.getElementById("mergePrecinctConfirm");
 var GhostPrecinct = document.getElementById("GhostPrecinct");
+var GhostCommentChanges = document.getElementById("GhostCommentChanges");
+var GhostComment = document.getElementById("GhostComment");
 var precinctName = document.getElementById("sidepanePrecinctName");
 var dataType = document.getElementById("Datatype");
 var mergeCommentConfirm = document.getElementById("SaveCommentChanges");
+var NeighbourCommentChanges = document.getElementById("NeighbourCommentChanges");
+var NeighbourComment = document.getElementById("neighbourComment");
+// mergeComment
+var mergeComment = document.getElementById("neighbourComment");
 changeBoundaryConfirm.disabled = true;
 MergePrecinct.disabled = true;
 MergeConfirm.disabled = true;
@@ -164,9 +170,11 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     // rectangle.setMap(null);
                     // rectangle.setPaths(null);
                 }
-                GhostPrecinct.addEventListener('click',function(){
+                GhostCommentChanges.addEventListener('click',function(){
                     precincts[ID].Ghost=true;
                     ghostPct.textContent="Ghost Pct.";
+                    var comment = GhostComment.value;
+                    sendGhost(stateName,countyID, ID, precincts[ID],comment);
                 });
                 addNeighbourButton.disabled = false;
                 addNeighbourButton.addEventListener('click',function(){
@@ -310,18 +318,20 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         mergeClicked=false;
         MergePrecinct.disabled = false;
         MergeConfirm.disabled = true;
+        var comment = mergeComment.value;
         if(mergePrecinctList.length ==2){
-            sendMergePrecinct(mergePrecinctList,stateName, countyID, polyinprecinct);
+            sendMergePrecinct(mergePrecinctList,stateName, countyID, polyinprecinct, comment);
         }
     });
-    addNeighbourConfirm.addEventListener('click',function(){
+    NeighbourCommentChanges.addEventListener('click',function(){
         addNeigbourClicked=false;
         console.log("confime button0");
         addNeighbourButton.disabled=false;
         addNeighbourConfirm.disabled=true;
         console.log(clickedPrecinct);
+        var comment =NeighbourComment.value;
         if(addneighbourlist.lenghth!=0) {
-            sendNeighbour(precincts[clickedPrecinct], addneighbourlist, stateName, countyID);  //send the list of neighbour to server
+            sendNeighbour(precincts[clickedPrecinct], addneighbourlist, stateName, countyID, comment);  //send the list of neighbour to server
         }
     });
     // changeBoundaryButtonClicked(precincts, clickedPrecinct,rectangle);
@@ -448,7 +458,31 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
 
     });
 }
-
+// stateName,countyID, ID, comment
+async function sendGhost(stateName, countyID, ID, precincts,comment) {
+    console.log(stateName);
+    console.log(countyID);
+    console.log(ID);
+    console.log(comment);
+    // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/define-ghost
+    var data = {"comment": comment}
+    var url
+    if(precincts.Ghost=false) {
+        url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + ID + "/data/define-ghost";
+    }
+    if(precincts.Ghost=true){
+        url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + ID + "/data/undefine-ghost";
+    }
+    let response = await fetch(url, {
+        method: 'PUT', // or 'PUT'
+        body: JSON.stringify({data}), // data can be `string` or {object}!
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+}
 // con18Opt.onchange = function(){
 //     console.log("12333333333!!!");
 //     console.log(con18Opt.value);
@@ -456,16 +490,17 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
 // con18Opt.addEventListener('onclick',function(){
 //     console.log("23333333!!!!!");
 // })
-async function sendMergePrecinct(List, stateName, countyID, polygonID) {
+async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) {
     var precinctID = [];
     for (var i in List) {
         precinctID[i] = List[i].id;
     }
     var url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID[0] + "/data/merge-donut/" + countyID + "/" + precinctID[1] + "/" + polygonID;
     console.log(url);
+    var data = {"comment":comment}
     let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
-        // body: JSON.stringify({vertices}), // data can be `string` or {object}!
+        body: JSON.stringify({data}), // data can be `string` or {object}!
         headers: new Headers({
             'Content-Type': 'application/json'
         })
@@ -491,18 +526,21 @@ async function precinctChangeBoundary(url, data,comment) {
     console.log(JSON.stringify(comment))
     var ver = JSON.stringify({vertices});
     // var com = JSON.stringify({comment});
-    var data = {ver,comment};
+    // var data = {ver,comment};
     // console.log(JSON.stringify(data));
     console.log(data);
-    // await fetch(url, {
-    //     method: 'PUT', // or 'PUT'
-    //     body: JSON.stringify({vertices}), // data can be `string` or {object}!
-    //     headers: new Headers({
-    //         'Content-Type': 'application/json'
-    //     })
-    // }).then(res => res.json())
-    //     .catch(error => console.error('Error:', error))
-    //     .then(response => console.log('Success:', response));
+    var data = {"polygon":{vertices},
+        "comment":comment
+    }
+    await fetch(url, {
+        method: 'PUT', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
     $.unblockUI();
 
 }
@@ -565,9 +603,10 @@ var addNeigbourClicked = false;
 var mergeClicked = false;
 var addneighbourlist=[];
 var mergePrecinctList=[];
-async function sendNeighbour(precinct, List, stateName, countyID) {
+async function sendNeighbour(precinct, List, stateName, countyID,comment) {
     console.log(precinct);
     precinctID = precinct.id;
+    console.log(comment);
     var neighbourlist = precinct.getNeighbours();
     var newList = [];
     var deletList = [];
@@ -597,11 +636,18 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
         // newList.length = 0;
         console.log(newList);
         console.log(JSON.stringify(newList));
+        var list =JSON.stringify(newList);
+        var com = JSON.stringify(comment);
+        var data = {"neighbors":newList,
+                    "comment":comment
+        }
+        console.log(JSON.stringify(data));
         $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
         console.log("add neighbor?");
         await fetch(urlpart1, {
             method: 'POST', // or 'PUT'
-            body: JSON.stringify(newList), // data can be `string` or {object}!
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            // body: data, // data can be `string` or {object}!
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
@@ -623,9 +669,12 @@ async function sendNeighbour(precinct, List, stateName, countyID) {
         $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
         console.log(deletList);
         console.log("delet neighbor?");
+        var data = {"neighbors":deletList,
+            "comment":comment
+        }
         await fetch(urlpart1, {
             method: 'DELETE', // or 'PUT'
-            body: JSON.stringify(deletList), // data can be `string` or {object}!
+            body: JSON.stringify(data), // data can be `string` or {object}!
             headers: new Headers({
                 'Content-Type': 'application/json'
             })

@@ -213,12 +213,13 @@
                             <div class="tab-pane" id="tab2">
                                 <div class = "change_boundary">Change Boundary<br>
                                     <button class="ChangeBoundary btn btn-primary" id="changeBoundary" type="button" >Change Boundary</button>
-                                    <button class="AddNeighbour btn btn-primary" data-toggle="modal" id="changeBounayConfirm"data-target="#coundary-comment-dialog">Confirm</button>
+                                    <button class="ChangeBoundary btn btn-primary" data-toggle="modal" id="changeBounayConfirm"data-target="#coundary-comment-dialog">Confirm</button>
 <!--                                    <button class="AddNeighbour btn btn-primary" id="changeBounayConfirm" type="button" data-target="coundary-comment-dialog>Comfirm"</button>-->
                                 </div>
                                 <div class="Edit_Neighbour">Edit Neighbour<br>
                                     <button class="AddNeighbour btn btn-primary" id="addNeighbour" type="button" >Add/Delete</button>
-                                    <button class="AddNeighbour btn btn-primary" id="addNeighbourConfirm" type="button" >Comfirm</button>
+                                    <button class="AddNeighbour btn btn-primary" data-toggle="modal" id="addNeighbourConfirm"data-target="#neighbour-comment-dialog">Confirm</button>
+<!--                                    <button class="AddNeighbour btn btn-primary" id="addNeighbourConfirm" type="button" >Comfirm</button>-->
                                 </div>
                                 <div class="merge">Merge Precinct<br>
                                     <button class="MergePrecinct btn btn-primary" id="mergePrecinct" type="button" >Select Precinct</button>
@@ -227,7 +228,8 @@
 <!--                                    <button class="MergePrecinct btn btn-primary" id="mergePrecinctConfirm" type="button" >Confirm</button>-->
                                 </div>
                                 <div class="merge">Ghost Precinct<br>
-                                    <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>
+                                    <button class="GhostPrecinct btn btn-primary" data-toggle="modal" id="GhostPrecinct"data-target="#ghost-comment">Define Ghost Precinct</button>
+<!--                                    <button class="GhostPrecinct btn btn-primary" id="GhostPrecinct" type="button" >Define Ghost Precinct</button>-->
                                 </div>
                             </div>
                         </div>
@@ -515,7 +517,7 @@
                             <div class="form-group row">
                                 <div class="col-lg-9">
                                     <label class="col-lg-3 col-form-label form-control-label">Comment
-                                        <input class="form-control" type="url" value="" />
+                                        <input class="form-control" type="url" value="" id = "mergeComment"/>
                                     </label>
                                 </div>
                             </div>
@@ -550,6 +552,53 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="neighbour-comment-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Add comment</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label" >Comment
+                                        <input class="form-control" type="url" value="" id="neighbourComment"/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id ="NeighbourCommentChanges">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ghost-comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="myModalLabel">Add comment</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-9">
+                                    <label class="col-lg-3 col-form-label form-control-label" >Comment
+                                        <input class="form-control" type="url" value="" id="GhostComment"/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id ="GhostCommentChanges">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="map_box" id="map"></div>
