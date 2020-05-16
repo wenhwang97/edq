@@ -41,11 +41,11 @@ public class ElectionData implements Serializable, Cloneable {
     }
 
     @Column(name = "dist_num", nullable = true)
-    public int getDistNum() {
+    public Integer getDistNum() {
         return distNum;
     }
 
-    public void setDistNum(int distNum) {
+    public void setDistNum(Integer distNum) {
         this.distNum = distNum;
     }
 
