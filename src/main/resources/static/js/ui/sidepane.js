@@ -33,6 +33,11 @@ $('#btnYes').click(function() {
     $('#vote-data-dialog').modal('hide');
 });
 
+$('.scroll').css('height', ($(window).height()-215)+"px");
+$(window).bind('resize', function() {
+    $('.scroll').css('height', ($(window).height()-215)+"px");
+})
+
 // Toggle for sidepane
 var isNotToggled = true;
 
