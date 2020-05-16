@@ -27,8 +27,17 @@
 
 /* Voting data and Demographic data  */
 .sidepane-data .sidepane-content .tab-pane .table-title {
+    margin: .6rem 0;
     font-size: 18px;
     font-weight: 600;
+}
+
+.sidepane-data .sidepane-content .tab-pane .dist-selector {
+    display: none;
+    font-size: 13px;
+    width: 120px;
+    height: 30px;
+    margin-left: 20px;
 }
 
 .sidepane-data .sidepane-content .tab-pane .table {
