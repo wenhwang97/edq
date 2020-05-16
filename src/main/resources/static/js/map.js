@@ -422,8 +422,8 @@ async function handleRedirect(
         // });
         // markDrop(event);
         countyID = event.feature.o; //get the current county ID
-
-        countyandState.textContent=countyID+", "+stateName;
+        var countyName = countyID.substring(3);
+        countyandState.textContent=countyName+", "+stateName;
         sidepanePrecinctName.textContent=null;
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
         console.log(selectedCounty.hasPrecincts());

@@ -1,5 +1,7 @@
 var changeVoting = document.getElementById("SaveVoteChanges");
 var datatype = document.getElementById("Datatype");
+// votingComment
+var votingComment = document.getElementById("votingComment");
 // changeVoting.onclick(function(){
 //     console.log("change voting");
 //     var dmVoting=document.getElementById("dmChanges").valueOf();
@@ -45,9 +47,10 @@ changeVoting.addEventListener('click', function(){
     var value = datatype.value;
     console.log(value);
     var indexofComma = countyandState.textContent.indexOf(',');
-    var StateId =countyandState.textContent.substring(indexofComma+2);
-    var countyID = countyandState.textContent.substring(0, indexofComma);
-    var PrecinctId = precinctName.textContent;
+    var StateId =countyandState.textContent.substring(indexofComma+2);  //不变的
+    var countyID = StateId+"-"+countyandState.textContent.substring(0, indexofComma);
+    var PrecinctId = countyID+"-"+precinctName.textContent;
+    var comment = votingComment.value;
     if(value == 4){ //Presidential General
         var url = 'http://localhost:8080/state/';
         var url2=StateId+'/county/';
@@ -64,7 +67,7 @@ changeVoting.addEventListener('click', function(){
         document.getElementById("DemocraticVoting").textContent = DData;
 
 
-        var data = {
+        var votingdata = {
             // "id" : PrecinctId,
             "type" : "PRESIDENTIAL",
             "year" : 2016,
@@ -72,7 +75,12 @@ changeVoting.addEventListener('click', function(){
             "democraticVote" : DData,
             "libertarianVote" : LData,
             "greenVote" : GData
+
         };
+        var data ={
+            "data":votingdata,
+            "comment":comment
+        }
         console.log(JSON.stringify(data));
         fetch(url+url2+url3+url4, {
             method: 'PUT', // or 'PUT'

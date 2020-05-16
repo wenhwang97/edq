@@ -152,7 +152,9 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
             // placeMarker(event.latLng);
             if(addNeigbourClicked==false&&mergeClicked==false){  //没点添加neighbor的时候,也没点击merge的时候
                 console.log("add neighbour is not clicked!");
-                sidepanePrecinctName.textContent = ID;
+                var second = ID.indexOf('-',3);
+                var precinctName = ID.substring(second+1);
+                sidepanePrecinctName.textContent = precinctName;
                 clickedPrecinct=ID;
                 addNeighbourButton.disabled = false;
                 MergePrecinct.disabled = false;

@@ -7,9 +7,6 @@ var overlapTable=  document.getElementById("OverLapTable");
 var gapTable=  document.getElementById("GapTable");
 var encloseTable=  document.getElementById("EncloseTable");
 var selfTable=  document.getElementById("SELFITable");
-// VoteDemoError
-// NoVoteError
-// NoDemoError
 var VoteDemoErrorNumber=  document.getElementById("VoteDemoError");
 var noVoteNumber=  document.getElementById("NoVoteError");
 var noDemoNumber=  document.getElementById("NoDemoError");
