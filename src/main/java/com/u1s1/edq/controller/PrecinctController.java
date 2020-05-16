@@ -82,6 +82,20 @@ public class PrecinctController {
         precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, year, data);
     }
 
+    @GetMapping(value = "/data/vote/congressional/{dist}/{year}")
+    public ElectionData sendPrecinctCongVoteData(@PathVariable String stateId, @PathVariable String countyId,
+                                                 @PathVariable String precinctCName, @PathVariable int dist,
+                                                 @PathVariable int year) {
+        return precinctService.getPrecinctVoteDataFromMem(stateId, countyId, precinctCName, year);
+    }
+
+    @PutMapping(value = "/data/vote/congressional/{dist}/{year}")
+    public void receivePrecinctCongVoteData(@PathVariable String stateId, @PathVariable String countyId,
+                                            @PathVariable String precinctCName, @PathVariable int dist,
+                                            @PathVariable int year, @RequestBody ElectionData data) {
+        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, year, data);
+    }
+
     @GetMapping(value = "/data/neighbors")
     public Set<String> sendPrecinctNeighbors(@PathVariable String stateId, @PathVariable String countyId,
                                              @PathVariable String precinctCName) {
