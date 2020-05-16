@@ -9,6 +9,7 @@ var addNeighbourButton = document.getElementById("addNeighbour");
 var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
 var countyandState = document.getElementById("sidepaneTitle");
 var currentCounty;
+var clickedCountyList = {};
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -327,7 +328,12 @@ function removePrecinctToMap(County){
     // styleCounties(precincts[ID].getPrecinctLayer());
   }
 }
-
+function isContain(list,value){
+  for (i in list) {
+    if (list[i] == value) return true;
+  }
+  return false;
+}
 
 /**
  * this function handles redirection via clicking on US map
@@ -375,6 +381,7 @@ async function handleRedirect(
 
   }
   rhode = state;
+
   // let response = await fetch("http://localhost:8080/state/ri");
   // console.log(response);
   // let RIJson = await response.json();
@@ -488,16 +495,16 @@ async function handleRedirect(
       let havePrecinct = 0;
 
       google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
-        // counties[ID].getLayer().setStyle((feature) => {
-        //   return {
-        //     fillColor: "rgba(255,255,255,0)",
-        //     strokeColor: "rgb(144,143,143)",
-        //     strokeWeight: 1,
-        //     zIndex: 1,
-        //   };
-        // });
-        // markDrop(event);
+        // clickedCountyList.push()
         countyID = event.feature.o; //get the current county ID
+        var countTemp =allStates[stateName].getCountyByID(countyID);
+        clickedCountyList[countyID]=countTemp;
+        console.log(clickedCountyList);
+        // if(isContain(clickedCountyList,countyID)==false){
+        //   allStates[StateId].getCountyByID(countyID)
+        //   clickedCountyList[countyID]=;
+        // }
+        // clickedCountyList.push(countyID);
         var countyName = countyID.substring(3);
         // var name = selectedCounty.name;
 
@@ -536,12 +543,12 @@ async function handleRedirect(
             removePrecinctToMap(currentCounty);
             currentCounty= selectedCounty;
           }
-          precinctEvents(stateName,selectedCounty);
+          // precinctEvents(stateName,selectedCounty);
           // currentCounty= selectedCounty;
         } else {//find precinct in server
           precincts = selectedCounty.getPrecincts();
           precinctCheckBox.disabled = false;
-          precinctCheckBox.checked = true;
+          // precinctCheckBox.checked = true;
           precinctFetch(stateName,selectedCounty);
           havePrecinct=1;
           console.log("after fetch");
@@ -557,69 +564,93 @@ async function handleRedirect(
     }
     precinctCheckBox.addEventListener('change', function () {//show precinct on the county or not
       if (this.checked) {
-        addPrecinctsToMap(precincts);
+        let precinctA;
+        let precinctAll={}
+        for(let a in clickedCountyList){
+          console.log("ji ge precinct");
+          precinctA = clickedCountyList[a].getPrecincts();
+          for(let b in precinctA){
+            precinctAll[b]=precinctA[b];
+          }
+          addPrecinctsToMap(precinctA);
+          // precinctEvents(stateName,clickedCountyList);
+        }
+        console.log(precinctAll);
+        allprecinctEvents(stateName,precinctAll);
+        // addPrecinctsToMap(precincts);
+        // clickedCountyList[]
       } else {
-        for (let ID in precincts) {  //not show
-          precincts[ID].getPrecinctLayer().setMap(null);
+        let precinctA;
+        let precinctAll={}
+        for(let a in clickedCountyList){
+          console.log("ji ge precinct");
+          precinctA = clickedCountyList[a].getPrecincts();
+          for(let b in precinctA){
+            precinctAll[b]=precinctA[b];
+          }
+          // precinctEvents(stateName,clickedCountyList);
+        }
+        for (let ID in precinctAll) {  //not show
+          precinctAll[ID].getPrecinctLayer().setMap(null);
           precinctCheckBox.checked = false;
         }
       }
     });
   }
 }
-async function countyClick (countyID,stateName) {  //when click on a county
-  // countyID = event.feature.o; //get the current county ID
-  countyandState.textContent=countyID+", "+stateName;
-  // sidepanePrecinctName.textContent=null;
-  console.log("teste!!!!");
-  var selectedCounty = allStates[stateName].getCountyByID(countyID); //get current county object in the state
-  console.log(selectedCounty.hasPrecincts());
-  if(!isEmptyObject(rectangle)){  // change border
-    console.log("it is not null");
-    console.log(rectangle);
-    for(var i in rectangle){
-      rectangle[i].setMap(null);
-      // rectangle[i].setPath(null);
-    }
-  }
-  if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
-    precincts = selectedCounty.getPrecincts();  //load the precinct
-    // console.log(precinctLayers);
-    var i = 0;
-    for (let ID in precincts) {  //check the map is loaded or not
-      if (precincts[ID].getPrecinctLayer().getMap() == null) {
-        i++;
-      }
-    }
-    // console.log(i);
-    if (i != 0) {//not loaded
-      console.log("no precincts");
-      addPrecinctsToMap(precincts);
-      precinctCheckBox.checked = true;
-    }
-    if(currentCounty==null||currentCounty==selectedCounty){//di yi ci dian
-      currentCounty= selectedCounty;
-    }else{
-      console.log("have precincts");
-      removePrecinctToMap(currentCounty);
-      currentCounty= selectedCounty;
-    }
-    precinctEvents(stateName,selectedCounty);
-    // currentCounty= selectedCounty;
-  } else {//find precinct in server
-    precincts = selectedCounty.getPrecincts();
-    precinctCheckBox.disabled = false;
-    precinctCheckBox.checked = true;
-    await precinctFetch(stateName,selectedCounty);
-    havePrecinct=1;
-    console.log("after fetch");
-    if(currentCounty==null){ //no county has been clicked yet
-      currentCounty= selectedCounty;
-    }else{  //remove last clicked county
-      // console.log(currentCounty);
-      removePrecinctToMap(currentCounty);
-      currentCounty= selectedCounty;
-    }
-  }
-}
+// async function countyClick (countyID,stateName) {  //when click on a county
+//   // countyID = event.feature.o; //get the current county ID
+//   countyandState.textContent=countyID+", "+stateName;
+//   // sidepanePrecinctName.textContent=null;
+//   console.log("teste!!!!");
+//   var selectedCounty = allStates[stateName].getCountyByID(countyID); //get current county object in the state
+//   console.log(selectedCounty.hasPrecincts());
+//   if(!isEmptyObject(rectangle)){  // change border
+//     console.log("it is not null");
+//     console.log(rectangle);
+//     for(var i in rectangle){
+//       rectangle[i].setMap(null);
+//       // rectangle[i].setPath(null);
+//     }
+//   }
+//   if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
+//     precincts = selectedCounty.getPrecincts();  //load the precinct
+//     // console.log(precinctLayers);
+//     var i = 0;
+//     for (let ID in precincts) {  //check the map is loaded or not
+//       if (precincts[ID].getPrecinctLayer().getMap() == null) {
+//         i++;
+//       }
+//     }
+//     // console.log(i);
+//     if (i != 0) {//not loaded
+//       console.log("no precincts");
+//       addPrecinctsToMap(precincts);
+//       precinctCheckBox.checked = true;
+//     }
+//     if(currentCounty==null||currentCounty==selectedCounty){//di yi ci dian
+//       currentCounty= selectedCounty;
+//     }else{
+//       console.log("have precincts");
+//       removePrecinctToMap(currentCounty);
+//       currentCounty= selectedCounty;
+//     }
+//     precinctEvents(stateName,selectedCounty);
+//     // currentCounty= selectedCounty;
+//   } else {//find precinct in server
+//     precincts = selectedCounty.getPrecincts();
+//     precinctCheckBox.disabled = false;
+//     precinctCheckBox.checked = true;
+//     await precinctFetch(stateName,selectedCounty);
+//     havePrecinct=1;
+//     console.log("after fetch");
+//     if(currentCounty==null){ //no county has been clicked yet
+//       currentCounty= selectedCounty;
+//     }else{  //remove last clicked county
+//       // console.log(currentCounty);
+//       removePrecinctToMap(currentCounty);
+//       currentCounty= selectedCounty;
+//     }
+//   }
+// }
 
