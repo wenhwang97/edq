@@ -49,11 +49,25 @@ changeVoting.addEventListener('click', function(){
     var value = datatype.value;
     console.log(value);
     var indexofComma = countyandState.textContent.indexOf(',');
-    var StateId =countyandState.textContent.substring(indexofComma+2);  //不变的
+    var StateName =countyandState.textContent.substring(indexofComma+2);  //不变的
+    var StateId;
+    if(StateName=="Rhode Island"){
+        StateId="ri";
+    }
+    if(StateName=="Virginia"){
+        StateId="va";
+    }
+    if(StateName=="Texas"){
+        StateId="tx";
+    }
     var countyID = StateId+"-"+countyandState.textContent.substring(0, indexofComma);
+    countyID = countyID.toLowerCase();
     var indexofspace = precinctName.textContent.indexOf(' ');
     var precinctID = precinctName.textContent.substring(indexofspace+1);
     var PrecinctId = countyID+"-"+precinctID;
+    console.log(StateId);
+    console.log(countyID);
+    console.log(PrecinctId);
     var comment = votingComment.value;
     var type;
     var year;
@@ -206,8 +220,6 @@ changeDemo.addEventListener('click',function(){
     document.getElementById("OtherData").textContent = OData;
 
     var data = {
-        // "id" : PrecinctId,
-        // "type" : "PRESIDENTIAL",
         "totalPop" : TData,
         "whitePop" : WData,
         "blackPop" : BData,
@@ -216,7 +228,7 @@ changeDemo.addEventListener('click',function(){
         "otherPop" : OData
     };
     var data ={
-        "data":data,
+        "demoData":data,
         "comment":comment
     }
     fetch(url+url2+url3, {

@@ -3,6 +3,7 @@ class County{
         this.id = id;
         this.layer=null;
         this.precincts = {};   //precinctlayer
+        this.name=null;
     }
     setCountyLayer(layer){
         this.layer= layer;

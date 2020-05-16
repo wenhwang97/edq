@@ -173,7 +173,7 @@ async function loadstates(stateName) {
         break;
 
       case THREE_STATES[2]:// Rhode Island
-        stateChoose.textContent = "Rhode Island";
+        // stateChoose.textContent = "Rhode Island";
         clickedState = "ri";
         console.log("RI");
         r.disabled = false;
@@ -358,15 +358,19 @@ async function handleRedirect(
 
 
   var stateName;
+  var OfficalStateName;
   switch (pageTitle) {
     case "Virginia State Level":
       stateName='va';
+      OfficalStateName="Virginia";
       break;
     case "Rhode Island State Level":
       stateName='ri';
+      OfficalStateName="Rhode Island";
       break;
     case "Texas State Level":
       stateName='tx';
+      OfficalStateName="Texas";
       break;
 
   }
@@ -399,6 +403,7 @@ async function handleRedirect(
     for (i = 0; i < myJson.length; i++) {  //how many counties
       var countyCoords = [];
       var county = new County(myJson[i].id);
+      county.name = myJson[i].name;
       for (j = 0; j < myJson[i].obj.length; j++) {  //for current counties
         var countyPolygon = [];
         for (k = 0; k < myJson[i].obj[j].vertices.length; k++) { //for current counties'polygon
@@ -494,9 +499,12 @@ async function handleRedirect(
         // markDrop(event);
         countyID = event.feature.o; //get the current county ID
         var countyName = countyID.substring(3);
-        countyandState.textContent=countyName+", "+stateName;
+        // var name = selectedCounty.name;
+
         sidepanePrecinctName.textContent=null;
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
+        var name = selectedCounty.name;
+        countyandState.textContent=name+", "+OfficalStateName;
         console.log(selectedCounty.hasPrecincts());
         if(!isEmptyObject(rectangle)){  // change border
           console.log("it is not null");
