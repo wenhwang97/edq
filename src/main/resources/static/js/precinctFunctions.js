@@ -1,13 +1,12 @@
 var changeBoundaryConfirm = document.getElementById("changeBounayConfirm");
 var changeBoundaryCommentConfirm = document.getElementById("BoundaryCommentChanges");
-// boundaryComment
+var ghostPct = document.getElementById("ghostPct");
 var boundaryComment = document.getElementById("boundaryComment");
 var MergePrecinct = document.getElementById("mergePrecinct");
 var MergeConfirm = document.getElementById("mergePrecinctConfirm");
 var GhostPrecinct = document.getElementById("GhostPrecinct");
 var precinctName = document.getElementById("sidepanePrecinctName");
 var dataType = document.getElementById("Datatype");
-// SaveCommentChanges
 var mergeCommentConfirm = document.getElementById("SaveCommentChanges");
 changeBoundaryConfirm.disabled = true;
 MergePrecinct.disabled = true;
@@ -33,12 +32,15 @@ async function precinctFetch(stateName, county) {
 
         var precinctCoords = [];
         if(precinctJson[i].objs[0]!=null) {
+            precinct.Ghost=false;
             precinct.setDemographic("asianPop", precinctJson[i].objs[0].asianPop);
             precinct.setDemographic("blackPop", precinctJson[i].objs[0].blackPop);
             precinct.setDemographic("nativePop", precinctJson[i].objs[0].nativePop);
             precinct.setDemographic("otherPop", precinctJson[i].objs[0].otherPop);
             precinct.setDemographic("totalPop", precinctJson[i].objs[0].totalPop);
             precinct.setDemographic("whitePop", precinctJson[i].objs[0].whitePop);
+        }else{
+            precinct.Ghost=true;
         }
         if(precinctJson[i].objs[1][0]!=null) {
             precinct.setPresidentialVote("democraticVote", precinctJson[i].objs[1][0].democraticVote);
@@ -148,6 +150,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 clickedPrecinct=ID;
                 addNeighbourButton.disabled = false;
                 MergePrecinct.disabled = false;
+                GhostPrecinct.disabled = false;
                 if(!isEmptyObject(rectangle)){  // change border
                     console.log("it is not null");
                     console.log(rectangle);
@@ -161,6 +164,10 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     // rectangle.setMap(null);
                     // rectangle.setPaths(null);
                 }
+                GhostPrecinct.addEventListener('click',function(){
+                    precincts[ID].Ghost=true;
+                    ghostPct.textContent="Ghost Pct.";
+                });
                 addNeighbourButton.disabled = false;
                 addNeighbourButton.addEventListener('click',function(){
                     addNeighbourConfirm.disabled=false;
@@ -264,6 +271,11 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                         zIndex: 1,
                     };
                 });
+                if(precincts[ID].Ghost==false){
+                    ghostPct.textContent="";
+                }else{
+                    ghostPct.textContent="Ghost Pct.";
+                }
 
                 var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
                 var url = "/precinct/" + precinctID;
