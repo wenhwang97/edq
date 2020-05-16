@@ -5,6 +5,7 @@ import com.u1s1.edq.entity.DemoData;
 import com.u1s1.edq.entity.ElectionData;
 import com.u1s1.edq.entity.GeoPolygon;
 import com.u1s1.edq.entity.Precinct;
+import com.u1s1.edq.enums.ElectionType;
 import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.service.CountyService;
 import com.u1s1.edq.service.GeoPolygonService;
@@ -79,7 +80,7 @@ public class PrecinctController {
     public void receivePrecinctPresVoteData(@PathVariable String stateId, @PathVariable String countyId,
                                             @PathVariable String precinctCName, @PathVariable int year,
                                             @RequestBody ElectionData data) {
-        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, year, data);
+        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.PRESIDENTIAL, -1, year, data);
     }
 
     @GetMapping(value = "/data/vote/congressional/{dist}/{year}")
@@ -93,7 +94,7 @@ public class PrecinctController {
     public void receivePrecinctCongVoteData(@PathVariable String stateId, @PathVariable String countyId,
                                             @PathVariable String precinctCName, @PathVariable int dist,
                                             @PathVariable int year, @RequestBody ElectionData data) {
-        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, year, data);
+        precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.CONGRESSIONAL, dist, year, data);
     }
 
     @GetMapping(value = "/data/neighbors")

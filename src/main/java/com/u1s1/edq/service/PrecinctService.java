@@ -1,6 +1,7 @@
 package com.u1s1.edq.service;
 
 import com.u1s1.edq.entity.*;
+import com.u1s1.edq.enums.ElectionType;
 import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.repository.DemoDataRepository;
 import com.u1s1.edq.repository.ElectionDataRepository;
@@ -88,10 +89,15 @@ public class PrecinctService {
         return null;
     }
 
-    public void updatePrecinctVoteData(String stateId, String countyId, String precinctCName, int year, ElectionData data) {
+    public void updatePrecinctVoteData(String stateId, String countyId, String precinctCName, ElectionType type, int dist, int year, ElectionData data) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         for (ElectionData electionData : precinct.getElectionData()) {
-            if (electionData.getYear() == year) {
+            if (electionData.getType() == type && electionData.getYear() == year) {
+                if (dist != -1) {
+                    if (electionData.getDistNum() != dist) {
+                        continue;
+                    }
+                }
                 electionData.setDemocraticVote(data.getDemocraticVote());
                 electionData.setRepublicanVote(data.getRepublicanVote());
                 electionData.setLibertarianVote(data.getLibertarianVote());
