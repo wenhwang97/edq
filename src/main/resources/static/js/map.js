@@ -7,6 +7,7 @@ var changeBoundaryButton = document.getElementById("changeBoundary");
 var addNeighbourButton = document.getElementById("addNeighbour");
 var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
 var countyandState = document.getElementById("sidepaneTitle");
+var currentCounty;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,
@@ -404,7 +405,7 @@ async function handleRedirect(
     let countyID;
     console.log("counties:  ");
     console.log(counties);
-    let currentCounty;
+    // let currentCounty;
     for (let ID in counties) {
       // console.log(counties[ID]);
       countyLayer = counties[ID].getLayer();
@@ -421,6 +422,7 @@ async function handleRedirect(
         // });
         // markDrop(event);
         countyID = event.feature.o; //get the current county ID
+
         countyandState.textContent=countyID+", "+stateName;
         sidepanePrecinctName.textContent=null;
         var selectedCounty = state.getCountyByID(countyID); //get current county object in the state
@@ -486,66 +488,59 @@ async function handleRedirect(
     });
   }
 }
-// console.log(allStates);
-// console.log(allStates["ri"]);
-var b = [];
-
-// var addNeigbourClicked = false;
-// var addneighbourlist=[];
-
-// async function sendNeighbour(precinct, List, stateName, countyID) {
-//   console.log(precinct);
-//   precinctID = precinct.id;
-//   var neighbourlist = precinct.getNeighbours();
-//   var newList = [];
-//   var deletList = [];
-//   for (i = 0; i < List.length; i++) {
-//     if (neighbourlist.indexOf(List[i]) < 0) {
-//       newList.push(List[i]);
-//     }
-//     if (neighbourlist.indexOf(List[i]) >= 0) {
-//       deletList.push(List[i]);
-//     }
-//   }
-//   for (i = 0; i < newList.lenght; i++) {
-//     precinct.addNeighbor(newList[i]);
-//   }
-//   for (i = 0; i < deletList.lenght; i++) {
-//     precinct.removeNeighbor(deletList[i]);
-//   }
-//
-//   console.log(newList);
-//   // var url = "http://localhost:8080/state/{stateId}/county/{countyId}/precinct/{precinctId}/data/neighbors";
-//   var urlpart1 = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID + "/data/neighbors";
-//   if (newList.length != 0) {
-//     console.log("add neighbor");
-//     console.log(JSON.stringify(newList));
-//     $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
-//     console.log("add neighbor?");
-//
-//     await fetch(urlpart1, {
-//       method: 'POST', // or 'PUT'
-//       body: JSON.stringify(newList), // data can be `string` or {object}!
-//       headers: new Headers({
-//         'Content-Type': 'application/json'
-//       })
-//     }).then(res => res.json())
-//         .catch(error => console.error('Error:', error))
-//         .then(response => console.log('Success:', response));
-//     $.unblockUI();
-//   }
-//   if (deletList.length != 0) {
-//     fetch(urlpart1, {
-//       method: 'DELETE', // or 'PUT'
-//       body: JSON.stringify(deletList), // data can be `string` or {object}!
-//       headers: new Headers({
-//         'Content-Type': 'application/json'
-//       })
-//     }).then(res => res.json())
-//         .catch(error => console.error('Error:', error))
-//         .then(response => console.log('Success:', response));
-//   }
-//
-// }
-
+async function countyClick (countyID,stateName) {  //when click on a county
+  // countyID = event.feature.o; //get the current county ID
+  countyandState.textContent=countyID+", "+stateName;
+  // sidepanePrecinctName.textContent=null;
+  console.log("teste!!!!");
+  var selectedCounty = allStates[stateName].getCountyByID(countyID); //get current county object in the state
+  console.log(selectedCounty.hasPrecincts());
+  if(!isEmptyObject(rectangle)){  // change border
+    console.log("it is not null");
+    console.log(rectangle);
+    for(var i in rectangle){
+      rectangle[i].setMap(null);
+      // rectangle[i].setPath(null);
+    }
+  }
+  if (selectedCounty.hasPrecincts()) {  //when there is precinct exist
+    precincts = selectedCounty.getPrecincts();  //load the precinct
+    // console.log(precinctLayers);
+    var i = 0;
+    for (let ID in precincts) {  //check the map is loaded or not
+      if (precincts[ID].getPrecinctLayer().getMap() == null) {
+        i++;
+      }
+    }
+    // console.log(i);
+    if (i != 0) {//not loaded
+      console.log("no precincts");
+      addPrecinctsToMap(precincts);
+      precinctCheckBox.checked = true;
+    }
+    if(currentCounty==null||currentCounty==selectedCounty){//di yi ci dian
+      currentCounty= selectedCounty;
+    }else{
+      console.log("have precincts");
+      removePrecinctToMap(currentCounty);
+      currentCounty= selectedCounty;
+    }
+    precinctEvents(stateName,selectedCounty);
+    // currentCounty= selectedCounty;
+  } else {//find precinct in server
+    precincts = selectedCounty.getPrecincts();
+    precinctCheckBox.disabled = false;
+    precinctCheckBox.checked = true;
+    await precinctFetch(stateName,selectedCounty);
+    havePrecinct=1;
+    console.log("after fetch");
+    if(currentCounty==null){ //no county has been clicked yet
+      currentCounty= selectedCounty;
+    }else{  //remove last clicked county
+      // console.log(currentCounty);
+      removePrecinctToMap(currentCounty);
+      currentCounty= selectedCounty;
+    }
+  }
+}
 

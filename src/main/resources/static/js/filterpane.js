@@ -47,14 +47,17 @@ errs.onmouseup = async function () {
             var slefnum=0;
             var enclosenum=0;
             var multinum=0;
+            var VotedemoErrobutton=[];
             for(var i in errorJson){
                 if(errorJson[i].type=="VOTEDEMO"){
                     VOTEDEMOnum++;
-                    var VotedemoErrobutton = document.createElement("button");
-                    VotedemoErrobutton.setAttribute("class","btn btn-link");
-                    VotedemoErrobutton.textContent=errorJson[i].info;
-                    VoteDemoErrorTable.appendChild(VotedemoErrobutton);
+                    VotedemoErrobutton[i]= document.createElement("button");
+                    VotedemoErrobutton[i].setAttribute("class","btn btn-link");
+                    VotedemoErrobutton[i].textContent=errorJson[i].info;
+                    VoteDemoErrorTable.appendChild(VotedemoErrobutton[i]);
                     VoteDemoErrorTable.appendChild(document.createElement("br"));
+                    var message = errorJson[i].info;
+                    VotedemoErrobutton[i].setAttribute("onclick","printText('"+message+"')");
                 }
                 if(errorJson[i].type=="NOVOTE"){
                     NOVOTEnum++;
@@ -121,6 +124,12 @@ errs.onmouseup = async function () {
             selfNumber.textContent=slefnum;
             encloseNumber.textContent=enclosenum;
             mutipolyNumber.textContent=multinum;
+            // for(var i in VotedemoErrobutton){
+            //     console.log(VotedemoErrobutton[i]);
+            //     VotedemoErrobutton[i].addEventListener('click',function(){
+            //         console.log(VotedemoErrobutton[i].textContent);
+            //     })
+            // }
         }
 
     }
@@ -132,6 +141,42 @@ errs.onmouseup = async function () {
     logContent.classList.remove("active")
     errTab.classList.add("active")
     errContent.classList.add("active")
+}
+var marker;
+async function printText(message) {
+    if(marker!=null){
+        marker.setMap(null);
+    }
+    console.log(message);
+    var index = message.indexOf('-', 3);
+    console.log(index);
+    var countyID = message.substring(0, index);
+    var StateId = message.substring(0, 2);
+    console.log(StateId);
+    console.log(countyID);
+    await countyClick(countyID, StateId);
+    // if(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message)!=null){  //你必须得
+    console.log(allStates[StateId]);
+    console.log(allStates[StateId].getCountyByID(countyID));
+    console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message));
+    console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message).getBoundary());
+    var coord = allStates[StateId].getCountyByID(countyID).getPrecinctByID(message).getBoundary();
+    console.log(coord);
+    // var myLatLng = coord[0][3];
+    var i=0;
+    for(i=0; i<coord[0].length; i++){
+
+    }
+    var middle = i/2;
+    var myLatLng = coord[0][middle];
+    console.log(myLatLng);
+    marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Demo data and Voting data are not compatible'
+    });
+    // }
+
 }
 
 logs.onmousedown = function () {
