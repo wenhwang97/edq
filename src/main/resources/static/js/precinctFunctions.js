@@ -1,4 +1,7 @@
 var changeBoundaryConfirm = document.getElementById("changeBounayConfirm");
+var changeBoundaryCommentConfirm = document.getElementById("BoundaryCommentChanges");
+// boundaryComment
+var boundaryComment = document.getElementById("boundaryComment");
 var MergePrecinct = document.getElementById("mergePrecinct");
 var MergeConfirm = document.getElementById("mergePrecinctConfirm");
 var GhostPrecinct = document.getElementById("GhostPrecinct");
@@ -296,7 +299,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         MergePrecinct.disabled = false;
         MergeConfirm.disabled = true;
         if(mergePrecinctList.length ==2){
-            // sendMergePrecinct(mergePrecinctList,stateName, countyID, polyinprecinct);
+            sendMergePrecinct(mergePrecinctList,stateName, countyID, polyinprecinct);
         }
     });
     addNeighbourConfirm.addEventListener('click',function(){
@@ -329,7 +332,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         }
     });
     // var modifiedPolygon = [];
-    changeBoundaryConfirm.addEventListener('click', function(){
+    changeBoundaryCommentConfirm.addEventListener('click', function(){
         changeBoundaryButton.disabled = false;
         var modifiedPolygon = [];
         var totalPolygon = [];
@@ -373,9 +376,11 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 console.log("there is new polygon");
                 console.log(i);
                 console.log(modifiedPolygon);
+                var comment = boundaryComment.value;
+                console.log(comment);
                 var url = "http://localhost:8080/state/"+stateName+"/county/"+countyID+"/precinct/"+clickedPrecinct+"/data/boundaries/"+i;
                 newPolygon=false;
-                precinctChangeBoundary(url, modifiedPolygon);
+                precinctChangeBoundary(url, modifiedPolygon,comment);
                 // polygons[i].setMap(null);
                 console.log("after fetch");
                 for(let i in rectangle){
@@ -459,7 +464,7 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID) {
     console.log(mergeJson);
 
 }
-async function precinctChangeBoundary(url, data) {
+async function precinctChangeBoundary(url, data,comment) {
     console.log(data);
     var vertices =[];
     // precinctPolygon.push({lat: precinctJson[i].obj[j].vertices[k].y_pos, lng: precinctJson[i].obj[j].vertices[k].x_pos});
@@ -469,18 +474,23 @@ async function precinctChangeBoundary(url, data) {
     console.log(vertices);
     // console.log(JSON.stringify({vertices}));
     $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
-
+    // console.log()
+    console.log(JSON.stringify({vertices}))
+    console.log(JSON.stringify(comment))
+    var ver = JSON.stringify({vertices});
+    // var com = JSON.stringify({comment});
+    var data = {ver,comment};
     // console.log(JSON.stringify(data));
-    // console.log(JSON.stringify({data}));
-    await fetch(url, {
-        method: 'PUT', // or 'PUT'
-        body: JSON.stringify({vertices}), // data can be `string` or {object}!
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+    console.log(data);
+    // await fetch(url, {
+    //     method: 'PUT', // or 'PUT'
+    //     body: JSON.stringify({vertices}), // data can be `string` or {object}!
+    //     headers: new Headers({
+    //         'Content-Type': 'application/json'
+    //     })
+    // }).then(res => res.json())
+    //     .catch(error => console.error('Error:', error))
+    //     .then(response => console.log('Success:', response));
     $.unblockUI();
 
 }
