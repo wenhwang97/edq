@@ -15,14 +15,16 @@ class Precinct{
         this.name;
 
     }
-    setCongressional16Vote(type,value) {
+    setCongressional16Vote(type,value,distNum) {
         this.Congressional16Vote[type] = value;
+        this.Congressional16Vote["distNum"] = distNum;
     }
     getCongressional16Vote(type) {
         return this.Congressional16Vote[type];
     }
-    setCongressional18Vote(type,value) {
+    setCongressional18Vote(type,value,distNum) {
         this.Congressional18Vote[type] = value;
+        this.Congressional18Vote["distNum"] = distNum;
     }
     getCongressional18Vote(type) {
         return this.Congressional18Vote[type];
