@@ -13,6 +13,7 @@ var dataSource = document.getElementById("dataVotingSource");
 var demoDataSource = document.getElementById("demoDataSource");
 var currentCounty;
 var clickedCountyList = {};
+var clickedState;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: US_CENTER,

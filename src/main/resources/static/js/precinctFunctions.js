@@ -182,12 +182,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                     // rectangle.setMap(null);
                     // rectangle.setPaths(null);
                 }
-                // GhostCommentChanges.addEventListener('click',function(){
-                //     precincts[ID].Ghost=true;
-                //     ghostPct.textContent="Ghost Pct.";
-                //     var comment = GhostComment.value;
-                //     sendGhost(stateName,countyID, ID, precincts[ID],comment);
-                // });
+
                 addNeighbourButton.disabled = false;
                 addNeighbourButton.addEventListener('click',function(){
                     addNeighbourConfirm.disabled=false;
@@ -209,7 +204,9 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 if(lastPrecinct!=null){
                     console.log(precincts[lastPrecinct]);
                     // precincts[lastPrecinct].getPrecinctLayer().revertStyle();
-                    styleCounties(precincts[lastPrecinct].getPrecinctLayer());
+                    if(precincts[lastPrecinct].Ghost==false) {
+                        styleCounties(precincts[lastPrecinct].getPrecinctLayer());
+                    }
                 }
                 // inforChange(event.feature.o);  //change the title for
                 let precinctID=event.feature.o;
@@ -248,42 +245,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 document.getElementById("OtherData").textContent = precincts[ID].getDemographic("otherPop");
                 document.getElementById("TotalData").textContent = precincts[ID].getDemographic("totalPop");
 
-                // dataType.onchange = function(){
-                //     // console.log("12333333333!!!");
-                //     console.log(dataType.value);
-                //     if(dataType.value == 4) { //Presidential General
-                //         document.getElementById("RepublicanVoting").textContent = precincts[ID].getPresidentialVote("republicanVote");
-                //         document.getElementById("GreenVoting").textContent = precincts[ID].getPresidentialVote("greenVote");
-                //         document.getElementById("LibertarianVoting").textContent = precincts[ID].getPresidentialVote("libertarianVote");
-                //         document.getElementById("DemocraticVoting").textContent = precincts[ID].getPresidentialVote("democraticVote");
-                //     }
-                //     if(dataType.value == 2){ //18 congressional
-                //         console.log("18 de congressional");
-                //         document.getElementById("RepublicanVoting").textContent = precincts[ID].getCongressional18Vote("republicanVote");
-                //         document.getElementById("GreenVoting").textContent = precincts[ID].getCongressional18Vote("greenVote");
-                //         document.getElementById("LibertarianVoting").textContent = precincts[ID].getCongressional18Vote("libertarianVote");
-                //         document.getElementById("DemocraticVoting").textContent = precincts[ID].getCongressional18Vote("democraticVote");
-                //     }
-                //     if(dataType.value == 3){ //16 congressional
-                //         console.log("18 de congressional");
-                //         document.getElementById("RepublicanVoting").textContent = precincts[ID].getCongressional16Vote("republicanVote");
-                //         document.getElementById("GreenVoting").textContent = precincts[ID].getCongressional16Vote("greenVote");
-                //         document.getElementById("LibertarianVoting").textContent = precincts[ID].getCongressional16Vote("libertarianVote");
-                //         document.getElementById("DemocraticVoting").textContent = precincts[ID].getCongressional16Vote("democraticVote");
-                //     }
-                // }
 
-                // AsianData
-                // }else { //no voting data
-                //     // var url1 ="/state/{stateId}/county/{countyId}/precinct/{precinctId}/data/vote/presidential/{year}";
-                //     var urlpart1 = "http://localhost:8080/state/"+stateName+"/county/" + countyID;
-                //     var url = "/precinct/" + precinctID;
-                //     var urlpart3 = "/data/vote/presidential/2016";
-                //     var demourl = urlpart1+url+"/data/demo";
-                //
-                //     // precinctFetchData(urlpart1 + url + urlpart3, demourl,precincts[ID]);
-                // }
-                // precincts[ID].getPrecinctLayer().overrideStyle(event.feature, { fillColor: "#a8329e",strokeWeight: 9 });
 
                 precincts[ID].getPrecinctLayer().setStyle((feature) => {
                     return {
@@ -517,6 +479,7 @@ async function sendGhost(stateName, countyID, ID, precincts,comment) {
     if(precincts.Ghost=true){
         url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + ID + "/data/undefine-ghost";
     }
+    $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
     let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify({data}), // data can be `string` or {object}!
@@ -526,6 +489,7 @@ async function sendGhost(stateName, countyID, ID, precincts,comment) {
     }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
+    $.unblockUI();
 }
 // con18Opt.onchange = function(){
 //     console.log("12333333333!!!");
@@ -539,21 +503,14 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) 
     for (var i in List) {
         precinctID[i] = List[i].id;
     }
+    console.log(List[0].getPrecinctLayer());
+    console.log(List[0].getPrecinctLayer().i);
+    console.log(List[0].getPrecinctLayer().__e3_);
+    var element = List[0].getPrecinctLayer().__e3_;
     var url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID[0] + "/data/merge-donut/" + countyID + "/" + precinctID[1] + "/" + polygonID;
     console.log(url);
     var data = {"comment":comment}
-    // console.log
-    // let response = await fetch(url, {
-    //     method: 'PUT', // or 'PUT'
-    //     body: JSON.stringify(data), // data can be `string` or {object}!
-    //     headers: new Headers({
-    //         'Content-Type': 'application/json'
-    //     })
-    // }).then(res => res.json())
-    //     .catch(error => console.error('Error:', error))
-    //     .then(response => {
-    //         console.log('Success:', response)
-    //     });
+    $.blockUI({message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>'});
     let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
@@ -562,9 +519,8 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) 
         })
     })
     let mergeJson = await response.json()
+    $.unblockUI();
     console.log(response);
-    // let mergeJson = await response.json()
-    // let mergeJson = response;
     console.log(mergeJson);
     List[0].getPrecinctLayer().setMap(null);
     List[1].getPrecinctLayer().setMap(null);
@@ -582,7 +538,15 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) 
     newPrecinctdata.add({geometry: geometry, id: mergeJson[0].id});
     console.log(List);
     console.log(List[0]);
+    console.log(List[0].getPrecinctLayer());
+    console.log(newPrecinctdata);
+    console.log(element);
+    // var teste3 = List[0].getPrecinctLayer().__e3_;
+    newPrecinctdata.add({__e3_:element});
+    console.log(newPrecinctdata);
+    // newPrecinctdata[__e3_]=element;
     List[0].setPrecinctLayer(newPrecinctdata);
+    console.log(List[0].getPrecinctLayer());
     List[0].setBoundary(newCoord);
     addOnePrecinctsToMap(List[0]);
     List[0].getPrecinctLayer().setMap(map);
@@ -889,8 +853,13 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
                 console.log(lastPrecinct);
                 if(lastPrecinct!=null){
                     console.log(precincts[lastPrecinct]);
-                    // precincts[lastPrecinct].getPrecinctLayer().revertStyle();
-                    styleCounties(precincts[lastPrecinct].getPrecinctLayer());
+                    if(precincts[lastPrecinct].Ghost==false) {
+                        styleCounties(precincts[lastPrecinct].getPrecinctLayer());
+                    }
+                    if(precincts[lastPrecinct].Ghost==true) {
+                        console.log("shang yi ge shigui !!!!!!");
+                        styleGhostPrecinct(precincts[lastPrecinct].getPrecinctLayer());
+                    }
                 }
                 // inforChange(event.feature.o);  //change the title for
                 let precinctID=event.feature.o;
@@ -1000,6 +969,7 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
         precincts[clickedPrecinct].Ghost=true;
         ghostPct.textContent="Ghost Pct.";
         var comment = GhostComment.value;
+        console.log("ghost??");
         styleGhostPrecinct(precincts[clickedPrecinct].getLayer());
         sendGhost(stateName,countyID, clickedPrecinct, precincts[clickedPrecinct],comment);
     });

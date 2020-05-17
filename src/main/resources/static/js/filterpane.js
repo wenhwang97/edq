@@ -55,7 +55,8 @@ errs.onmouseup = async function () {
             var NovoteErrobutton=[];
             var NoDemoErrobutton=[];
             var Multibutton=[];
-            var Gapbutton=[]
+            var Gapbutton=[];
+            var Overlapbutton=[];
             for(var i in errorJson){
                 if(errorJson[i].type=="VOTEDEMO"){
                     VOTEDEMOnum++;
@@ -123,11 +124,31 @@ errs.onmouseup = async function () {
                 }
                 if(errorJson[i].type=="OVERLAP"){
                     Overlapnum++;
-                    var Overlapbutton = document.createElement("button");
-                    Overlapbutton.setAttribute("class","btn btn-link");
-                    Overlapbutton.textContent=errorJson[i].info;
+                    Overlapbutton[i] = document.createElement("button");
+                    Overlapbutton[i].setAttribute("class","btn btn-link");
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    let precinctout = errorinfo.substring(secondsem+1,thirdsem);
+                    let precinctin = errorinfo.substring(thirdsem+1);
+                    // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/merge-overlap/{mergeeCountyId}/{mergeePrecinctId}/{xPos}/{yPos}
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1, secondsem);
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    var latCoord = parseFloat(lat);
+                    var lngCoord = parseFloat(lng);
+                    let indexofhifen = precinctout.indexOf('-',3);
+                    let countyId=precinctout.substring(0,indexofhifen);
+                    let url = "http://localhost:8080/state/"+clickedState+"/county/"+countyId+"/precinct/"+precinctout+"/data/merge-overlap/"+countyId+"/"+precinctin+"/"+lngCoord+"/"+latCoord;
+                    let precinctidinfo = errorinfo.substring(secondsem+1);
+                    Overlapbutton[i].textContent="Overlap Error";
                     overlapTable.appendChild(Overlapbutton);
                     overlapTable.appendChild(document.createElement("br"));
+                    Overlapbutton[i].setAttribute("onclick","solveOverlap('"+url+"','NODEMO')");
                 }
                 if(errorJson[i].type=="GAP"){
                     Gapnum++;
@@ -253,12 +274,24 @@ async function printText(message,type) {
         lng:lngCoord
     }
     console.log(myLatLng);
+    map.setZoom(13);
+    map.setCenter(myLatLng);
     marker = new google.maps.Marker({
         position: myLatLng,
         map: map,
         title: 'Demo data and Voting data are not compatible'
     });
-
+}
+async function solveOverlap(url) {
+    let response = await fetch(url, {
+        method: 'PUT', // or 'PUT'
+        // body: JSON.stringify({data}), // data can be `string` or {object}!
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
 
 }
 

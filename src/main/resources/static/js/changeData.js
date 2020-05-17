@@ -25,6 +25,15 @@ editVoting.addEventListener('click',function(){
 changeVoting.addEventListener('click', function(){
     console.log("change voting");
 
+    if(clickedState=="va"){
+        dataSource.textContent="Secretary State Of Virginia"
+    }
+    if(clickedState=="tx"){
+        dataSource.textContent="State Of Texas"
+    }
+    if(clickedState=="ri"){
+        dataSource.textContent="Secretary State Of Rhode Island"
+    }
 
     var dmVoting=document.getElementById("dmChanges").value;    //输入框里面的
     var rpVoting=document.getElementById("rpChanges").value;
@@ -103,7 +112,6 @@ changeVoting.addEventListener('click', function(){
         allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).setPresidentialVote("republicanVote", RData);
     }
     if(value == 2) { //18 congressional
-
         var disNumber = (allStates[StateId].getCountyByID(countyID).getPrecinctByID(PrecinctId).Congressional18Vote["distNum"]);
         var url4 = PrecinctId + '/data/vote/congressional/'+disNumber+'/2018';
         type = "CONGRESSIONAL";
