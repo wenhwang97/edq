@@ -456,7 +456,7 @@ async function handleRedirect(
       Countydata.add({geometry: geometry, id: myJson[i].id});
       county.setCountyLayer(Countydata);
       state.addCounty(county.id, county);
-      console.log(county.id);
+      // console.log(county.id);
       // localStorage.setItem(rhode);
     }
     for (i = 0; i < parkJson.length; i++) {  //how many parks

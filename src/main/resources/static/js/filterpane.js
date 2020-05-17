@@ -131,6 +131,7 @@ errs.onmouseup = async function () {
                     let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
                     let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
                     let precinctout = errorinfo.substring(secondsem+1,thirdsem);
+                    console.log(precinctout);
                     let precinctin = errorinfo.substring(thirdsem+1);
                     // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/merge-overlap/{mergeeCountyId}/{mergeePrecinctId}/{xPos}/{yPos}
                     let lng = errorinfo.substring(0,firstsem);
@@ -142,11 +143,14 @@ errs.onmouseup = async function () {
                     var latCoord = parseFloat(lat);
                     var lngCoord = parseFloat(lng);
                     let indexofhifen = precinctout.indexOf('-',3);
+                    let indexofhifenin = precinctin.indexOf('-',3);
                     let countyId=precinctout.substring(0,indexofhifen);
-                    let url = "http://localhost:8080/state/"+clickedState+"/county/"+countyId+"/precinct/"+precinctout+"/data/merge-overlap/"+countyId+"/"+precinctin+"/"+lngCoord+"/"+latCoord;
+                    let countyIdin = precinctin.substring(0,indexofhifenin);
+                    let url = "http://localhost:8080/state/"+clickedState+"/county/"+countyId+"/precinct/"+precinctout+"/data/merge-overlap/"+countyIdin+"/"+precinctin+"/"+lngCoord+"/"+latCoord;
+                    // console.log(url)
                     let precinctidinfo = errorinfo.substring(secondsem+1);
                     Overlapbutton[i].textContent="Overlap Error";
-                    overlapTable.appendChild(Overlapbutton);
+                    overlapTable.appendChild(Overlapbutton[i]);
                     overlapTable.appendChild(document.createElement("br"));
                     Overlapbutton[i].setAttribute("onclick","solveOverlap('"+url+"','NODEMO')");
                 }
@@ -283,9 +287,11 @@ async function printText(message,type) {
     });
 }
 async function solveOverlap(url) {
+    console.log(url);
+    var data = {"comment":"auto fix"}
     let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
-        // body: JSON.stringify({data}), // data can be `string` or {object}!
+        body: JSON.stringify(data), // data can be `string` or {object}!
         headers: new Headers({
             'Content-Type': 'application/json'
         })
