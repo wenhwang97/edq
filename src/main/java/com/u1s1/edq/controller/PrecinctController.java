@@ -234,6 +234,10 @@ public class PrecinctController {
                                                           @PathVariable String mergeePrecinctId,
                                                           @PathVariable Integer polygonId,
                                                           @RequestBody RequestComment comment) {
+        if (precinctCName.equals(mergeePrecinctId)) {
+            return null;
+        }
+
         LocalDateTime dateTime = LocalDateTime.now();
         Precinct merger = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         Precinct mergee = precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId);
