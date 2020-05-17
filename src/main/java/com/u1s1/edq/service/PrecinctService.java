@@ -40,9 +40,9 @@ public class PrecinctService {
         return cachedContainer.findPrecinct(stateId, countyId, precinctCName);
     }
 
-    public void removePrecinct(String precinctCName) {
-        precinctRepo.deleteById(precinctCName);
-    }
+//    public void removePrecinct(String precinctCName) {
+//        precinctRepo.deleteById(precinctCName);
+//    }
 
     public void updatePrecinctDemoData(String stateId, String countyId, String precinctCName, DemoData data) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);

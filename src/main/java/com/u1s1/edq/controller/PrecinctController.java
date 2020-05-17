@@ -7,9 +7,7 @@ import com.u1s1.edq.enums.OperationType;
 import com.u1s1.edq.enums.PrecinctType;
 import com.u1s1.edq.service.CorrectionLogService;
 import com.u1s1.edq.service.CountyService;
-import com.u1s1.edq.service.GeoPolygonService;
 import com.u1s1.edq.service.PrecinctService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +23,6 @@ public class PrecinctController {
 
     private PrecinctService precinctService;
     private CountyService countyService;
-    private GeoPolygonService geoPolygonService;
     private CorrectionLogService correctionLogService;
 
     private final String LOG_DELETE_PRECINCT_DESC = "Delete Precinct '@0' from State '@1'";
@@ -44,27 +41,10 @@ public class PrecinctController {
 
     @Autowired
     public PrecinctController(PrecinctService precinctService, CountyService countyService,
-                              GeoPolygonService geoPolygonService, CorrectionLogService correctionLogService) {
+                              CorrectionLogService correctionLogService) {
         this.precinctService = precinctService;
         this.countyService = countyService;
-        this.geoPolygonService = geoPolygonService;
         this.correctionLogService = correctionLogService;
-    }
-
-    @DeleteMapping(value = "")
-    public void removePrecinct(@PathVariable String stateId, @PathVariable String countyId,
-                               @PathVariable String precinctCName, @RequestBody RequestComment comment) {
-        LocalDateTime dateTime = LocalDateTime.now();
-        Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
-        State state = precinct.getCounty().getState();
-        String desc = LOG_DELETE_PRECINCT_DESC;
-        desc = desc.replace("@0", precinct.getName());
-        desc = desc.replace("@1", precinct.getCounty().getState().getName());
-
-        countyService.removePrecinctFromCounty(stateId, countyId, precinctCName);
-        precinctService.removePrecinct(precinctCName);
-
-        correctionLogService.addDataLog(state, precinctCName, OperationType.DELETE_PRECINCT, desc, comment.getComment(), dateTime);
     }
 
     @GetMapping(value = "/data/demo")
@@ -265,7 +245,7 @@ public class PrecinctController {
 
         List<GeoPolygon> polygons = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId, polygonId);
         if (polygons.size() == 2) {
-            desc += " removing polygon ID#" + polygonId + " and hole ID#" + polygons.get(0).getId();
+            desc += " removing polygon ID#" + polygonId + " and hole ID#" + polygons.get(1).getId();
         }
 
         List<ResponseObject> response = new ArrayList<ResponseObject>();
@@ -273,7 +253,6 @@ public class PrecinctController {
 
         if (mergee.getBoundary().size() == 0) {
             desc += " and remove merged precinct";
-            precinctService.removePrecinct(mergeePrecinctId);
             response.add(new ResponseObject(mergeePrecinctId , null, null));
         }
         else {
