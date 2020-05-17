@@ -57,8 +57,8 @@ public class PrecinctController {
         Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         State state = precinct.getCounty().getState();
         String desc = LOG_DELETE_PRECINCT_DESC;
-        desc.replace("@0", precinct.getName());
-        desc.replace("@1", precinct.getCounty().getState().getName());
+        desc = desc.replace("@0", precinct.getName());
+        desc = desc.replace("@1", precinct.getCounty().getState().getName());
 
         countyService.removePrecinctFromCounty(stateId, countyId, precinctCName);
         precinctService.removePrecinct(precinctCName);
@@ -79,7 +79,7 @@ public class PrecinctController {
         Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         State state = precinct.getCounty().getState();
         String desc = LOG_UPDATE_DEMO_DESC;
-        desc.replace("@0", precinct.getName());
+        desc = desc.replace("@0", precinct.getName());
 
         precinctService.updatePrecinctDemoData(stateId, countyId, precinctCName, data.getDemoData());
 
@@ -99,7 +99,7 @@ public class PrecinctController {
         Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         State state = precinct.getCounty().getState();
         String desc = LOG_DEFINE_GHOST_DESC;
-        desc.replace("@0", precinct.getName());
+        desc = desc.replace("@0", precinct.getName());
 
         precinctService.updatePrecinctType(stateId, countyId, precinctCName, PrecinctType.GHOST);
 
@@ -113,7 +113,7 @@ public class PrecinctController {
         Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         State state = precinct.getCounty().getState();
         String desc = LOG_UNDEFINE_GHOST_DESC;
-        desc.replace("@0", precinct.getName());
+        desc = desc.replace("@0", precinct.getName());
 
         precinctService.updatePrecinctType(stateId, countyId, precinctCName, PrecinctType.NORMAL);
 
@@ -133,9 +133,9 @@ public class PrecinctController {
         LocalDateTime dateTime = LocalDateTime.now();
         Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         State state = precinct.getCounty().getState();
-        String desc = LOG_UPDATE_PRES_VOTE_DESC;
-        desc.replace("@0", precinct.getName());
-        desc.replace("@1", year + "");
+        String desc = new String(LOG_UPDATE_PRES_VOTE_DESC.toString());
+        desc = desc.replace("@0", precinct.getName());
+        desc = desc.replace("@1", year + "");
 
         precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.PRESIDENTIAL, -1, year, data.getData());
 
@@ -157,9 +157,9 @@ public class PrecinctController {
         Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
         State state = precinct.getCounty().getState();
         String desc = LOG_UPDATE_CONG_VOTE_DESC;
-        desc.replace("@0", precinct.getName());
-        desc.replace("@1", year + "");
-        desc.replace("@2", dist + "");
+        desc = desc.replace("@0", precinct.getName());
+        desc = desc.replace("@1", year + "");
+        desc = desc.replace("@2", dist + "");
 
         precinctService.updatePrecinctVoteData(stateId, countyId, precinctCName, ElectionType.CONGRESSIONAL, dist, year, data.getData());
 
@@ -190,8 +190,8 @@ public class PrecinctController {
 
         for (String neighbor : neighbors.getNeighbors()) {
             String desc = LOG_ADD_NEIGHBOR_DESC;
-            desc.replace("@0", neighbor);
-            desc.replace("@1", precinct.getName());
+            desc = desc.replace("@0", neighbor);
+            desc = desc.replace("@1", precinct.getName());
             correctionLogService.addDataLog(state, precinctCName, OperationType.EDIT_NEIGHBOR, desc, neighbors.getComment(), dateTime);
         }
     }
@@ -207,8 +207,8 @@ public class PrecinctController {
 
         for (String neighbor : neighbors.getNeighbors()) {
             String desc = LOG_REMOVE_NEIGHBOR_DESC;
-            desc.replace("@0", neighbor);
-            desc.replace("@1", precinct.getName());
+            desc = desc.replace("@0", neighbor);
+            desc = desc.replace("@1", precinct.getName());
             correctionLogService.addDataLog(state, precinctCName, OperationType.EDIT_NEIGHBOR, desc, neighbors.getComment(), dateTime);
         }
     }
@@ -224,7 +224,7 @@ public class PrecinctController {
 
         List<GeoPolygon> polygons = precinctService.updatePrecinctPolygons(stateId, countyId, precinctCName, geoPolygonId, geoPolygon.getPolygon());
 
-        desc.replace("@0", precinct.getName());
+        desc = desc.replace("@0", precinct.getName());
         if (polygons.size() == 2) {
             correctionLogService.addPolygonLog(state, precinctCName, OperationType.EDIT_BOUNDARY, polygons.get(0), polygons.get(1), desc, geoPolygon.getComment(), dateTime);
         }
@@ -239,8 +239,8 @@ public class PrecinctController {
         Precinct mergee = precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId);
         State state = merger.getCounty().getState();
         String desc = LOG_MERGE_DATA_DESC;
-        desc.replace("@0", mergee.getName());
-        desc.replace("@1", merger.getName());
+        desc = desc.replace("@0", mergee.getName());
+        desc = desc.replace("@1", merger.getName());
 
         precinctService.mergePrecinctData(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId);
 
@@ -259,8 +259,8 @@ public class PrecinctController {
         Precinct mergee = precinctService.getPrecinctFromMem(stateId, mergeeCountyId, mergeePrecinctId);
         State state = merger.getCounty().getState();
         String desc = LOG_MERGE_DONUT_DESC;
-        desc.replace("@0", mergee.getName());
-        desc.replace("@1", merger.getName());
+        desc = desc.replace("@0", mergee.getName());
+        desc = desc.replace("@1", merger.getName());
 
         List<GeoPolygon> polygons = precinctService.mergeGeoPolygonDonut(stateId, countyId, precinctCName, mergeeCountyId, mergeePrecinctId, polygonId);
         if (polygons.size() == 2) {
@@ -300,8 +300,8 @@ public class PrecinctController {
         GeoPolygon polygon = precinctService.mergeGeoPolygonOverlap(stateId, mergeeCountyId, mergeePrecinctId, xPos, yPos);
 
         String desc = LOG_MERGE_OVERLAP_DESC;
-        desc.replace("@0", mergee.getName());
-        desc.replace("@1", merger.getName());
+        desc = desc.replace("@0", mergee.getName());
+        desc = desc.replace("@1", merger.getName());
         desc += " and removing polygon ID#" + polygon.getId();
 
         correctionLogService.addPolygonLog(state, precinctCName, OperationType.MERGE_POLY, polygon, null, desc, comment.getComment(), dateTime);
