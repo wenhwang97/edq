@@ -30,6 +30,10 @@ errs.onmousedown = function () {
     errs.style.opacity = ".5";
 }
 var VotedemoErroCoord={};
+var NovoteErroCoord={};
+var NodemoErroCoord={}
+var multiPolyCoord={};
+var gapCoord={};
 errs.onmouseup = async function () {
     if (isNotToggled) {
         sidepane.classList.toggle("toggled")
@@ -48,6 +52,10 @@ errs.onmouseup = async function () {
             var enclosenum=0;
             var multinum=0;
             var VotedemoErrobutton=[];
+            var NovoteErrobutton=[];
+            var NoDemoErrobutton=[];
+            var Multibutton=[];
+            var Gapbutton=[]
             for(var i in errorJson){
                 if(errorJson[i].type=="VOTEDEMO"){
                     VOTEDEMOnum++;
@@ -69,24 +77,49 @@ errs.onmouseup = async function () {
                     VotedemoErroCoord[precinctidinfo]=errorCoord;
                     VoteDemoErrorTable.appendChild(VotedemoErrobutton[i]);
                     VoteDemoErrorTable.appendChild(document.createElement("br"));
-                    var message = errorJson[i].info;
-                    VotedemoErrobutton[i].setAttribute("onclick","printText('"+precinctidinfo+"')");
+                    VotedemoErrobutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','VOTEDEMO')");
                 }
                 if(errorJson[i].type=="NOVOTE"){
                     NOVOTEnum++;
-                    var NovoteErrobutton = document.createElement("button");
-                    NovoteErrobutton.setAttribute("class","btn btn-link");
-                    NovoteErrobutton.textContent=errorJson[i].info;
-                    noVotingTable.appendChild(NovoteErrobutton);
+                    NovoteErrobutton[i] = document.createElement("button");
+                    NovoteErrobutton[i].setAttribute("class","btn btn-link");
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    let precinctidinfo = errorinfo.substring(secondsem+1, thirdsem);
+                    NovoteErrobutton[i].textContent=precinctidinfo;
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1, secondsem);
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    NovoteErroCoord[precinctidinfo]=errorCoord;
+                    noVotingTable.appendChild(NovoteErrobutton[i]);
                     noVotingTable.appendChild(document.createElement("br"));
+                    NovoteErrobutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','NOVOTE')");
                 }
                 if(errorJson[i].type=="NODEMO"){
                     NODEMOnum++;
-                    var NoDemoErrobutton = document.createElement("button");
-                    NoDemoErrobutton.setAttribute("class","btn btn-link");
-                    NoDemoErrobutton.textContent=errorJson[i].info;
-                    noDemoTable.appendChild(NoDemoErrobutton);
+                    NoDemoErrobutton[i] = document.createElement("button");
+                    NoDemoErrobutton[i].setAttribute("class","btn btn-link");
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    // let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    let precinctidinfo = errorinfo.substring(secondsem+1);
+                    NoDemoErrobutton[i].textContent=precinctidinfo;
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1, secondsem);
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    NodemoErroCoord[precinctidinfo]=errorCoord;
+                    noDemoTable.appendChild(NoDemoErrobutton[i]);
                     noDemoTable.appendChild(document.createElement("br"));
+                    NoDemoErrobutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','NODEMO')");
                 }
                 if(errorJson[i].type=="OVERLAP"){
                     Overlapnum++;
@@ -98,11 +131,25 @@ errs.onmouseup = async function () {
                 }
                 if(errorJson[i].type=="GAP"){
                     Gapnum++;
-                    var Gapbutton = document.createElement("button");
-                    Gapbutton.setAttribute("class","btn btn-link");
-                    Gapbutton.textContent=errorJson[i].info;
-                    gapTable.appendChild(Gapbutton);
+                    Gapbutton[i] = document.createElement("button");
+                    Gapbutton[i].setAttribute("class","btn btn-link");
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    // let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    // let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    // let precinctidinfo = errorinfo.substring(secondsem+1);
+                    let precinctidinfo = errorJson[i].id;
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1);
+                    Gapbutton[i].textContent="Gap";
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    gapCoord[precinctidinfo]=errorCoord;
+                    gapTable.appendChild(Gapbutton[i]);
                     gapTable.appendChild(document.createElement("br"));
+                    Gapbutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','GAP')");
                 }
                 if(errorJson[i].type=="SELFINTER"){
                     slefnum++;
@@ -122,11 +169,24 @@ errs.onmouseup = async function () {
                 }
                 if(errorJson[i].type=="MULTIPOLY"){
                     multinum++;
-                    var Multibutton = document.createElement("button");
-                    Multibutton.setAttribute("class","btn btn-link");
-                    Multibutton.textContent=errorJson[i].info;
-                    mutipolyTable.appendChild(Multibutton);
+                    Multibutton[i] = document.createElement("button");
+                    Multibutton[i].setAttribute("class","btn btn-link");
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    // let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    let precinctidinfo = errorinfo.substring(secondsem+1);
+                    Multibutton[i].textContent=precinctidinfo;
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1, secondsem);
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    multiPolyCoord[precinctidinfo]=errorCoord;
+                    mutipolyTable.appendChild(Multibutton[i]);
                     mutipolyTable.appendChild(document.createElement("br"));
+                    Multibutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','MULTIPOLY')");
                 }
             }
             VoteDemoErrorNumber.textContent=VOTEDEMOnum;
@@ -156,13 +216,35 @@ errs.onmouseup = async function () {
     errContent.classList.add("active")
 }
 var marker;
-async function printText(message) {
+async function printText(message,type) {
     if(marker!=null){
         marker.setMap(null);
     }
-    console.log(VotedemoErroCoord);
-    console.log(VotedemoErroCoord[message]);
-    var coord= VotedemoErroCoord[message];
+    // console.log(VotedemoErroCoord);
+    // console.log(VotedemoErroCoord[message]);
+    var coord;
+    if(type=="VOTEDEMO") {
+        coord = VotedemoErroCoord[message];
+    }
+    if(type=="NOVOTE") {
+        coord = NovoteErroCoord[message];
+    }
+    if(type=="NODEMO") {
+        coord = NodemoErroCoord[message];
+    }if(type=="MULTIPOLY") {
+        coord = multiPolyCoord[message];
+    }
+    if(type=="GAP") {
+        coord = gapCoord[message];
+        // coord = VotedemoErroCoord[message];
+    }if(type=="VOTEDEMO") {
+        // coord = VotedemoErroCoord[message];
+    }
+    if(type=="VOTEDEMO") {
+        // coord = VotedemoErroCoord[message];
+    }
+
+
     // parseFloat(s)
     var latCoord = parseFloat(coord.lat);
     var lngCoord = parseFloat(coord.lng);
