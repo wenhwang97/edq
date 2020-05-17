@@ -29,7 +29,7 @@ filter.onclick = function () {
 errs.onmousedown = function () {
     errs.style.opacity = ".5";
 }
-
+var VotedemoErroCoord={};
 errs.onmouseup = async function () {
     if (isNotToggled) {
         sidepane.classList.toggle("toggled")
@@ -53,11 +53,24 @@ errs.onmouseup = async function () {
                     VOTEDEMOnum++;
                     VotedemoErrobutton[i]= document.createElement("button");
                     VotedemoErrobutton[i].setAttribute("class","btn btn-link");
-                    VotedemoErrobutton[i].textContent=errorJson[i].info;
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    let precinctidinfo = errorinfo.substring(secondsem+1, thirdsem);
+                    VotedemoErrobutton[i].textContent=precinctidinfo;
+                    // VotedemoErroCoord[precinctidinfo]=
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1, secondsem);
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    VotedemoErroCoord[precinctidinfo]=errorCoord;
                     VoteDemoErrorTable.appendChild(VotedemoErrobutton[i]);
                     VoteDemoErrorTable.appendChild(document.createElement("br"));
                     var message = errorJson[i].info;
-                    VotedemoErrobutton[i].setAttribute("onclick","printText('"+message+"')");
+                    VotedemoErrobutton[i].setAttribute("onclick","printText('"+precinctidinfo+"')");
                 }
                 if(errorJson[i].type=="NOVOTE"){
                     NOVOTEnum++;
@@ -147,36 +160,23 @@ async function printText(message) {
     if(marker!=null){
         marker.setMap(null);
     }
-    console.log(message);
-    var index = message.indexOf('-', 3);
-    console.log(index);
-    var countyID = message.substring(0, index);
-    var StateId = message.substring(0, 2);
-    console.log(StateId);
-    console.log(countyID);
-    // await countyClick(countyID, StateId);
-    if(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message)!=null){  //你必须得有
-        console.log("have???????");
-    console.log(allStates[StateId]);
-    console.log(allStates[StateId].getCountyByID(countyID));
-    console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message));
-    console.log(allStates[StateId].getCountyByID(countyID).getPrecinctByID(message).getBoundary());
-    var coord = allStates[StateId].getCountyByID(countyID).getPrecinctByID(message).getBoundary();
-    console.log(coord);
-    // var myLatLng = coord[0][3];
-    var i=0;
-    for(i=0; i<coord[0].length; i++){
-
+    console.log(VotedemoErroCoord);
+    console.log(VotedemoErroCoord[message]);
+    var coord= VotedemoErroCoord[message];
+    // parseFloat(s)
+    var latCoord = parseFloat(coord.lat);
+    var lngCoord = parseFloat(coord.lng);
+    var myLatLng = {
+        lat:latCoord,
+        lng:lngCoord
     }
-    var middle = i/2;
-    var myLatLng = coord[0][middle];
     console.log(myLatLng);
     marker = new google.maps.Marker({
         position: myLatLng,
         map: map,
         title: 'Demo data and Voting data are not compatible'
     });
-    }
+
 
 }
 
