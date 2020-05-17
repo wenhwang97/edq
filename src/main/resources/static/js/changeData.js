@@ -12,6 +12,8 @@ var votingComment = document.getElementById("votingComment");
 // })
 changeVoting.addEventListener('click', function(){
     console.log("change voting");
+
+
     var dmVoting=document.getElementById("dmChanges").value;    //输入框里面的
     var rpVoting=document.getElementById("rpChanges").value;
     var lbVoting=document.getElementById("lbChanges").value;
@@ -21,6 +23,10 @@ changeVoting.addEventListener('click', function(){
     var origiongr = document.getElementById("GreenVoting").textContent;
     var origionlb = document.getElementById("LibertarianVoting").textContent;
     var origiondm = document.getElementById("DemocraticVoting").textContent;
+    document.getElementById("dmChanges").value = origiondm;    //输入框里面的
+    document.getElementById("rpChanges").value = origionrp;
+    document.getElementById("lbChanges").value =origionlb;
+    document.getElementById("grChanges").value = origiongr;
     let RData;
     let DData;
     let LData;
@@ -195,11 +201,25 @@ changeDemo.addEventListener('click',function(){
         OData = parseInt(OtherNum);
     }
     var indexofComma = countyandState.textContent.indexOf(',');
-    var StateId =countyandState.textContent.substring(indexofComma+2);  //不变的
+    var StateName =countyandState.textContent.substring(indexofComma+2);  //不变的
+    var StateId;
+    if(StateName=="Rhode Island"){
+        StateId="ri";
+    }
+    if(StateName=="Virginia"){
+        StateId="va";
+    }
+    if(StateName=="Texas"){
+        StateId="tx";
+    }
     var countyID = StateId+"-"+countyandState.textContent.substring(0, indexofComma);
+    countyID = countyID.toLowerCase();
     var indexofspace = precinctName.textContent.indexOf(' ');
     var precinctID = precinctName.textContent.substring(indexofspace+1);
     var PrecinctId = countyID+"-"+precinctID;
+    console.log(StateId);
+    console.log(countyID);
+    console.log(PrecinctId);
     var comment = votingComment.value;
     // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/demo
     var url = 'http://localhost:8080/state/';
