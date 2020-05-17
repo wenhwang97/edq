@@ -5,3 +5,16 @@
 .sidepane-errlog .sidepane-content .nav-link {
     padding: 8px 76px;
 }
+
+.sidepane-errlog .sidepane-content .ml-auto, .sidepane-errlog .sidepane-content .mx-auto {
+    margin-left: unset!important;
+}
+
+.sidepane-errlog .sidepane-content .mr-auto, .sidepane-errlog .sidepane-content .mx-auto {
+    margin-left: unset!important;
+}
+
+.sidepane-errlog .sidepane-content .card .card-header .badge {
+    float: right;
+    margin-top: 7px;
+}
