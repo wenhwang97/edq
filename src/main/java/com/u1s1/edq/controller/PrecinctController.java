@@ -310,6 +310,7 @@ public class PrecinctController {
         return new ResponseObject(mergee.getCanonicalName(), mergee.getName(), mergee.getBoundary());
     }
 
+    @PutMapping(value = "/data/close-boundary")
     public ResponseObject closeUnclosedPrecinctPolygon(@PathVariable String stateId, @PathVariable String countyId,
                                                        @PathVariable String precinctCName,
                                                        @RequestBody RequestComment comment) {
