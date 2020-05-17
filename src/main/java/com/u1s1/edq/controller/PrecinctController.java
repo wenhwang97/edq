@@ -25,7 +25,6 @@ public class PrecinctController {
     private CountyService countyService;
     private CorrectionLogService correctionLogService;
 
-    private final String LOG_DELETE_PRECINCT_DESC = "Delete Precinct '@0' from State '@1'";
     private final String LOG_UPDATE_DEMO_DESC = "Update Precinct '@0' demographic data";
     private final String LOG_ADD_NEIGHBOR_DESC = "Add Precinct '@0' as neighbor to Precinct '@1'";
     private final String LOG_REMOVE_NEIGHBOR_DESC = "Remove Precinct '@0' as neighbor from Precinct '@1'";
