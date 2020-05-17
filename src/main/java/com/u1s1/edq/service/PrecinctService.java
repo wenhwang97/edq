@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -58,22 +60,6 @@ public class PrecinctService {
     public void updatePrecinctType(String stateId, String countyId, String precinctCName, PrecinctType type) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
         precinct.setType(type);
-        if (precinct.getType() == PrecinctType.GHOST) {
-            for (ElectionData electionData : precinct.getElectionData()) {
-                electionData.setDemocraticVote(-1);
-                electionData.setRepublicanVote(-1);
-                electionData.setLibertarianVote(-1);
-                electionData.setGreenVote(-1);
-            }
-
-            precinct.getDemoData().setTotalPop(-1);
-            precinct.getDemoData().setWhitePop(-1);
-            precinct.getDemoData().setBlackPop(-1);
-            precinct.getDemoData().setNativePop(-1);
-            precinct.getDemoData().setAsianPop(-1);
-            precinct.getDemoData().setNativePop(-1);
-            precinct.getDemoData().setOtherPop(-1);
-        }
 
         precinctRepo.save(precinct);
     }
@@ -138,9 +124,10 @@ public class PrecinctService {
     }
 
     @Transactional
-    public void updatePrecinctPolygons(String stateId, String countyId, String precinctCName, Integer geoPolygonId,
-                                       GeoPolygon newGeoPolygon) {
+    public List<GeoPolygon> updatePrecinctPolygons(String stateId, String countyId, String precinctCName, Integer geoPolygonId,
+                                                   GeoPolygon newGeoPolygon) {
         Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctCName);
+        List<GeoPolygon> polygons = new ArrayList<GeoPolygon>();
         GeoPolygon removedGeoPolygon = null;
         for (GeoPolygon geoPolygon : precinct.getBoundary()) {
             if (geoPolygon.getId().equals(geoPolygonId)) {
@@ -152,7 +139,11 @@ public class PrecinctService {
         if (removedGeoPolygon != null) {
             precinct.getBoundary().add(newGeoPolygon);
             precinctRepo.save(precinct);
+            polygons.add(removedGeoPolygon);
+            polygons.add(newGeoPolygon);
         }
+
+        return polygons;
     }
 
     public void mergePrecinctData(String stateId, String countyId, String precinctMerger, String countyMergee,
@@ -180,10 +171,11 @@ public class PrecinctService {
     }
 
     @Transactional
-    public Integer mergeGeoPolygonDonut(String stateId, String countyId, String precinctMerger, String countyMergee,
+    public List<GeoPolygon> mergeGeoPolygonDonut(String stateId, String countyId, String precinctMerger, String countyMergee,
                                         String precinctMergee, Integer geoPolygonId) {
         Precinct merger = cachedContainer.findPrecinct(stateId, countyId, precinctMerger);
         Precinct mergee = cachedContainer.findPrecinct(stateId, countyMergee, precinctMergee);
+        List<GeoPolygon> polygons = new ArrayList<GeoPolygon>();
 
         GeoPolygon removedGeoPolygon = null;
         for (GeoPolygon geoPolygon : mergee.getBoundary()) {
@@ -198,6 +190,8 @@ public class PrecinctService {
             for (GeoPolygon geoPolygon : merger.getBoundary()) {
                 if (geoPolygon.getId().equals(hole)) {
                     merger.removeFromBoundaries(geoPolygon);
+                    polygons.add(removedGeoPolygon);
+                    polygons.add(geoPolygon);
                     break;
                 }
             }
@@ -205,17 +199,19 @@ public class PrecinctService {
             precinctRepo.save(mergee);
             precinctRepo.save(merger);
 
-            return hole;
+            return polygons;
         }
 
         return null;
     }
 
-    public void mergeGeoPolygonOverlap(String stateId, String countyId, String precinctId, double xPos, double yPos) {
+    public GeoPolygon mergeGeoPolygonOverlap(String stateId, String countyId, String precinctId, double xPos, double yPos) {
         Precinct mergee = cachedContainer.findPrecinct(stateId, countyId, precinctId);
         GeoPolygon removedGeoPolygon = geoUtils.findPolygonByPoint(xPos, yPos, mergee.getBoundary());
         mergee.removeFromBoundaries(removedGeoPolygon);
 
         precinctRepo.save(mergee);
+
+        return removedGeoPolygon;
     }
 }

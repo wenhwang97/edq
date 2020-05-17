@@ -4,6 +4,7 @@ public enum OperationType {
 
     DELETE_PRECINCT,
     UPDATE_DEMO,
+    EDIT_NEIGHBOR,
     EDIT_DEMO,
     EDIT_GHOST,
     EDIT_PRES_VOTE,

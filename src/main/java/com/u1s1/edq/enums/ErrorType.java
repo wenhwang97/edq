@@ -8,5 +8,6 @@ public enum ErrorType {
     MULTIPOLY,
     NODEMO,
     NOVOTE,
-    VOTEDEMO
+    VOTEDEMO,
+    UNCLOSED
 }
