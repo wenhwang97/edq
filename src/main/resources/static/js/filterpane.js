@@ -34,6 +34,7 @@ var NovoteErroCoord={};
 var NodemoErroCoord={}
 var multiPolyCoord={};
 var gapCoord={};
+var overlapCoord={};
 errs.onmouseup = async function () {
     if (isNotToggled) {
         sidepane.classList.toggle("toggled")
@@ -57,6 +58,7 @@ errs.onmouseup = async function () {
             var Multibutton=[];
             var Gapbutton=[];
             var Overlapbutton=[];
+            var Enclosebutton=[]
             for(var i in errorJson){
                 if(errorJson[i].type=="VOTEDEMO"){
                     VOTEDEMOnum++;
@@ -123,6 +125,7 @@ errs.onmouseup = async function () {
                     NoDemoErrobutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','NODEMO')");
                 }
                 if(errorJson[i].type=="OVERLAP"){
+                    // console.
                     Overlapnum++;
                     Overlapbutton[i] = document.createElement("button");
                     Overlapbutton[i].setAttribute("class","btn btn-link");
@@ -130,29 +133,18 @@ errs.onmouseup = async function () {
                     let firstsem = errorinfo.indexOf(';');
                     let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
                     let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
-                    let precinctout = errorinfo.substring(secondsem+1,thirdsem);
-                    console.log(precinctout);
-                    let precinctin = errorinfo.substring(thirdsem+1);
-                    // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/merge-overlap/{mergeeCountyId}/{mergeePrecinctId}/{xPos}/{yPos}
+                    let precinctidinfo = errorinfo.substring(secondsem+1);
+                    Overlapbutton[i].textContent=precinctidinfo;
                     let lng = errorinfo.substring(0,firstsem);
                     let lat = errorinfo.substring(firstsem+1, secondsem);
                     var errorCoord = {
                         "lat" : lat,
                         "lng" : lng
                     };
-                    var latCoord = parseFloat(lat);
-                    var lngCoord = parseFloat(lng);
-                    let indexofhifen = precinctout.indexOf('-',3);
-                    let indexofhifenin = precinctin.indexOf('-',3);
-                    let countyId=precinctout.substring(0,indexofhifen);
-                    let countyIdin = precinctin.substring(0,indexofhifenin);
-                    let url = "http://localhost:8080/state/"+clickedState+"/county/"+countyId+"/precinct/"+precinctout+"/data/merge-overlap/"+countyIdin+"/"+precinctin+"/"+lngCoord+"/"+latCoord;
-                    // console.log(url)
-                    let precinctidinfo = errorinfo.substring(secondsem+1);
-                    Overlapbutton[i].textContent="Overlap Error";
+                    overlapCoord[precinctidinfo]=errorCoord;
                     overlapTable.appendChild(Overlapbutton[i]);
                     overlapTable.appendChild(document.createElement("br"));
-                    Overlapbutton[i].setAttribute("onclick","solveOverlap('"+url+"','NODEMO')");
+                    Overlapbutton[i].setAttribute("onclick","printText('"+precinctidinfo+"','OVERLAP')");
                 }
                 if(errorJson[i].type=="GAP"){
                     Gapnum++;
@@ -186,11 +178,42 @@ errs.onmouseup = async function () {
                 }
                 if(errorJson[i].type=="ENCLOSED"){
                     enclosenum++;
-                    var Enclosebutton = document.createElement("button");
-                    Enclosebutton.setAttribute("class","btn btn-link");
-                    Enclosebutton.textContent=errorJson[i].info;
-                    encloseTable.appendChild(Enclosebutton);
+                    Enclosebutton[i] = document.createElement("button");
+                    Enclosebutton[i].setAttribute("class","btn btn-link");
+                    let errorinfo = errorJson[i].info;
+                    let firstsem = errorinfo.indexOf(';');
+                    let secondsem = errorinfo.indexOf(';',firstsem+1);  //precinctID 前的分号
+                    let thirdsem = errorinfo.indexOf(';',secondsem+1);  //precintID 后面的分号
+                    let precinctout = errorinfo.substring(secondsem+1,thirdsem);
+                    console.log(precinctout);
+                    let precinctin = errorinfo.substring(thirdsem+1);
+                    // /state/{stateId}/county/{countyId}/precinct/{precinctId}/data/merge-overlap/{mergeeCountyId}/{mergeePrecinctId}/{xPos}/{yPos}
+                    let lng = errorinfo.substring(0,firstsem);
+                    let lat = errorinfo.substring(firstsem+1, secondsem);
+                    var errorCoord = {
+                        "lat" : lat,
+                        "lng" : lng
+                    };
+                    var latCoord = parseFloat(lat);
+                    var lngCoord = parseFloat(lng);
+                    let indexofhifen = precinctout.indexOf('-',3);
+                    let indexofhifenin = precinctin.indexOf('-',3);
+                    let countyId=precinctout.substring(0,indexofhifen);
+                    let countyIdin = precinctin.substring(0,indexofhifenin);
+                    let url = "http://localhost:8080/state/"+clickedState+"/county/"+countyId+"/precinct/"+precinctout+"/data/merge-overlap/"+countyIdin+"/"+precinctin+"/"+lngCoord+"/"+latCoord;
+                    // console.log(url)
+                    let precinctidinfo = errorinfo.substring(secondsem+1);
+                    Enclosebutton[i].textContent="Enclose Error";
+                    encloseTable.appendChild(Enclosebutton[i]);
                     encloseTable.appendChild(document.createElement("br"));
+                    Enclosebutton[i].setAttribute("onclick","solveOverlap('"+url+"','"+latCoord+"','"+lngCoord+"')");
+
+                    // enclosenum++;
+                    // var Enclosebutton = document.createElement("button");
+                    // Enclosebutton.setAttribute("class","btn btn-link");
+                    // Enclosebutton.textContent=errorJson[i].info;
+                    // encloseTable.appendChild(Enclosebutton);
+                    // encloseTable.appendChild(document.createElement("br"));
                 }
                 if(errorJson[i].type=="MULTIPOLY"){
                     multinum++;
@@ -262,8 +285,8 @@ async function printText(message,type) {
     if(type=="GAP") {
         coord = gapCoord[message];
         // coord = VotedemoErroCoord[message];
-    }if(type=="VOTEDEMO") {
-        // coord = VotedemoErroCoord[message];
+    }if(type=="OVERLAP") {
+        coord = overlapCoord[message];
     }
     if(type=="VOTEDEMO") {
         // coord = VotedemoErroCoord[message];
@@ -286,7 +309,22 @@ async function printText(message,type) {
         title: 'Demo data and Voting data are not compatible'
     });
 }
-async function solveOverlap(url) {
+async function solveOverlap(url,lat,lng) {
+    // console.log(coord);
+    var latCoord = parseFloat(lat);
+    var lngCoord = parseFloat(lng);
+    var myLatLng = {
+        lat:latCoord,
+        lng:lngCoord
+    }
+    console.log(myLatLng);
+    map.setZoom(13);
+    map.setCenter(myLatLng);
+    marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Demo data and Voting data are not compatible'
+    });
     console.log(url);
     var data = {"comment":"auto fix"}
     let response = await fetch(url, {
