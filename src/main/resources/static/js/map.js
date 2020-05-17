@@ -8,6 +8,9 @@ var changeBoundaryButton = document.getElementById("changeBoundary");
 var addNeighbourButton = document.getElementById("addNeighbour");
 var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
 var countyandState = document.getElementById("sidepaneTitle");
+//demoDataSource
+var dataSource = document.getElementById("dataVotingSource");
+var demoDataSource = document.getElementById("demoDataSource");
 var currentCounty;
 var clickedCountyList = {};
 function initMap() {
@@ -60,6 +63,7 @@ function initMap() {
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
     console.log(event.feature.j.name);
+    demoDataSource.textContent = "Census Bureau";
     if (THREE_STATES.includes(event.feature.j.name)) {
 
       let response;
@@ -67,6 +71,7 @@ function initMap() {
 
         case THREE_STATES[0]:// fujiniya
           stateChoose.textContent = "Virginia";
+          // demoDataSource.textContent = ""
           clickedState="va";
           r.disabled=false;
           $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
@@ -331,6 +336,18 @@ function addPrecinctsToMap(precincts){
     precincts[ID].getPrecinctLayer().setMap(map);
     styleCounties(precincts[ID].getPrecinctLayer());
   }
+  // console.log(number);
+}
+function addOnePrecinctsToMap(precincts){
+  precincts.getPrecinctLayer().setMap(map);
+  styleCounties(precincts.getPrecinctLayer());
+  // console.log(precinctLayers);
+  // var number =0;
+  // for (let ID in precincts){
+  //   // number++;
+  //   precincts[ID].getPrecinctLayer().setMap(map);
+  //   styleCounties(precincts[ID].getPrecinctLayer());
+  // }
   // console.log(number);
 }
 function removePrecinctToMap(County){

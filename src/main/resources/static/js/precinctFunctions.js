@@ -543,32 +543,49 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) 
     console.log(url);
     var data = {"comment":comment}
     // console.log
+    // let response = await fetch(url, {
+    //     method: 'PUT', // or 'PUT'
+    //     body: JSON.stringify(data), // data can be `string` or {object}!
+    //     headers: new Headers({
+    //         'Content-Type': 'application/json'
+    //     })
+    // }).then(res => res.json())
+    //     .catch(error => console.error('Error:', error))
+    //     .then(response => {
+    //         console.log('Success:', response)
+    //     });
     let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
         headers: new Headers({
             'Content-Type': 'application/json'
         })
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+    })
     let mergeJson = await response.json()
+    console.log(response);
+    // let mergeJson = await response.json()
+    // let mergeJson = response;
     console.log(mergeJson);
+    List[0].getPrecinctLayer().setMap(null);
+    List[1].getPrecinctLayer().setMap(null);
     let newCoord=[];
     for (j = 0; j < mergeJson[0].obj.length; j++) {  //for current polygon
         var newPolygon = [];
         for (k = 0; k < mergeJson[0].obj[j].vertices.length; k++) { //for current new'polygon
             newPolygon.push({lat: mergeJson[0].obj[j].vertices[k].y_pos, lng: mergeJson[0].obj[j].vertices[k].x_pos});
         }
-        newCoord.push(countyPolygon);
-
+        newCoord.push(newPolygon);
     }
+
     newPrecinctdata = new google.maps.Data();
     geometry = new google.maps.Data.Polygon(newCoord);
     newPrecinctdata.add({geometry: geometry, id: mergeJson[0].id});
-    precinctID[0].setLayer(newPrecinctdata);
-    precinctID[0].setBoundary(newCoord);
-    addPrecinctsToMap(precinctID[0]);
+    console.log(List);
+    console.log(List[0]);
+    List[0].setPrecinctLayer(newPrecinctdata);
+    List[0].setBoundary(newCoord);
+    addOnePrecinctsToMap(List[0]);
+    List[0].getPrecinctLayer().setMap(map);
 }
 async function precinctChangeBoundary(url, data,comment) {
     console.log(data);
