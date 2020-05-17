@@ -13,10 +13,12 @@ var mergeCommentConfirm = document.getElementById("SaveCommentChanges");
 //<input type="checkbox" class="custom-control-input" id="show-county">
 var NeighbourCommentChanges = document.getElementById("NeighbourCommentChanges");
 var NeighbourComment = document.getElementById("neighbourComment");
-// mergeComment
+// mergePrecinctAbrot
+var mergePrecinctAbrot = document.getElementById("mergePrecinctAbrot");
 var mergeComment = document.getElementById("neighbourComment");
 changeBoundaryConfirm.disabled = true;
 MergePrecinct.disabled = true;
+mergePrecinctAbrot.disabled=true;
 MergeConfirm.disabled = true;
 GhostPrecinct.disabled = true;
 async function precinctFetch(stateName, county) {
@@ -193,6 +195,7 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 MergePrecinct.addEventListener('click',function(){
                     MergeConfirm.disabled = false;
                     MergePrecinct.disabled = true;
+                    mergePrecinctAbrot.disabled = false;
                     mergeClicked = true;
                     mergePrecinctList.push(precincts[ID]);
                     console.log("第一个merge的precinct");
@@ -318,6 +321,11 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
         var comment = GhostComment.value;
         sendGhost(stateName,countyID, clickedPrecinct, precincts[clickedPrecinct],comment);
     });
+    mergePrecinctAbrot.addEventListener('click',function(){
+        mergeClicked=false;
+        MergePrecinct.disabled = false;
+        MergeConfirm.disabled = true;
+    })
     mergeCommentConfirm.addEventListener('click',function(){
         console.log(mergePrecinctList);
         mergeClicked=false;
@@ -843,6 +851,7 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
                 MergePrecinct.addEventListener('click',function(){
                     MergeConfirm.disabled = false;
                     MergePrecinct.disabled = true;
+                    mergePrecinctAbrot.disabled=false;
                     mergeClicked = true;
                     mergePrecinctList.push(precincts[ID]);
                     console.log("第一个merge的precinct");
@@ -973,6 +982,13 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
         styleGhostPrecinct(precincts[clickedPrecinct].getLayer());
         sendGhost(stateName,countyID, clickedPrecinct, precincts[clickedPrecinct],comment);
     });
+    mergePrecinctAbrot.addEventListener('click',function(){
+        mergeClicked=false;
+        MergePrecinct.disabled = false;
+        MergeConfirm.disabled = true;
+        mergePrecinctAbrot.disabled=true;
+    })
+
     mergeCommentConfirm.addEventListener('click',function(){
         console.log(mergePrecinctList);
         mergeClicked=false;
