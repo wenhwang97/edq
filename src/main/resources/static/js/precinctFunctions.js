@@ -49,6 +49,7 @@ async function precinctFetch(stateName, county) {
             precinct.setDemographic("totalPop", precinctJson[i].objs[0].totalPop);
             precinct.setDemographic("whitePop", precinctJson[i].objs[0].whitePop);
         }else{
+            console.log("there is ghost");
             precinct.Ghost=true;
         }
         if(precinctJson[i].objs[1][0]!=null) {
@@ -59,6 +60,9 @@ async function precinctFetch(stateName, county) {
 
             // console.log(precinctJson[i].objs[1][0].democraticVote);
         }
+        else{
+            precinct.Ghost=true;
+        }
         if(precinctJson[i].objs[1][1]!=null) {  //2016
             precinct.setCongressional16Vote("democraticVote", precinctJson[i].objs[1][1].democraticVote,precinctJson[i].objs[1][1].distNum);
             precinct.setCongressional16Vote("greenVote", precinctJson[i].objs[1][1].greenVote,precinctJson[i].objs[1][1].distNum);
@@ -66,6 +70,9 @@ async function precinctFetch(stateName, county) {
             precinct.setCongressional16Vote("republicanVote", precinctJson[i].objs[1][1].republicanVote, precinctJson[i].objs[1][1].distNum);
 
             // console.log(precinctJson[i].objs[1][0].democraticVote);
+        }
+        else{
+            precinct.Ghost=true;
         }
         if(precinctJson[i].objs[1][2]!=null) {  //2018
             precinct.setCongressional18Vote("democraticVote", precinctJson[i].objs[1][2].democraticVote, precinctJson[i].objs[1][2].distNum);
@@ -247,8 +254,6 @@ function precinctEvents(stateName,county){  //here shouldn't be county should be
                 document.getElementById("NativeData").textContent = precincts[ID].getDemographic("nativePop");
                 document.getElementById("OtherData").textContent = precincts[ID].getDemographic("otherPop");
                 document.getElementById("TotalData").textContent = precincts[ID].getDemographic("totalPop");
-
-
 
                 precincts[ID].getPrecinctLayer().setStyle((feature) => {
                     return {

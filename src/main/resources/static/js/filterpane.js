@@ -309,7 +309,7 @@ async function printText(message,type) {
         title: 'Demo data and Voting data are not compatible'
     });
 }
-async function solveOverlap(url,lat,lng) {
+function solveOverlap(url,lat,lng) {
     // console.log(coord);
     var latCoord = parseFloat(lat);
     var lngCoord = parseFloat(lng);
@@ -327,15 +327,26 @@ async function solveOverlap(url,lat,lng) {
     });
     console.log(url);
     var data = {"comment":"auto fix"}
-    let response = await fetch(url, {
-        method: 'PUT', // or 'PUT'
-        body: JSON.stringify(data), // data can be `string` or {object}!
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+    marker.addListener('click', async function() {
+        let response = await fetch(url, {
+            method: 'PUT', // or 'PUT'
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+    });
+    // let response = await fetch(url, {
+    //     method: 'PUT', // or 'PUT'
+    //     body: JSON.stringify(data), // data can be `string` or {object}!
+    //     headers: new Headers({
+    //         'Content-Type': 'application/json'
+    //     })
+    // }).then(res => res.json())
+    //     .catch(error => console.error('Error:', error))
+    //     .then(response => console.log('Success:', response));
 
 }
 

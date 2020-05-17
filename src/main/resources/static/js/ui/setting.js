@@ -49,6 +49,9 @@ const TEXAS_BODER = "../data/texas/TX_State.json";
 const RI_BODER = "../data/RI/RiBoder.json";
 const RI_STATE= "../data/RI/RI_State_Converted.json"
 const VA_STATE= "../data/VA/VA_State.json"
+const RI_Congressionl = "../data/RI/RI_Congressional_Border.json";
+const TX_Congressionl = "../data/texas/TX_Congressional_Border.json";
+const VA_Congressionl = "../data/VA/VA_Congressional_Border.json";
 
 const SILVIR_STYLE = [
   {

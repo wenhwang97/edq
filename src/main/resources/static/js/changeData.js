@@ -24,7 +24,7 @@ editVoting.addEventListener('click',function(){
 })
 changeVoting.addEventListener('click', function(){
     console.log("change voting");
-
+    console.log(clickedState);
     if(clickedState=="va"){
         dataSource.textContent="Secretary State Of Virginia"
     }

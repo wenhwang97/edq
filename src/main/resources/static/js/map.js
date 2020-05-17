@@ -8,7 +8,8 @@ var changeBoundaryButton = document.getElementById("changeBoundary");
 var addNeighbourButton = document.getElementById("addNeighbour");
 var addNeighbourConfirm = document.getElementById("addNeighbourConfirm");
 var countyandState = document.getElementById("sidepaneTitle");
-//demoDataSource
+//show-district
+var districtCheck = document.getElementById("show-district");
 var dataSource = document.getElementById("dataVotingSource");
 var demoDataSource = document.getElementById("demoDataSource");
 var currentCounty;
@@ -335,7 +336,13 @@ function addPrecinctsToMap(precincts){
   for (let ID in precincts){
     // number++;
     precincts[ID].getPrecinctLayer().setMap(map);
-    styleCounties(precincts[ID].getPrecinctLayer());
+    if(precincts[ID].Ghost==false) {
+      console.log("not ghost");
+      styleCounties(precincts[ID].getPrecinctLayer());
+    }else{
+      console.log("ghost");
+      styleGhostPrecinct(precincts[ID].getPrecinctLayer())
+    }
   }
   // console.log(number);
 }
@@ -397,18 +404,22 @@ async function handleRedirect(
 
   var stateName;
   var OfficalStateName;
+  var districtData;
   switch (pageTitle) {
     case "Virginia State Level":
       stateName='va';
+      districtData=VA_Congressionl;
       OfficalStateName="Virginia";
       break;
     case "Rhode Island State Level":
       stateName='ri';
+      districtData=RI_Congressionl;
       OfficalStateName="Rhode Island";
       break;
     case "Texas State Level":
       stateName='tx';
       OfficalStateName="Texas";
+      districtData=TX_Congressionl;
       break;
 
   }
@@ -493,6 +504,16 @@ async function handleRedirect(
         }
       }
     });
+    dcData=new google.maps.Data();
+    dcData.loadGeoJson(districtData);
+    districtCheck.addEventListener('change',function(){
+      if (this.checked) {
+        dcData.setMap(map);
+      }else{
+        dcData.setMap(null);
+      }
+
+    })
     var marker
     parkcheck.addEventListener('change', function () {  //county's check boxes
       if (this.checked) {
