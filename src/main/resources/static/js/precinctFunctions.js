@@ -10,6 +10,7 @@ var GhostComment = document.getElementById("GhostComment");
 var precinctName = document.getElementById("sidepanePrecinctName");
 var dataType = document.getElementById("Datatype");
 var mergeCommentConfirm = document.getElementById("SaveCommentChanges");
+//<input type="checkbox" class="custom-control-input" id="show-county">
 var NeighbourCommentChanges = document.getElementById("NeighbourCommentChanges");
 var NeighbourComment = document.getElementById("neighbourComment");
 // mergeComment
@@ -552,7 +553,21 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) 
         .then(response => console.log('Success:', response));
     let mergeJson = await response.json()
     console.log(mergeJson);
+    let newCoord=[];
+    for (j = 0; j < mergeJson[0].obj.length; j++) {  //for current polygon
+        var newPolygon = [];
+        for (k = 0; k < mergeJson[0].obj[j].vertices.length; k++) { //for current new'polygon
+            newPolygon.push({lat: mergeJson[0].obj[j].vertices[k].y_pos, lng: mergeJson[0].obj[j].vertices[k].x_pos});
+        }
+        newCoord.push(countyPolygon);
 
+    }
+    newPrecinctdata = new google.maps.Data();
+    geometry = new google.maps.Data.Polygon(newCoord);
+    newPrecinctdata.add({geometry: geometry, id: mergeJson[0].id});
+    precinctID[0].setLayer(newPrecinctdata);
+    precinctID[0].setBoundary(newCoord);
+    addPrecinctsToMap(precinctID[0]);
 }
 async function precinctChangeBoundary(url, data,comment) {
     console.log(data);
