@@ -52,35 +52,37 @@ async function precinctFetch(stateName, county) {
             console.log("there is ghost");
             precinct.Ghost=true;
         }
-        if(precinctJson[i].objs[1][0]!=null) {
-            precinct.setPresidentialVote("democraticVote", precinctJson[i].objs[1][0].democraticVote);
-            precinct.setPresidentialVote("greenVote", precinctJson[i].objs[1][0].greenVote);
-            precinct.setPresidentialVote("libertarianVote", precinctJson[i].objs[1][0].libertarianVote);
-            precinct.setPresidentialVote("republicanVote", precinctJson[i].objs[1][0].republicanVote);
+        if(precinctJson[i].objs[1]!=null) {
+            if (precinctJson[i].objs[1][0] != null) {
+                precinct.setPresidentialVote("democraticVote", precinctJson[i].objs[1][0].democraticVote);
+                precinct.setPresidentialVote("greenVote", precinctJson[i].objs[1][0].greenVote);
+                precinct.setPresidentialVote("libertarianVote", precinctJson[i].objs[1][0].libertarianVote);
+                precinct.setPresidentialVote("republicanVote", precinctJson[i].objs[1][0].republicanVote);
 
-            // console.log(precinctJson[i].objs[1][0].democraticVote);
-        }
-        else{
-            precinct.Ghost=true;
-        }
-        if(precinctJson[i].objs[1][1]!=null) {  //2016
-            precinct.setCongressional16Vote("democraticVote", precinctJson[i].objs[1][1].democraticVote,precinctJson[i].objs[1][1].distNum);
-            precinct.setCongressional16Vote("greenVote", precinctJson[i].objs[1][1].greenVote,precinctJson[i].objs[1][1].distNum);
-            precinct.setCongressional16Vote("libertarianVote", precinctJson[i].objs[1][1].libertarianVote, precinctJson[i].objs[1][1].distNum);
-            precinct.setCongressional16Vote("republicanVote", precinctJson[i].objs[1][1].republicanVote, precinctJson[i].objs[1][1].distNum);
+                // console.log(precinctJson[i].objs[1][0].democraticVote);
+            } else {
+                precinct.Ghost = true;
+            }
+            if (precinctJson[i].objs[1][1] != null) {  //2016
+                precinct.setCongressional16Vote("democraticVote", precinctJson[i].objs[1][1].democraticVote, precinctJson[i].objs[1][1].distNum);
+                precinct.setCongressional16Vote("greenVote", precinctJson[i].objs[1][1].greenVote, precinctJson[i].objs[1][1].distNum);
+                precinct.setCongressional16Vote("libertarianVote", precinctJson[i].objs[1][1].libertarianVote, precinctJson[i].objs[1][1].distNum);
+                precinct.setCongressional16Vote("republicanVote", precinctJson[i].objs[1][1].republicanVote, precinctJson[i].objs[1][1].distNum);
 
-            // console.log(precinctJson[i].objs[1][0].democraticVote);
-        }
-        else{
-            precinct.Ghost=true;
-        }
-        if(precinctJson[i].objs[1][2]!=null) {  //2018
-            precinct.setCongressional18Vote("democraticVote", precinctJson[i].objs[1][2].democraticVote, precinctJson[i].objs[1][2].distNum);
-            precinct.setCongressional18Vote("greenVote", precinctJson[i].objs[1][2].greenVote,precinctJson[i].objs[1][2].distNum);
-            precinct.setCongressional18Vote("libertarianVote", precinctJson[i].objs[1][2].libertarianVote, precinctJson[i].objs[1][2].distNum);
-            precinct.setCongressional18Vote("republicanVote", precinctJson[i].objs[1][2].republicanVote, precinctJson[i].objs[1][2].distNum);
+                // console.log(precinctJson[i].objs[1][0].democraticVote);
+            } else {
+                precinct.Ghost = true;
+            }
+            if (precinctJson[i].objs[1][2] != null) {  //2018
+                precinct.setCongressional18Vote("democraticVote", precinctJson[i].objs[1][2].democraticVote, precinctJson[i].objs[1][2].distNum);
+                precinct.setCongressional18Vote("greenVote", precinctJson[i].objs[1][2].greenVote, precinctJson[i].objs[1][2].distNum);
+                precinct.setCongressional18Vote("libertarianVote", precinctJson[i].objs[1][2].libertarianVote, precinctJson[i].objs[1][2].distNum);
+                precinct.setCongressional18Vote("republicanVote", precinctJson[i].objs[1][2].republicanVote, precinctJson[i].objs[1][2].distNum);
 
-            // console.log(precinctJson[i].objs[1][0].democraticVote);
+                // console.log(precinctJson[i].objs[1][0].democraticVote);
+            }
+        }else{
+            precinct.Ghost = true;
         }
         for (let j in precinctJson[i].objs[2]) {  //for current precinct
             if(precinctJson[i].id=="ri-kent-0617"){

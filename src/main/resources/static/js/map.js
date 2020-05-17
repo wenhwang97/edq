@@ -65,6 +65,16 @@ function initMap() {
   // click event, redirect to state level map
   google.maps.event.addListener(usBorderLayer, "click", async function(event) {
     console.log(event.feature.j.name);
+
+    // if(clickedState=="va"){
+    //   dataSource.textContent="Secretary State Of Virginia"
+    // }
+    // if(clickedState=="tx"){
+    //   dataSource.textContent="State Of Texas"
+    // }
+    // if(clickedState=="ri"){
+    //   dataSource.textContent="Secretary State Of Rhode Island"
+    // }
     demoDataSource.textContent = "Census Bureau";
     if (THREE_STATES.includes(event.feature.j.name)) {
 
@@ -75,6 +85,7 @@ function initMap() {
           stateChoose.textContent = "Virginia";
           // demoDataSource.textContent = ""
           clickedState="va";
+          dataSource.textContent="Secretary State Of Virginia"
           r.disabled=false;
           $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
           response = await fetch("http://localhost:8080/state/va");
@@ -95,6 +106,7 @@ function initMap() {
         case THREE_STATES[1]:// Texas
           stateChoose.textContent = "Texas";
           clickedState="tx";
+          dataSource.textContent="State Of Texas"
           r.disabled=false;
           $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
           response = await fetch("http://localhost:8080/state/tx");
@@ -115,6 +127,7 @@ function initMap() {
         case THREE_STATES[2]:// Rhode Island
           stateChoose.textContent = "Rhode Island";
           clickedState="ri";
+          dataSource.textContent="Secretary State Of Rhode Island"
             console.log("RI");
           r.disabled=false;
           $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
@@ -549,6 +562,7 @@ async function handleRedirect(
 
       google.maps.event.addListener(countyLayer, 'click', function (event) {  //when click on a county
         // clickedCountyList.push()
+
         countyID = event.feature.o; //get the current county ID
         var countTemp =allStates[stateName].getCountyByID(countyID);
         clickedCountyList[countyID]=countTemp;

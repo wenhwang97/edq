@@ -337,7 +337,10 @@ function solveOverlap(url,lat,lng) {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(response => console.log('Success:', response));
+        // enclosenum--;
+        // encloseNumber.textContent=enclosenum;
     });
+
     // let response = await fetch(url, {
     //     method: 'PUT', // or 'PUT'
     //     body: JSON.stringify(data), // data can be `string` or {object}!
