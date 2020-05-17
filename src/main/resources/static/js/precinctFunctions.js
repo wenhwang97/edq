@@ -542,9 +542,10 @@ async function sendMergePrecinct(List, stateName, countyID, polygonID, comment) 
     var url = "http://localhost:8080/state/" + stateName + "/county/" + countyID + "/precinct/" + precinctID[0] + "/data/merge-donut/" + countyID + "/" + precinctID[1] + "/" + polygonID;
     console.log(url);
     var data = {"comment":comment}
+    // console.log
     let response = await fetch(url, {
         method: 'PUT', // or 'PUT'
-        body: JSON.stringify({data}), // data can be `string` or {object}!
+        body: JSON.stringify(data), // data can be `string` or {object}!
         headers: new Headers({
             'Content-Type': 'application/json'
         })
