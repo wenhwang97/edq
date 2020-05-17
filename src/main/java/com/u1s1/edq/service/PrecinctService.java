@@ -214,4 +214,22 @@ public class PrecinctService {
 
         return removedGeoPolygon;
     }
+
+    public void closeGeoPolygon(String stateId, String countyId, String precinctId) {
+        Precinct precinct = cachedContainer.findPrecinct(stateId, countyId, precinctId);
+        for (GeoPolygon polygon : precinct.getBoundary()) {
+            GeoVertex start = polygon.getVertices().get(0);
+            GeoVertex end = polygon.getVertices().get(polygon.getVertices().size() - 1);
+
+            if (!start.getX_pos().equals(end.getX_pos()) || !start.getY_pos().equals(end.getY_pos())) {
+                try {
+                    polygon.getVertices().add(start.clone());
+                } catch (Exception e) {
+                    System.err.println("[Fatal] Unable to clone the starting vertex of the GeoPolygon");
+                }
+            }
+        }
+
+        precinctRepo.save(precinct);
+    }
 }

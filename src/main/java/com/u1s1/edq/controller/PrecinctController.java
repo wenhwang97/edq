@@ -38,8 +38,9 @@ public class PrecinctController {
     private final String LOG_UPDATE_CONG_VOTE_DESC = "Update Precinct '@0' @1 congressional voting data in District #@2";
     private final String LOG_UPDATE_POLYGON_DESC = "Update Precinct '@0' boundary's polygon";
     private final String LOG_MERGE_DATA_DESC = "Merge Precinct '@0' data into Precinct '@1'";
-    private final String LOG_MERGE_DONUT_DESC = "Merge Precinct '@0' Polygon into Precinct '@1'";
-    private final String LOG_MERGE_OVERLAP_DESC = "Merge Precinct '@0' Polygon overlap into Precinct '@1'";
+    private final String LOG_MERGE_DONUT_DESC = "Merge Precinct '@0' polygon into Precinct '@1'";
+    private final String LOG_MERGE_OVERLAP_DESC = "Merge Precinct '@0' polygon overlap into Precinct '@1'";
+    private final String LOG_CLOSE_POLYGON_DESC = "Close Precinct '@0' boundary";
 
     @Autowired
     public PrecinctController(PrecinctService precinctService, CountyService countyService,
@@ -307,5 +308,21 @@ public class PrecinctController {
         correctionLogService.addPolygonLog(state, precinctCName, OperationType.MERGE_POLY, polygon, null, desc, comment.getComment(), dateTime);
 
         return new ResponseObject(mergee.getCanonicalName(), mergee.getName(), mergee.getBoundary());
+    }
+
+    public ResponseObject closeUnclosedPrecinctPolygon(@PathVariable String stateId, @PathVariable String countyId,
+                                                       @PathVariable String precinctCName,
+                                                       @RequestBody RequestComment comment) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        Precinct precinct = precinctService.getPrecinctFromMem(stateId, countyId, precinctCName);
+        State state = precinct.getCounty().getState();
+        String desc = LOG_CLOSE_POLYGON_DESC;
+        desc = desc.replace("@0", precinct.getName());
+
+        precinctService.closeGeoPolygon(stateId, countyId, precinctCName);
+
+        correctionLogService.addDataLog(state, precinctCName, OperationType.CLOSE_POLYGON, desc, comment.getComment(), dateTime);
+
+        return new ResponseObject(precinct.getCanonicalName(), precinct.getName(), precinct.getBoundary());
     }
 }

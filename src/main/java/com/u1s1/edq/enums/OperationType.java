@@ -11,5 +11,6 @@ public enum OperationType {
     EDIT_CONG_VOTE,
     EDIT_BOUNDARY,
     MERGE_DATA,
-    MERGE_POLY
+    MERGE_POLY,
+    CLOSE_POLYGON
 }
