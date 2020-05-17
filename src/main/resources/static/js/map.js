@@ -242,6 +242,17 @@ function styleCounties(dataLayer) {
     };
   });
 }
+function styleGhostPrecinct(dataLayer) {
+  dataLayer.setStyle((feature) => {
+    // #101778 = light blue
+    return {
+      fillColor: "rgba(109,255,78,0.29)",
+      strokeColor: "rgba(125,230,69,0.8)",
+      strokeWeight: 1,
+      zIndex: 2,
+    };
+  });
+}
 function styleNeighbour(dataLayer) {
   dataLayer.setStyle((feature) => {
     // #101778 = light blue

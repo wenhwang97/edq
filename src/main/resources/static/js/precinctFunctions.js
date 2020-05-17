@@ -761,6 +761,7 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
         // var rectangle={};
         var polyinprecinct;
         var value = datatype.value;
+        var countyID;
         google.maps.event.addListener(precinctLayer, 'click', function (event) {  //when click on a precinct
             console.log(clickedCountyList);
             value = datatype.value
@@ -775,6 +776,10 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
             sidepaneData.style.opacity = "1"
             // errs.style.display = "none"
             console.log(event.feature.o);
+            var second = ID.indexOf('-',3);
+            var first = ID.indexOf('-');
+            countyID =ID.substring(0,second);
+            let StateId = ID.substring(0,first);
             // console.log(precinctLayer.geometry);
             console.log(event.latLng.lat());
             polyinprecinct = precincts[event.feature.o].getPrecinctPolygon({lat:event.latLng.lat(),lng:event.latLng.lng()});
@@ -792,7 +797,11 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
                     // precinctEvents(stateName,clickedCountyList);
                 }
                 for(let x in precinctAll){
-                    styleCounties(precinctAll[x].getLayer());
+                    if(precinctAll[x].Ghost==true){
+                        styleGhostPrecinct(precinctAll[x].getLayer());
+                    }else {
+                        styleCounties(precinctAll[x].getLayer());
+                    }
                 }
                 // styleCounties(dataLayer)
                 // precinctAll
@@ -800,7 +809,7 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
                 console.log("add neighbour is not clicked!");
                 var second = ID.indexOf('-',3);
                 var first = ID.indexOf('-');
-                let countyID =ID.substring(0,second);
+                countyID =ID.substring(0,second);
                 let StateId = ID.substring(0,first);
                 var precinctName = ID.substring(second+1);
                 sidepanePrecinctName.textContent = precincts[event.feature.o].name;
@@ -958,6 +967,7 @@ function allprecinctEvents(stateName,precincts){  //here shouldn't be county sho
         precincts[clickedPrecinct].Ghost=true;
         ghostPct.textContent="Ghost Pct.";
         var comment = GhostComment.value;
+        styleGhostPrecinct(precincts[clickedPrecinct].getLayer());
         sendGhost(stateName,countyID, clickedPrecinct, precincts[clickedPrecinct],comment);
     });
     mergeCommentConfirm.addEventListener('click',function(){
