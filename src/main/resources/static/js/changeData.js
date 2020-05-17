@@ -1,5 +1,7 @@
 var changeVoting = document.getElementById("SaveVoteChanges");
-// SaveDemoChanges
+// editDemo
+var editVoting = document.getElementById("voteEdit");
+var editDemo = document.getElementById("editDemo");
 var changeDemo = document.getElementById("SaveDemoChanges");
 var datatype = document.getElementById("Datatype");
 // votingComment
@@ -10,6 +12,16 @@ var votingComment = document.getElementById("votingComment");
 //     console.log(dmVoting);
 //
 // })
+editVoting.addEventListener('click',function(){
+    var origionrp = document.getElementById("RepublicanVoting").textContent;    //原本的
+    var origiongr = document.getElementById("GreenVoting").textContent;
+    var origionlb = document.getElementById("LibertarianVoting").textContent;
+    var origiondm = document.getElementById("DemocraticVoting").textContent;
+    document.getElementById("dmChanges").value = origiondm;    //输入框里面的
+    document.getElementById("rpChanges").value = origionrp;
+    document.getElementById("lbChanges").value =origionlb;
+    document.getElementById("grChanges").value = origiongr;
+})
 changeVoting.addEventListener('click', function(){
     console.log("change voting");
 
@@ -147,6 +159,20 @@ changeVoting.addEventListener('click', function(){
 
     // var votingType=
 
+})
+editDemo.addEventListener('click',function(){
+    var origionTT = document.getElementById("TotalData").textContent;    //原本的
+    var origionWD = document.getElementById("WhiteData").textContent;
+    var origionBD = document.getElementById("BlackData").textContent;
+    var origionAD = document.getElementById("AsianData").textContent;
+    var origionND = document.getElementById("NativeData").textContent;
+    var origionOD = document.getElementById("OtherData").textContent;
+    document.getElementById("TotalPop").value = origionTT;    //输入框里面的
+    document.getElementById("WhiteNum").value = origionWD;
+    document.getElementById("BlackNum").value =origionBD;
+    document.getElementById("AsianNum").value= origionAD;
+    document.getElementById("NativeNum").value = origionND;
+    document.getElementById("OtherNum").value = origionOD;
 })
 changeDemo.addEventListener('click',function(){
     var TotalPop=document.getElementById("TotalPop").value;    //输入框里面的

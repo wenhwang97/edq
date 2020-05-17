@@ -66,6 +66,7 @@ function initMap() {
       switch (event.feature.j.name) {
 
         case THREE_STATES[0]:// fujiniya
+          stateChoose.textContent = "Virginia";
           clickedState="va";
           r.disabled=false;
           $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
@@ -85,6 +86,7 @@ function initMap() {
           break;
 
         case THREE_STATES[1]:// Texas
+          stateChoose.textContent = "Texas";
           clickedState="tx";
           r.disabled=false;
           $.blockUI({ message: '<h1><img src="../images/YCZH.gif" /> Loding Counties</h1>' });
@@ -104,6 +106,7 @@ function initMap() {
           break;
 
         case THREE_STATES[2]:// Rhode Island
+          stateChoose.textContent = "Rhode Island";
           clickedState="ri";
             console.log("RI");
           r.disabled=false;
@@ -174,7 +177,7 @@ async function loadstates(stateName) {
         break;
 
       case THREE_STATES[2]:// Rhode Island
-        // stateChoose.textContent = "Rhode Island";
+        stateChoose.textContent = "Rhode Island";
         clickedState = "ri";
         console.log("RI");
         r.disabled = false;
