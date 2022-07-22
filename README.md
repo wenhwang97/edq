@@ -1,7 +1,7 @@
 # CSE416 Project: Election Data Quality
 
 ## Introduction
-Coming soon...
+// TO BE ADDED
 
 ## How to Use
 
@@ -14,8 +14,4 @@ This guild is specifically for IntelliJ IDEA. Preparation using other IDE may be
 5. Mark directory `src/test/java` as "test sources root"
 ### Run
 Use the ```public static void main(String[] args)``` method in `src/main/java/com/u1s1/edq/EdqApplication.java` to run.
-
-## Documentation
-## Issues
-- Some ```POST``` methods are missing. See Google Spreed Sheets for details.
 
