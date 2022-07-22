@@ -1,9 +1,7 @@
 # CSE416 Project: Election Data Quality
 
 ## Introduction
-// TO BE ADDED
-
-## How to Use
+*TO BE ADDED*
 
 ### Preparation
 This guild is specifically for IntelliJ IDEA. Preparation using other IDE may be differnet
